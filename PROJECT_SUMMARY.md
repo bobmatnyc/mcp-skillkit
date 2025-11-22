@@ -119,7 +119,7 @@ mcp-skills is a standalone Python PyPI package that provides intelligent, contex
 - Skill validation
 
 **IndexingEngine**:
-- Vector store abstraction (ChromaDB/Qdrant)
+- Vector store using ChromaDB
 - Knowledge graph (NetworkX)
 - Hybrid RAG search combining vector + KG
 - Embedding generation with sentence-transformers
@@ -274,8 +274,8 @@ python scripts/manage_version.py set 0.2.0
 ## Architecture Highlights
 
 **Hybrid RAG**:
-- Vector store for semantic similarity (ChromaDB/Qdrant)
-- Knowledge graph for relationships (NetworkX/Neo4j)
+- Vector store for semantic similarity (ChromaDB)
+- Knowledge graph for relationships (NetworkX)
 - Combined scoring: 70% vector + 30% graph
 
 **Toolchain Detection**:

@@ -80,9 +80,10 @@ Skills are automatically available in Claude Code. Try:
 
 mcp-skills uses a hybrid RAG approach combining:
 
-**Vector Store** (ChromaDB/Qdrant):
+**Vector Store** (ChromaDB):
 - Fast semantic search over skill descriptions
 - Embeddings generated with sentence-transformers
+- Persistent local storage with minimal configuration
 
 **Knowledge Graph** (NetworkX):
 - Skill relationships and dependencies
