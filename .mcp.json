@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "mcp-vector-search": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "mcp-vector-search",
+        "mcp"
+      ],
+      "env": {
+        "MCP_ENABLE_FILE_WATCHING": "true"
+      }
+    }
+  }
+}
