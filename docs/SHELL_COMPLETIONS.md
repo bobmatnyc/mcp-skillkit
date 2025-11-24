@@ -155,7 +155,7 @@ If you installed `mcp-skills` via pip/pipx, the completion files are included in
 
 ```bash
 # Find where mcp-skills is installed
-pip show mcp-skillkit
+pip show mcp-skills
 
 # Completion files are in: <site-packages>/mcp_skills/completions/
 ```
@@ -310,21 +310,21 @@ The completion system requires `mcp-skills` to be in your PATH.
 1. **Verify installation**:
    ```bash
    which mcp-skills
-   pip show mcp-skillkit
+   pip show mcp-skills
    ```
 
 2. **Install if missing**:
    ```bash
-   pipx install mcp-skillkit
+   pipx install mcp-skills
    # or
-   pip install mcp-skillkit
+   pip install mcp-skills
    ```
 
 3. **Ensure shell PATH includes pip bin directory**:
    ```bash
    # Add to ~/.bashrc or ~/.zshrc
    export PATH="$HOME/.local/bin:$PATH"  # For pip --user
-   export PATH="$HOME/.local/share/pipx/venvs/mcp-skillkit/bin:$PATH"  # For pipx
+   export PATH="$HOME/.local/share/pipx/venvs/mcp-skills/bin:$PATH"  # For pipx
    ```
 
 ## Advanced Usage

@@ -1,7 +1,7 @@
 # mcp-skills
 
-[![PyPI version](https://badge.fury.io/py/mcp-skillkit.svg)](https://badge.fury.io/py/mcp-skillkit)
-[![Python Versions](https://img.shields.io/pypi/pyversions/mcp-skillkit)](https://pypi.org/project/mcp-skillkit/)
+[![PyPI version](https://badge.fury.io/py/mcp-skills.svg)](https://badge.fury.io/py/mcp-skills)
+[![Python Versions](https://img.shields.io/pypi/pyversions/mcp-skills)](https://pypi.org/project/mcp-skills/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Test Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)](https://github.com/bobmatnyc/mcp-skills)
 
@@ -25,19 +25,15 @@ mcp-skills is a standalone Python application that provides intelligent, context
 [pipx](https://pipx.pypa.io/) is the recommended way to install Python CLI applications:
 
 ```bash
-pipx install mcp-skillkit
+pipx install mcp-skills
 ```
-
-**Note**: The package name on PyPI is `mcp-skillkit`, but the CLI command is `mcp-skills`:
-- Install: `pipx install mcp-skillkit`
-- Run: `mcp-skills --help`
 
 ### With pip
 
 If you prefer pip (not recommended for CLI tools):
 
 ```bash
-pip install mcp-skillkit
+pip install mcp-skills
 ```
 
 ### From Source
@@ -47,13 +43,6 @@ git clone https://github.com/bobmatnyc/mcp-skills.git
 cd mcp-skills
 pip install -e .
 ```
-
-### Troubleshooting Installation
-
-**Error: "No apps associated with package mcp-skills"**
-- You're trying to install the wrong package name
-- The correct package name is `mcp-skillkit` (not `mcp-skills`)
-- Install with: `pipx install mcp-skillkit`
 
 ### Local Development (Without Installation)
 
@@ -78,7 +67,7 @@ This is useful for:
 - Debugging with source code
 - Contributing to the project
 
-**Note**: For production use, install the package normally with `pip install -e .` or `pip install mcp-skillkit`.
+**Note**: For production use, install the package normally with `pip install -e .` or `pip install mcp-skills`.
 
 ### First-Run Requirements
 
@@ -566,7 +555,7 @@ For environments without internet access:
 
 3. Install mcp-skills (transfer wheel if needed):
    ```bash
-   pip install mcp-skillkit  # Or install from wheel
+   pip install mcp-skills  # Or install from wheel
    ```
 
 4. Verify the setup:
@@ -656,7 +645,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Links
 
-- **PyPI Package**: [mcp-skillkit on PyPI](https://pypi.org/project/mcp-skillkit/)
+- **PyPI Package**: [mcp-skills on PyPI](https://pypi.org/project/mcp-skills/)
 - **Documentation**: [GitHub Wiki](https://github.com/bobmatnyc/mcp-skills/wiki)
 - **Issue Tracker**: [GitHub Issues](https://github.com/bobmatnyc/mcp-skills/issues)
 - **MCP Registry**: [MCP Servers](https://registry.modelcontextprotocol.io)

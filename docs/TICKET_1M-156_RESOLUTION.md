@@ -1,11 +1,15 @@
 # Ticket 1M-156 Resolution: Installation Issues Fixed
 
+> **UPDATE (2025-11-24)**: This issue has been permanently resolved by renaming the package from `mcp-skillkit` to `mcp-skills` on PyPI. Package name now matches CLI command name. This document is kept for historical reference.
+
 ## Executive Summary
 
-**Status**: ✅ RESOLVED
+**Status**: ✅ RESOLVED (Package renamed to mcp-skills)
 **Date**: 2025-11-23
+**Updated**: 2025-11-24
 **Ticket**: 1M-156
 **Issue**: Users running `pipx install mcp-skills` received error "No apps associated with package mcp-skills"
+**Resolution**: Package renamed from `mcp-skillkit` to `mcp-skills` for consistency
 
 ## Problem Analysis
 

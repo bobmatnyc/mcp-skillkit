@@ -17,7 +17,7 @@
 - **Hybrid RAG**: Vector similarity + KG relationships for better discovery
 - **Zero Config**: `mcp-skills setup` handles everything automatically
 - **Multi-Source**: Pulls skills from multiple git repositories
-- **PyPI Installable**: `pip install mcp-skillkit` in any codebase
+- **PyPI Installable**: `pip install mcp-skills` in any codebase
 
 ---
 
@@ -1209,7 +1209,7 @@ mcp-skills health
 
 ### 1. Local Installation (Recommended for Solo Developers)
 ```bash
-pip install mcp-skillkit
+pip install mcp-skills
 mcp-skills setup
 mcp-skills serve
 ```
@@ -1217,7 +1217,7 @@ mcp-skills serve
 ### 2. Docker Container (Recommended for Teams)
 ```dockerfile
 FROM python:3.11-slim
-RUN pip install mcp-skillkit
+RUN pip install mcp-skills
 EXPOSE 8000
 CMD ["mcp-skills", "serve", "--transport", "http", "--port", "8000"]
 ```
