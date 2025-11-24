@@ -19,7 +19,7 @@ from click.testing import CliRunner
 
 from mcp_skills.cli.main import cli
 from mcp_skills.mcp.server import configure_services
-from mcp_skills.services.indexing_engine import IndexingEngine
+from mcp_skills.services.indexing import IndexingEngine
 from mcp_skills.services.repository_manager import RepositoryManager
 from mcp_skills.services.skill_manager import SkillManager
 

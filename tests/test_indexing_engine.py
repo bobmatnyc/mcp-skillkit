@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from mcp_skills.models.skill import Skill
-from mcp_skills.services.indexing_engine import (
+from mcp_skills.services.indexing import (
     IndexingEngine,
     IndexStats,
     ScoredSkill,

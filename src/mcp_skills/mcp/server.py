@@ -14,7 +14,7 @@ from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
-from ..services.indexing_engine import IndexingEngine
+from ..services.indexing import IndexingEngine
 from ..services.repository_manager import RepositoryManager
 from ..services.skill_manager import SkillManager
 from ..services.toolchain_detector import ToolchainDetector

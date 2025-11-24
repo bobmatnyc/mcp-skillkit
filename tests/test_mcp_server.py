@@ -21,7 +21,7 @@ from mcp_skills.mcp.tools.skill_tools import (
     search_skills,
 )
 from mcp_skills.models.skill import Skill, SkillMetadata
-from mcp_skills.services.indexing_engine import ScoredSkill
+from mcp_skills.services.indexing import ScoredSkill
 from mcp_skills.services.toolchain_detector import ToolchainInfo
 
 
@@ -445,7 +445,7 @@ class TestReindexSkills:
     @pytest.mark.asyncio
     async def test_reindex_skills_success(self, mock_skill):
         """Test successful reindexing."""
-        from mcp_skills.services.indexing_engine import IndexStats
+        from mcp_skills.services.indexing import IndexStats
 
         mock_stats = IndexStats(
             total_skills=1,
@@ -473,7 +473,7 @@ class TestReindexSkills:
     @pytest.mark.asyncio
     async def test_reindex_skills_force(self, mock_skill):
         """Test forced reindexing."""
-        from mcp_skills.services.indexing_engine import IndexStats
+        from mcp_skills.services.indexing import IndexStats
 
         mock_stats = IndexStats(
             total_skills=1,
@@ -500,7 +500,7 @@ class TestReindexSkills:
     @pytest.mark.asyncio
     async def test_reindex_skills_no_skills(self):
         """Test reindexing with no skills."""
-        from mcp_skills.services.indexing_engine import IndexStats
+        from mcp_skills.services.indexing import IndexStats
 
         mock_stats = IndexStats(
             total_skills=0,
