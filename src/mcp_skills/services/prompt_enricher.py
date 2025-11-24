@@ -395,7 +395,6 @@ class PromptEnricher:
         prompt: str,
         max_skills: int = 3,
         detailed: bool = False,
-        threshold: float = 0.7,
     ) -> EnrichedPrompt:
         """Enrich a prompt with relevant skill instructions.
 
@@ -408,7 +407,6 @@ class PromptEnricher:
             prompt: Original user prompt
             max_skills: Maximum number of skills to include
             detailed: Use detailed format (full instructions)
-            threshold: Relevance threshold for filtering
 
         Returns:
             EnrichedPrompt with all enrichment data
