@@ -1,7 +1,6 @@
 """Skill lifecycle management - discovery, loading, execution."""
 
 import logging
-import re
 from pathlib import Path
 
 import yaml
@@ -13,6 +12,7 @@ from mcp_skills.models.skill import (
     SkillMetadataModel,
     SkillModel,
 )
+from mcp_skills.services.validators import SkillValidator
 
 
 logger = logging.getLogger(__name__)
@@ -41,20 +41,8 @@ class SkillManager:
     - SQLite integration (Phase 1 Task 7) for indexed access
     """
 
-    # Predefined skill categories
-    VALID_CATEGORIES = {
-        "testing",
-        "debugging",
-        "refactoring",
-        "documentation",
-        "security",
-        "performance",
-        "deployment",
-        "architecture",
-        "data-analysis",
-        "code-review",
-        "collaboration",
-    }
+    # Predefined skill categories (maintained for backward compatibility)
+    VALID_CATEGORIES = SkillValidator.VALID_CATEGORIES
 
     def __init__(self, repos_dir: Path | None = None) -> None:
         """Initialize skill manager.
@@ -66,6 +54,7 @@ class SkillManager:
         self.repos_dir = repos_dir or Path.home() / ".mcp-skills" / "repos"
         self._skill_cache: dict[str, Skill] = {}
         self._skill_paths: dict[str, Path] = {}  # Map skill_id -> file_path
+        self.validator = SkillValidator()
 
     def discover_skills(self, repos_dir: Path | None = None) -> list[Skill]:
         """Scan repositories for skills.
@@ -308,56 +297,10 @@ class SkillManager:
             >>> result["warnings"]
             ['Unknown category: invalid-cat']
         """
-        errors: list[str] = []
-        warnings: list[str] = []
-
-        # Check required fields
-        if not skill.name or len(skill.name.strip()) == 0:
-            errors.append("Missing required field: name")
-
-        if not skill.description or len(skill.description.strip()) < 10:
-            errors.append(
-                f"Description too short ({len(skill.description)} chars, minimum 10)"
-            )
-
-        if not skill.instructions or len(skill.instructions.strip()) < 50:
-            errors.append(
-                f"Instructions too short ({len(skill.instructions)} chars, minimum 50)"
-            )
-
-        # Validate category
-        if skill.category not in self.VALID_CATEGORIES:
-            warnings.append(
-                f"Unknown category: {skill.category}. "
-                f"Valid categories: {', '.join(sorted(self.VALID_CATEGORIES))}"
-            )
-
-        # Check tags
-        if not skill.tags or len(skill.tags) == 0:
-            warnings.append("No tags specified. Tags improve discoverability.")
-
-        # Check for examples in instructions (basic heuristic)
-        instructions_lower = skill.instructions.lower()
-        has_examples = (
-            "example" in instructions_lower
-            or "usage" in instructions_lower
-            or "```" in skill.instructions  # Code blocks often indicate examples
+        # Delegate validation to SkillValidator with dependency resolution
+        return self.validator.validate_skill_with_dependencies(
+            skill, dependency_resolver=self.load_skill
         )
-        if not has_examples:
-            warnings.append(
-                "No examples found in instructions. Consider adding usage examples."
-            )
-
-        # Validate dependencies (check if they can be resolved)
-        # Note: This requires discovering all skills first
-        if skill.dependencies:
-            for dep_id in skill.dependencies:
-                # Check if dependency exists (in cache or can be found)
-                dep_skill = self.load_skill(dep_id)
-                if not dep_skill:
-                    warnings.append(f"Unresolved dependency: {dep_id}")
-
-        return {"errors": errors, "warnings": warnings}
 
     def search_skills(
         self, query: str, category: str | None = None, limit: int = 10
@@ -550,19 +493,8 @@ class SkillManager:
         Returns:
             Dictionary with frontmatter data or None if parsing fails
         """
-        try:
-            content = file_path.read_text(encoding="utf-8")
-            frontmatter, _ = self._split_frontmatter(content)
-
-            if not frontmatter:
-                return None
-
-            metadata = yaml.safe_load(frontmatter)
-            return metadata if isinstance(metadata, dict) else None
-
-        except (yaml.YAMLError, OSError) as e:
-            logger.error(f"Failed to parse frontmatter from {file_path}: {e}")
-            return None
+        # Delegate to validator
+        return self.validator.parse_frontmatter(file_path)
 
     def _split_frontmatter(self, content: str) -> tuple[str, str]:
         """Split SKILL.md content into frontmatter and instructions.
@@ -582,15 +514,8 @@ class SkillManager:
         Returns:
             Tuple of (frontmatter_yaml, instructions_markdown)
         """
-        # Match YAML frontmatter between --- markers
-        frontmatter_pattern = r"^---\s*\n(.*?)\n---\s*\n(.*)$"
-        match = re.match(frontmatter_pattern, content, re.DOTALL)
-
-        if match:
-            return match.group(1), match.group(2)
-
-        # No frontmatter found
-        return "", content
+        # Delegate to validator
+        return self.validator.split_frontmatter(content)
 
     def _normalize_skill_id(self, skill_id: str) -> str:
         """Normalize skill ID to lowercase with hyphens.
@@ -605,19 +530,8 @@ class SkillManager:
             "Anthropics/Testing/PyTest" -> "anthropics/testing/pytest"
             "My Skill!" -> "my-skill"
         """
-        # Convert to lowercase
-        normalized = skill_id.lower()
-
-        # Replace special characters (except /) with hyphens
-        normalized = re.sub(r"[^a-z0-9/]", "-", normalized)
-
-        # Remove consecutive hyphens
-        normalized = re.sub(r"-+", "-", normalized)
-
-        # Remove leading/trailing hyphens
-        normalized = normalized.strip("-")
-
-        return normalized
+        # Delegate to validator
+        return self.validator.normalize_skill_id(skill_id)
 
     def _extract_examples(self, instructions: str) -> list[str]:
         """Extract examples from skill instructions.
@@ -638,22 +552,5 @@ class SkillManager:
         - For more sophisticated parsing, consider using markdown AST
         - Current implementation is fast enough for <100KB files
         """
-        examples: list[str] = []
-
-        # Look for "Examples" section (case-insensitive)
-        examples_pattern = r"##\s+Examples?\s*\n(.*?)(?=\n##|\Z)"
-        match = re.search(examples_pattern, instructions, re.IGNORECASE | re.DOTALL)
-
-        if match:
-            examples_text = match.group(1).strip()
-            if examples_text:
-                examples.append(examples_text)
-
-        # Also extract code blocks as examples
-        code_block_pattern = r"```[\w]*\n(.*?)\n```"
-        code_blocks = re.findall(code_block_pattern, instructions, re.DOTALL)
-
-        # Limit to first 3 code blocks to avoid bloat
-        examples.extend(code_blocks[:3])
-
-        return examples
+        # Delegate to validator
+        return self.validator.extract_examples(instructions)
