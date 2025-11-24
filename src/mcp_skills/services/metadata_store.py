@@ -479,7 +479,8 @@ class MetadataStore:
         """
         with self._get_connection() as conn:
             cursor = conn.execute("SELECT COUNT(*) FROM repositories")
-            count = cursor.fetchone()[0]
+            result = cursor.fetchone()
+            count: int = result[0] if result else 0
             return count > 0
 
     # Helper Methods

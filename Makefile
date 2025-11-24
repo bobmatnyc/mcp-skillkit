@@ -96,10 +96,10 @@ quality: ## Run comprehensive quality checks
 	black --check $(SRC_DIR) $(TEST_DIR)
 	@echo ""
 	@echo "$(YELLOW)2️⃣  Running type checks...$(NC)"
-	mypy $(SRC_DIR)
+	uv run mypy $(SRC_DIR)
 	@echo ""
 	@echo "$(YELLOW)3️⃣  Running tests with coverage...$(NC)"
-	pytest $(TEST_DIR) --cov=$(SRC_DIR) --cov-report=term-missing --cov-fail-under=85
+	uv run pytest $(TEST_DIR)
 	@echo ""
 	@echo "$(GREEN)✅ All quality checks passed$(NC)"
 

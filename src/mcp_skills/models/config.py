@@ -73,7 +73,7 @@ class HybridSearchConfig(BaseSettings):
 
     @field_validator("graph_weight")
     @classmethod
-    def validate_weights_sum(cls, v: float, info) -> float:
+    def validate_weights_sum(cls, v: float, info: Any) -> float:
         """Validate that weights sum to 1.0.
 
         Args:
@@ -213,13 +213,16 @@ class MCPSkillsConfig(BaseSettings):
 
     # Component configurations
     vector_store: VectorStoreConfig = Field(
-        default_factory=VectorStoreConfig, description="Vector store config"
+        default_factory=VectorStoreConfig,  # type: ignore[arg-type]
+        description="Vector store config",
     )
     knowledge_graph: KnowledgeGraphConfig = Field(
-        default_factory=KnowledgeGraphConfig, description="Knowledge graph config"
+        default_factory=KnowledgeGraphConfig,  # type: ignore[arg-type]
+        description="Knowledge graph config",
     )
     server: ServerConfig = Field(
-        default_factory=ServerConfig, description="Server config"
+        default_factory=ServerConfig,  # type: ignore[arg-type]
+        description="Server config",
     )
     hybrid_search: HybridSearchConfig = Field(
         default_factory=HybridSearchConfig.current,

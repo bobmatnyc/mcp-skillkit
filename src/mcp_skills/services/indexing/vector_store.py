@@ -105,7 +105,7 @@ class VectorStore:
             )
 
             # Get or create collection
-            # Type ignore for ChromaDB's complex embedding function types
+            # Type ignore for ChromaDB's complex embedding function signature
             self.collection = self.chroma_client.get_or_create_collection(
                 name="skills",
                 embedding_function=embedding_fn,  # type: ignore[arg-type]
@@ -342,7 +342,8 @@ class VectorStore:
             Number of indexed skills
         """
         try:
-            return self.collection.count()
+            count: int = self.collection.count()
+            return count
         except Exception as e:
             logger.error(f"Failed to count vector store: {e}")
             return 0

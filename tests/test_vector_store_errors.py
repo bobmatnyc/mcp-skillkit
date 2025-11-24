@@ -2,7 +2,7 @@
 
 import tempfile
 from pathlib import Path
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -41,7 +41,9 @@ class TestVectorStoreInitializationErrors:
 
     def test_chromadb_initialization_failure_raises_runtime_error(self):
         """Test that ChromaDB init failure raises RuntimeError."""
-        with patch("mcp_skills.services.indexing.vector_store.chromadb.PersistentClient") as mock_client:
+        with patch(
+            "mcp_skills.services.indexing.vector_store.chromadb.PersistentClient"
+        ) as mock_client:
             mock_client.side_effect = Exception("ChromaDB connection failed")
 
             with pytest.raises(RuntimeError, match="ChromaDB initialization failed"):
@@ -49,10 +51,14 @@ class TestVectorStoreInitializationErrors:
 
     def test_embedding_model_initialization_failure_raises_runtime_error(self):
         """Test that embedding model init failure raises RuntimeError."""
-        with patch("mcp_skills.services.indexing.vector_store.SentenceTransformer") as mock_model:
+        with patch(
+            "mcp_skills.services.indexing.vector_store.SentenceTransformer"
+        ) as mock_model:
             mock_model.side_effect = Exception("Model download failed")
 
-            with pytest.raises(RuntimeError, match="Embedding model initialization failed"):
+            with pytest.raises(
+                RuntimeError, match="Embedding model initialization failed"
+            ):
                 VectorStore()
 
     def test_vector_store_creates_persist_directory(self, temp_storage):
@@ -95,12 +101,16 @@ class TestVectorStoreIndexSkillErrors:
         # Count should not increase
         assert vector_store.count() == initial_count
 
-    def test_index_skill_handles_chromadb_add_failure_gracefully(self, temp_storage, sample_skill):
+    def test_index_skill_handles_chromadb_add_failure_gracefully(
+        self, temp_storage, sample_skill
+    ):
         """Test that ChromaDB add failure is handled gracefully."""
         vector_store = VectorStore(persist_directory=temp_storage)
 
         # Mock collection.add to raise exception
-        with patch.object(vector_store.collection, 'add', side_effect=Exception("DB write failed")):
+        with patch.object(
+            vector_store.collection, "add", side_effect=Exception("DB write failed")
+        ):
             # Should not raise exception (logs error instead)
             vector_store.index_skill(sample_skill)
 
@@ -131,12 +141,18 @@ class TestVectorStoreBuildEmbeddingsErrors:
 
         assert embeddings == []
 
-    def test_build_embeddings_handles_encoding_error_gracefully(self, temp_storage, sample_skill):
+    def test_build_embeddings_handles_encoding_error_gracefully(
+        self, temp_storage, sample_skill
+    ):
         """Test that encoding errors are handled gracefully."""
         vector_store = VectorStore(persist_directory=temp_storage)
 
         # Mock embedding model to raise exception
-        with patch.object(vector_store.embedding_model, 'encode', side_effect=Exception("Encoding failed")):
+        with patch.object(
+            vector_store.embedding_model,
+            "encode",
+            side_effect=Exception("Encoding failed"),
+        ):
             embeddings = vector_store.build_embeddings(sample_skill)
 
             # Should return empty list instead of raising
@@ -153,13 +169,17 @@ class TestVectorStoreSearchErrors:
 
         assert results == []
 
-    def test_search_with_chromadb_query_failure_returns_empty_list(self, temp_storage, sample_skill):
+    def test_search_with_chromadb_query_failure_returns_empty_list(
+        self, temp_storage, sample_skill
+    ):
         """Test that ChromaDB query failure returns empty list."""
         vector_store = VectorStore(persist_directory=temp_storage)
         vector_store.index_skill(sample_skill)
 
         # Mock collection.query to raise exception
-        with patch.object(vector_store.collection, 'query', side_effect=Exception("Query failed")):
+        with patch.object(
+            vector_store.collection, "query", side_effect=Exception("Query failed")
+        ):
             results = vector_store.search("test query", top_k=5)
 
             # Should return empty list instead of raising
@@ -202,15 +222,23 @@ class TestVectorStoreSearchErrors:
 class TestVectorStoreClearErrors:
     """Test clear error handling."""
 
-    def test_clear_with_chromadb_delete_failure_raises_exception(self, temp_storage, sample_skill):
+    def test_clear_with_chromadb_delete_failure_raises_exception(
+        self, temp_storage, sample_skill
+    ):
         """Test that ChromaDB delete failure raises exception."""
         vector_store = VectorStore(persist_directory=temp_storage)
         vector_store.index_skill(sample_skill)
 
         # Mock collection.delete to raise exception
-        with patch.object(vector_store.collection, 'delete', side_effect=Exception("Delete failed")):
-            with pytest.raises(Exception, match="Delete failed"):
-                vector_store.clear()
+        with (
+            patch.object(
+                vector_store.collection,
+                "delete",
+                side_effect=Exception("Delete failed"),
+            ),
+            pytest.raises(Exception, match="Delete failed"),
+        ):
+            vector_store.clear()
 
     def test_clear_empty_store_handles_gracefully(self, temp_storage):
         """Test that clearing empty store handles gracefully."""
@@ -225,13 +253,17 @@ class TestVectorStoreClearErrors:
 class TestVectorStoreCountErrors:
     """Test count error handling."""
 
-    def test_count_with_chromadb_count_failure_returns_zero(self, temp_storage, sample_skill):
+    def test_count_with_chromadb_count_failure_returns_zero(
+        self, temp_storage, sample_skill
+    ):
         """Test that ChromaDB count failure returns 0."""
         vector_store = VectorStore(persist_directory=temp_storage)
         vector_store.index_skill(sample_skill)
 
         # Mock collection.count to raise exception
-        with patch.object(vector_store.collection, 'count', side_effect=Exception("Count failed")):
+        with patch.object(
+            vector_store.collection, "count", side_effect=Exception("Count failed")
+        ):
             count = vector_store.count()
 
             # Should return 0 instead of raising
@@ -309,13 +341,17 @@ class TestVectorStoreEdgeCases:
             vector_store.index_skill(skill)
 
         # Search with category filter
-        results = vector_store.search("skill", top_k=10, filters={"category": "testing"})
+        results = vector_store.search(
+            "skill", top_k=10, filters={"category": "testing"}
+        )
 
         # All results should have testing category
         for result in results:
             assert result["metadata"]["category"] == "testing"
 
-    def test_build_embeddings_creates_consistent_dimensions(self, temp_storage, sample_skill):
+    def test_build_embeddings_creates_consistent_dimensions(
+        self, temp_storage, sample_skill
+    ):
         """Test that embeddings have consistent dimensions."""
         vector_store = VectorStore(persist_directory=temp_storage)
 

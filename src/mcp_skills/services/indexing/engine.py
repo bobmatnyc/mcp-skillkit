@@ -27,7 +27,7 @@ import logging
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from mcp_skills.models.config import MCPSkillsConfig
 from mcp_skills.models.skill import Skill
@@ -434,7 +434,7 @@ class IndexingEngine:
 
     # Expose collection property for backward compatibility
     @property
-    def collection(self):
+    def collection(self) -> Any:
         """Access ChromaDB collection (backward compatibility).
 
         Returns:
@@ -444,7 +444,7 @@ class IndexingEngine:
 
     # Expose graph property for backward compatibility
     @property
-    def graph(self):
+    def graph(self) -> Any:
         """Access NetworkX graph (backward compatibility).
 
         Returns:
@@ -454,7 +454,7 @@ class IndexingEngine:
 
     # Expose embedding_model property for backward compatibility
     @property
-    def embedding_model(self):
+    def embedding_model(self) -> Any:
         """Access sentence-transformers model (backward compatibility).
 
         Returns:
@@ -464,7 +464,7 @@ class IndexingEngine:
 
     # Expose chroma_client property for backward compatibility
     @property
-    def chroma_client(self):
+    def chroma_client(self) -> Any:
         """Access ChromaDB client (backward compatibility).
 
         Returns:

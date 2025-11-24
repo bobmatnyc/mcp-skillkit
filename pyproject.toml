@@ -150,6 +150,11 @@ module = [
     "frontmatter.*",
     "watchdog.*",
     "yaml",
+    "pydantic",
+    "pydantic_settings",
+    "mcp.server.fastmcp",
+    "click",
+    "rich.*",
 ]
 ignore_missing_imports = true
 

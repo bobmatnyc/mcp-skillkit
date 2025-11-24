@@ -4,8 +4,6 @@ import logging
 import tempfile
 from pathlib import Path
 
-import pytest
-
 from mcp_skills.utils import get_logger, setup_logger
 
 
@@ -115,9 +113,7 @@ class TestSetupLogger:
         with tempfile.TemporaryDirectory() as tmpdir:
             log_file = Path(tmpdir) / "test_level.log"
             logger = setup_logger(
-                name="test_file_level",
-                level="WARNING",
-                log_file=str(log_file)
+                name="test_file_level", level="WARNING", log_file=str(log_file)
             )
 
             # Both console and file handlers should have WARNING level
