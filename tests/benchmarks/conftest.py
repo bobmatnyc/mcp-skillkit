@@ -18,12 +18,11 @@ Performance Requirements:
 """
 
 import tempfile
+from collections.abc import Generator
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Generator
 
 import pytest
-
-from datetime import datetime, timezone
 
 from mcp_skills.models.repository import Repository
 from mcp_skills.models.skill import Skill
@@ -225,7 +224,7 @@ def metadata_store_100(benchmark_storage_path: Path) -> MetadataStore:
             url=f"https://github.com/benchmark/repo-{i:05d}.git",
             local_path=benchmark_storage_path / "repos" / f"repo-{i:05d}",
             priority=50 + (i % 50),
-            last_updated=datetime(2024, 1, 1, 12, 0, 0, tzinfo=timezone.utc),
+            last_updated=datetime(2024, 1, 1, 12, 0, 0, tzinfo=UTC),
             skill_count=10 + (i % 20),
             license="MIT",
         )
@@ -253,7 +252,7 @@ def metadata_store_1000(benchmark_storage_path: Path) -> MetadataStore:
             url=f"https://github.com/benchmark/repo-{i:05d}.git",
             local_path=benchmark_storage_path / "repos" / f"repo-{i:05d}",
             priority=50 + (i % 50),
-            last_updated=datetime(2024, 1, 1, 12, 0, 0, tzinfo=timezone.utc),
+            last_updated=datetime(2024, 1, 1, 12, 0, 0, tzinfo=UTC),
             skill_count=10 + (i % 20),
             license="MIT",
         )

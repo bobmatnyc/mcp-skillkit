@@ -23,10 +23,10 @@ Error Handling:
 
 import logging
 import sqlite3
+from collections.abc import Iterator
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
-from typing import Iterator, Optional
 
 from mcp_skills.models.repository import Repository
 
@@ -53,7 +53,7 @@ class MetadataStore:
 
     SCHEMA_VERSION = 1
 
-    def __init__(self, db_path: Optional[Path] = None) -> None:
+    def __init__(self, db_path: Path | None = None) -> None:
         """Initialize metadata store.
 
         Args:
@@ -221,7 +221,7 @@ class MetadataStore:
             conn.commit()
             logger.debug(f"Added repository {repository.id} to metadata store")
 
-    def get_repository(self, repo_id: str) -> Optional[Repository]:
+    def get_repository(self, repo_id: str) -> Repository | None:
         """Get repository by ID.
 
         Args:
@@ -341,7 +341,7 @@ class MetadataStore:
         """
         raise NotImplementedError("Skill management not yet implemented")
 
-    def get_skill(self, skill_id: str) -> Optional[dict]:
+    def get_skill(self, skill_id: str) -> dict | None:
         """Get skill by ID (placeholder for future use).
 
         Args:
@@ -354,7 +354,7 @@ class MetadataStore:
         """
         raise NotImplementedError("Skill management not yet implemented")
 
-    def list_skills(self, repo_id: Optional[str] = None) -> list[dict]:
+    def list_skills(self, repo_id: str | None = None) -> list[dict]:
         """List skills, optionally filtered by repository (placeholder).
 
         Args:
@@ -407,7 +407,7 @@ class MetadataStore:
         import json
 
         try:
-            with open(json_path, "r") as f:
+            with open(json_path) as f:
                 data = json.load(f)
 
             repositories = []

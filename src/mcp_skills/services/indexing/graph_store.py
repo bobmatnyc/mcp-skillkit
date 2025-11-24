@@ -136,7 +136,7 @@ class GraphStore:
     def extract_relationships(
         self,
         skill: Skill,
-        all_skills: list[Skill] | None = None,
+        _all_skills: list[Skill] | None = None,
     ) -> list[tuple[str, str, str]]:
         """Identify skill dependencies and relationships.
 

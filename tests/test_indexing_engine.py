@@ -101,7 +101,7 @@ class TestIndexingEngineInitialization:
 
     def test_initialization_creates_storage_directory(self, temp_storage):
         """Test that storage directory is created."""
-        engine = IndexingEngine(storage_path=temp_storage)
+        IndexingEngine(storage_path=temp_storage)
         assert temp_storage.exists()
 
     def test_initialization_creates_chromadb_client(self, temp_storage):
@@ -324,7 +324,7 @@ class TestIndexingEngineGetRelatedSkills:
         related = indexing_engine.get_related_skills(debugging_skill.id, max_depth=2)
 
         # Should find pytest skill as related
-        related_ids = [skill.id for skill in related]
+        [skill.id for skill in related]
         # May or may not include depending on graph structure
         assert isinstance(related, list)
 

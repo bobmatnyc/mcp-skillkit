@@ -7,6 +7,7 @@ multiple components.
 
 import json
 import shutil
+from datetime import UTC
 from pathlib import Path
 
 import pytest
@@ -344,7 +345,8 @@ class TestRepositoryWorkflow:
         shutil.copytree(sample_skill_repo, dest_dir)
 
         # Manually create metadata entry
-        from datetime import datetime, timezone
+        from datetime import datetime
+
         from mcp_skills.models.repository import Repository
 
         repository = Repository(
@@ -352,7 +354,7 @@ class TestRepositoryWorkflow:
             url="https://github.com/test/sample-repo.git",
             local_path=dest_dir,
             priority=100,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=3,
             license="MIT",
         )

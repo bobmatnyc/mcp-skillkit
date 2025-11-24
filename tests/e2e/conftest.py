@@ -5,19 +5,15 @@ actual file operations, and complete service configurations for testing
 production-like scenarios.
 """
 
-import asyncio
 import json
-import subprocess
-import sys
-import time
+from collections.abc import AsyncGenerator, Generator
+from datetime import UTC
 from pathlib import Path
-from typing import AsyncGenerator, Generator
 
 import git
 import pytest
 from click.testing import CliRunner
 
-from mcp_skills.cli.main import cli
 from mcp_skills.mcp.server import configure_services
 from mcp_skills.services.indexing import IndexingEngine
 from mcp_skills.services.repository_manager import RepositoryManager
@@ -460,7 +456,7 @@ def e2e_services_with_repo(
 
     # Copy real repo to repos directory
     import shutil
-    from datetime import datetime, timezone
+    from datetime import datetime
 
     from mcp_skills.models.repository import Repository
 
@@ -474,7 +470,7 @@ def e2e_services_with_repo(
         url="https://github.com/test/skills.git",
         local_path=dest_dir,
         priority=100,
-        last_updated=datetime.now(timezone.utc),
+        last_updated=datetime.now(UTC),
         skill_count=5,
         license="MIT",
     )

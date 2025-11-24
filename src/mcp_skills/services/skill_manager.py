@@ -401,7 +401,7 @@ class SkillManager:
         results: list[tuple[Skill, int]] = []  # (skill, relevance_score)
 
         # Search through all discovered skills
-        for skill_id in self._skill_paths.keys():
+        for skill_id in self._skill_paths:
             skill = self.load_skill(skill_id)
             if not skill:
                 continue

@@ -12,15 +12,12 @@ Tests use real git operations and file I/O to ensure production readiness.
 """
 
 import shutil
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
 
 from mcp_skills.models.repository import Repository
-from mcp_skills.services.indexing import IndexingEngine
-from mcp_skills.services.repository_manager import RepositoryManager
-from mcp_skills.services.skill_manager import SkillManager
 
 
 @pytest.mark.e2e
@@ -50,7 +47,7 @@ class TestRepositoryAddWorkflow:
             url="https://github.com/test/local-repo.git",
             local_path=dest_dir,
             priority=90,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="MIT",
         )
@@ -99,7 +96,7 @@ class TestRepositoryAddWorkflow:
             url="https://github.com/test/priority-repo.git",
             local_path=dest_dir,
             priority=75,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="MIT",
         )
@@ -145,7 +142,7 @@ class TestRepositoryListWorkflow:
                 url=f"https://github.com/test/repo{i}.git",
                 local_path=dest_dir,
                 priority=100 - (i * 10),
-                last_updated=datetime.now(timezone.utc),
+                last_updated=datetime.now(UTC),
                 skill_count=5,
                 license="MIT",
             )
@@ -178,7 +175,7 @@ class TestRepositoryListWorkflow:
             url="https://github.com/test/metadata-repo.git",
             local_path=dest_dir,
             priority=85,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="Apache-2.0",
         )
@@ -240,7 +237,7 @@ class TestRepositoryIndexWorkflow:
             url="https://github.com/test/new-repo.git",
             local_path=dest_dir,
             priority=90,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="MIT",
         )
@@ -321,7 +318,7 @@ class TestRepositoryUpdateWorkflow:
             url=repo.url,
             local_path=repo.local_path,
             priority=repo.priority,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=repo.skill_count,
             license=repo.license,
         )
@@ -421,7 +418,7 @@ class TestCompleteRepositoryWorkflow:
             url="https://github.com/test/lifecycle-repo.git",
             local_path=dest_dir,
             priority=95,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="MIT",
         )
@@ -483,7 +480,7 @@ class TestCompleteRepositoryWorkflow:
                 url=f"https://github.com/test/{repo_id}.git",
                 local_path=dest_dir,
                 priority=90,
-                last_updated=datetime.now(timezone.utc),
+                last_updated=datetime.now(UTC),
                 skill_count=5,
                 license="MIT",
             )
@@ -539,7 +536,7 @@ class TestCompleteRepositoryWorkflow:
             url="https://github.com/test/high-priority.git",
             local_path=high_dest,
             priority=100,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="MIT",
         )
@@ -556,7 +553,7 @@ class TestCompleteRepositoryWorkflow:
             url="https://github.com/test/low-priority.git",
             local_path=low_dest,
             priority=10,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="MIT",
         )

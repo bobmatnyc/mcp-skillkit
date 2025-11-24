@@ -1,7 +1,7 @@
 """Pydantic models for configuration management."""
 
 from pathlib import Path
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import Field
 from pydantic_settings import BaseSettings
@@ -24,7 +24,7 @@ class VectorStoreConfig(BaseSettings):
         "all-MiniLM-L6-v2", description="Sentence transformer model"
     )
     collection_name: str = Field("skills_v1", description="Collection name")
-    persist_directory: Optional[Path] = Field(
+    persist_directory: Path | None = Field(
         None, description="Persistence directory"
     )
 
@@ -40,7 +40,7 @@ class KnowledgeGraphConfig(BaseSettings):
     backend: Literal["networkx", "neo4j"] = Field(
         "networkx", description="Knowledge graph backend"
     )
-    persist_path: Optional[Path] = Field(
+    persist_path: Path | None = Field(
         None, description="Graph persistence path"
     )
 
@@ -95,8 +95,8 @@ class MCPSkillsConfig(BaseSettings):
         default_factory=lambda: Path.home() / ".mcp-skills",
         description="Base directory for mcp-skills",
     )
-    repos_dir: Optional[Path] = Field(None, description="Repositories directory")
-    indices_dir: Optional[Path] = Field(None, description="Indices directory")
+    repos_dir: Path | None = Field(None, description="Repositories directory")
+    indices_dir: Path | None = Field(None, description="Indices directory")
 
     # Component configurations
     vector_store: VectorStoreConfig = Field(

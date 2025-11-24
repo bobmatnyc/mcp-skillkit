@@ -5,7 +5,7 @@ Use mcp_skills.mcp.server instead for the FastMCP-based implementation.
 """
 
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from ..mcp.server import configure_services, main, mcp
 
@@ -24,7 +24,7 @@ class MCPSkillsServer:
     - Global service management pattern
     """
 
-    def __init__(self, config: Optional[dict[str, Any]] = None) -> None:
+    def __init__(self, config: dict[str, Any] | None = None) -> None:
         """Initialize MCP server (DEPRECATED).
 
         Args:

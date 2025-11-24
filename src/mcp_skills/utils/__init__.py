@@ -1,6 +1,6 @@
 """Utility functions and helpers for mcp-skills."""
 
-from mcp_skills.utils.logger import setup_logger, get_logger
+from mcp_skills.utils.logger import get_logger, setup_logger
 
 
 __all__ = ["setup_logger", "get_logger"]

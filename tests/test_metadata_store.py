@@ -1,7 +1,7 @@
 """Tests for SQLite metadata store."""
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
@@ -28,7 +28,7 @@ class TestMetadataStore:
             url="https://github.com/test/repo.git",
             local_path=tmp_path / "repos" / "test/repo",
             priority=50,
-            last_updated=datetime(2024, 1, 1, 12, 0, 0, tzinfo=timezone.utc),
+            last_updated=datetime(2024, 1, 1, 12, 0, 0, tzinfo=UTC),
             skill_count=5,
             license="MIT",
         )
@@ -60,7 +60,7 @@ class TestMetadataStore:
                 url=f"https://github.com/test/{name}.git",
                 local_path=tmp_path / "repos" / f"test/{name}",
                 priority=priority,
-                last_updated=datetime.now(timezone.utc),
+                last_updated=datetime.now(UTC),
                 skill_count=0,
                 license="MIT",
             )
@@ -82,7 +82,7 @@ class TestMetadataStore:
             url="https://github.com/test/repo.git",
             local_path=tmp_path / "repos" / "test/repo",
             priority=50,
-            last_updated=datetime(2024, 1, 1, 12, 0, 0, tzinfo=timezone.utc),
+            last_updated=datetime(2024, 1, 1, 12, 0, 0, tzinfo=UTC),
             skill_count=5,
             license="MIT",
         )
@@ -109,7 +109,7 @@ class TestMetadataStore:
             url="https://github.com/test/repo.git",
             local_path=tmp_path / "repos" / "test/repo",
             priority=50,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="MIT",
         )
@@ -126,7 +126,7 @@ class TestMetadataStore:
             url="https://github.com/test/repo.git",
             local_path=tmp_path / "repos" / "test/repo",
             priority=50,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="MIT",
         )
@@ -155,7 +155,7 @@ class TestMetadataStore:
             url="https://github.com/test/repo.git",
             local_path=tmp_path / "repos" / "test/repo",
             priority=50,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="MIT",
         )
@@ -256,7 +256,7 @@ class TestMetadataStore:
             url="https://github.com/test/repo.git",
             local_path=tmp_path / "repos" / "test/repo",
             priority=50,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=5,
             license="MIT",
         )

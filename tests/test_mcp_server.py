@@ -1,8 +1,7 @@
 """Tests for MCP server implementation using FastMCP SDK."""
 
 from pathlib import Path
-from typing import Any
-from unittest.mock import AsyncMock, MagicMock, Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
@@ -20,7 +19,7 @@ from mcp_skills.mcp.tools.skill_tools import (
     reindex_skills,
     search_skills,
 )
-from mcp_skills.models.skill import Skill, SkillMetadata
+from mcp_skills.models.skill import Skill
 from mcp_skills.services.indexing import ScoredSkill
 from mcp_skills.services.toolchain_detector import ToolchainInfo
 
@@ -186,7 +185,7 @@ class TestSearchSkills:
             "mcp_skills.mcp.tools.skill_tools.get_indexing_engine",
             return_value=mock_engine,
         ):
-            result = await search_skills(query="test", limit=100)
+            await search_skills(query="test", limit=100)
 
             # Verify limit was capped
             mock_engine.search.assert_called_once()
@@ -290,21 +289,20 @@ class TestRecommendSkills:
         with patch(
             "mcp_skills.mcp.tools.skill_tools.get_toolchain_detector",
             return_value=mock_detector,
+        ), patch(
+            "mcp_skills.mcp.tools.skill_tools.get_indexing_engine",
+            return_value=mock_engine,
         ):
-            with patch(
-                "mcp_skills.mcp.tools.skill_tools.get_indexing_engine",
-                return_value=mock_engine,
-            ):
-                result = await recommend_skills(
-                    project_path=str(project_dir), limit=5
-                )
+            result = await recommend_skills(
+                project_path=str(project_dir), limit=5
+            )
 
-                assert result["status"] == "completed"
-                assert result["recommendation_type"] == "project_based"
-                assert len(result["recommendations"]) == 1
-                assert result["recommendations"][0]["id"] == "pytest-skill"
-                assert result["context"]["detected_toolchains"] == ["Python"]
-                assert result["context"]["confidence"] == 0.95
+            assert result["status"] == "completed"
+            assert result["recommendation_type"] == "project_based"
+            assert len(result["recommendations"]) == 1
+            assert result["recommendations"][0]["id"] == "pytest-skill"
+            assert result["context"]["detected_toolchains"] == ["Python"]
+            assert result["context"]["confidence"] == 0.95
 
     @pytest.mark.asyncio
     async def test_recommend_skills_skill_based(self, mock_skill):
@@ -331,17 +329,16 @@ class TestRecommendSkills:
         with patch(
             "mcp_skills.mcp.tools.skill_tools.get_indexing_engine",
             return_value=mock_engine,
+        ), patch(
+            "mcp_skills.mcp.tools.skill_tools.get_skill_manager",
+            return_value=mock_manager,
         ):
-            with patch(
-                "mcp_skills.mcp.tools.skill_tools.get_skill_manager",
-                return_value=mock_manager,
-            ):
-                result = await recommend_skills(current_skill="pytest-skill", limit=5)
+            result = await recommend_skills(current_skill="pytest-skill", limit=5)
 
-                assert result["status"] == "completed"
-                assert result["recommendation_type"] == "skill_based"
-                assert result["context"]["base_skill"] == "pytest-skill"
-                assert len(result["recommendations"]) == 1
+            assert result["status"] == "completed"
+            assert result["recommendation_type"] == "skill_based"
+            assert result["context"]["base_skill"] == "pytest-skill"
+            assert len(result["recommendations"]) == 1
 
     @pytest.mark.asyncio
     async def test_recommend_skills_no_params(self):
@@ -357,15 +354,14 @@ class TestRecommendSkills:
         with patch(
             "mcp_skills.mcp.tools.skill_tools.get_toolchain_detector",
             return_value=Mock(),
+        ), patch(
+            "mcp_skills.mcp.tools.skill_tools.get_indexing_engine",
+            return_value=MagicMock(),
         ):
-            with patch(
-                "mcp_skills.mcp.tools.skill_tools.get_indexing_engine",
-                return_value=MagicMock(),
-            ):
-                result = await recommend_skills(project_path="/nonexistent/path")
+            result = await recommend_skills(project_path="/nonexistent/path")
 
-                assert result["status"] == "error"
-                assert "does not exist" in result["error"]
+            assert result["status"] == "error"
+            assert "does not exist" in result["error"]
 
 
 class TestListCategories:

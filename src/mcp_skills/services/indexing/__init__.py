@@ -24,6 +24,7 @@ from mcp_skills.services.indexing.graph_store import GraphStore
 from mcp_skills.services.indexing.hybrid_search import HybridSearcher, ScoredSkill
 from mcp_skills.services.indexing.vector_store import VectorStore
 
+
 __all__ = [
     "IndexingEngine",
     "VectorStore",

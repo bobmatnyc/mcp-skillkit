@@ -2,10 +2,9 @@
 
 import json
 import logging
-import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+
 
 logger = logging.getLogger(__name__)
 
@@ -323,7 +322,7 @@ class ToolchainDetector:
             package_json = project_dir / "package.json"
             if package_json.exists():
                 try:
-                    with open(package_json, "r") as f:
+                    with open(package_json) as f:
                         data = json.load(f)
                         dev_deps = data.get("devDependencies", {})
 
@@ -341,14 +340,12 @@ class ToolchainDetector:
                     logger.debug(f"Failed to parse package.json: {e}")
 
         # Rust build tools
-        if "Rust" in language_scores:
-            if (project_dir / "Cargo.toml").exists():
-                build_tools.append("cargo")
+        if "Rust" in language_scores and (project_dir / "Cargo.toml").exists():
+            build_tools.append("cargo")
 
         # Go build tools
-        if "Go" in language_scores:
-            if (project_dir / "go.mod").exists():
-                build_tools.append("go")
+        if "Go" in language_scores and (project_dir / "go.mod").exists():
+            build_tools.append("go")
 
         return build_tools
 
@@ -387,14 +384,12 @@ class ToolchainDetector:
                 package_managers.append("pnpm")
 
         # Rust package manager
-        if "Rust" in language_scores:
-            if (project_dir / "Cargo.lock").exists():
-                package_managers.append("cargo")
+        if "Rust" in language_scores and (project_dir / "Cargo.lock").exists():
+            package_managers.append("cargo")
 
         # Go package manager
-        if "Go" in language_scores:
-            if (project_dir / "go.sum").exists():
-                package_managers.append("go modules")
+        if "Go" in language_scores and (project_dir / "go.sum").exists():
+            package_managers.append("go modules")
 
         return package_managers
 
@@ -428,9 +423,8 @@ class ToolchainDetector:
                 if req_path.exists():
                     try:
                         content = req_path.read_text()
-                        if "pytest" in content.lower():
-                            if "pytest" not in test_frameworks:
-                                test_frameworks.append("pytest")
+                        if "pytest" in content.lower() and "pytest" not in test_frameworks:
+                            test_frameworks.append("pytest")
                         if "unittest" in content.lower():
                             test_frameworks.append("unittest")
                     except (FileNotFoundError, PermissionError) as e:
@@ -441,7 +435,7 @@ class ToolchainDetector:
             package_json = project_dir / "package.json"
             if package_json.exists():
                 try:
-                    with open(package_json, "r") as f:
+                    with open(package_json) as f:
                         data = json.load(f)
                         dev_deps = data.get("devDependencies", {})
                         deps = data.get("dependencies", {})
@@ -507,9 +501,8 @@ class ToolchainDetector:
                 try:
                     content = req_path.read_text().lower()
                     for framework, patterns in framework_patterns.items():
-                        if any(pattern in content for pattern in patterns):
-                            if framework not in frameworks:
-                                frameworks.append(framework)
+                        if any(pattern in content for pattern in patterns) and framework not in frameworks:
+                            frameworks.append(framework)
                 except (FileNotFoundError, PermissionError) as e:
                     logger.debug(f"Failed to read {req_file}: {e}")
 
@@ -519,9 +512,8 @@ class ToolchainDetector:
             try:
                 content = pyproject.read_text().lower()
                 for framework, patterns in framework_patterns.items():
-                    if any(pattern in content for pattern in patterns):
-                        if framework not in frameworks:
-                            frameworks.append(framework)
+                    if any(pattern in content for pattern in patterns) and framework not in frameworks:
+                        frameworks.append(framework)
             except (FileNotFoundError, PermissionError) as e:
                 logger.debug(f"Failed to read pyproject.toml: {e}")
 
@@ -543,7 +535,7 @@ class ToolchainDetector:
             return frameworks
 
         try:
-            with open(package_json, "r") as f:
+            with open(package_json) as f:
                 data = json.load(f)
                 deps = data.get("dependencies", {})
                 dev_deps = data.get("devDependencies", {})

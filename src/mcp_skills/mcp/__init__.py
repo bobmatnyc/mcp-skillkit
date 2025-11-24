@@ -6,6 +6,7 @@ discovery, search, and recommendation via the Model Context Protocol (MCP).
 
 from typing import TYPE_CHECKING, Any
 
+
 if TYPE_CHECKING:
     from .server import configure_services, main, mcp
 

@@ -1,7 +1,7 @@
 """Pytest configuration and fixtures for mcp-skills tests."""
 
+from collections.abc import Generator
 from pathlib import Path
-from typing import Generator
 
 import pytest
 

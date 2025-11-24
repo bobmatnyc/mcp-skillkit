@@ -167,6 +167,7 @@ select = [
 
 ignore = [
     "E501",   # line too long (handled by formatter)
+    "B904",   # raise from - overly strict for CLI exit handlers
 ]
 
 fixable = ["ALL"]
@@ -175,6 +176,10 @@ unfixable = []
 [tool.ruff.lint.isort]
 force-single-line = false
 lines-after-imports = 2
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["ARG001", "ARG002", "ARG005", "B017"]  # pytest fixtures and mocks
+"tests/benchmarks/**/*.py" = ["ARG001"]  # benchmark setup functions
 
 [tool.black]
 line-length = 88

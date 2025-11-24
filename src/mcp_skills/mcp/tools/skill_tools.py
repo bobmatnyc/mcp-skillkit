@@ -10,11 +10,11 @@ from typing import Any
 
 from ..server import (
     get_indexing_engine,
-    get_repo_manager,
     get_skill_manager,
     get_toolchain_detector,
     mcp,
 )
+
 
 logger = logging.getLogger(__name__)
 

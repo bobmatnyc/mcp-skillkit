@@ -217,7 +217,8 @@ def mcp(dev: bool) -> None:
         console.print("🔧 [yellow]Development mode enabled[/yellow]")
 
     # Import and configure MCP server
-    from mcp_skills.mcp.server import main as mcp_main, configure_services
+    from mcp_skills.mcp.server import configure_services
+    from mcp_skills.mcp.server import main as mcp_main
 
     try:
         # Initialize services (SkillManager, IndexingEngine, ToolchainDetector, RepositoryManager)
@@ -294,7 +295,7 @@ def search(query: str, limit: int, category: str | None) -> None:
             )
 
         console.print(table)
-        console.print(f"\n[dim]Use 'mcp-skills info <skill-id>' for details[/dim]")
+        console.print("\n[dim]Use 'mcp-skills info <skill-id>' for details[/dim]")
 
     except Exception as e:
         console.print(f"[red]Search failed: {e}[/red]")
@@ -367,7 +368,7 @@ def list(category: str | None, compact: bool) -> None:
 
             console.print(table)
 
-        console.print(f"\n[dim]Use 'mcp-skills info <skill-id>' for details[/dim]")
+        console.print("\n[dim]Use 'mcp-skills info <skill-id>' for details[/dim]")
 
     except Exception as e:
         console.print(f"[red]List failed: {e}[/red]")
@@ -532,7 +533,7 @@ def recommend() -> None:
             )
 
         console.print(table)
-        console.print(f"\n[dim]Use 'mcp-skills info <skill-id>' for details[/dim]")
+        console.print("\n[dim]Use 'mcp-skills info <skill-id>' for details[/dim]")
 
     except Exception as e:
         console.print(f"[red]Recommendations failed: {e}[/red]")
@@ -736,14 +737,14 @@ def repo_add(url: str, priority: int) -> None:
                 repo = repo_manager.add_repository(url, priority=priority)
                 progress.update(task, completed=True)
 
-                console.print(f"[green]✓[/green] Repository added successfully")
+                console.print("[green]✓[/green] Repository added successfully")
                 console.print(f"  • ID: {repo.id}")
                 console.print(f"  • Skills: {repo.skill_count}")
                 console.print(f"  • License: {repo.license}")
                 console.print(f"  • Path: {repo.local_path}")
 
                 # Suggest reindexing
-                console.print(f"\n[dim]Tip: Run 'mcp-skills index' to index new skills[/dim]")
+                console.print("\n[dim]Tip: Run 'mcp-skills index' to index new skills[/dim]")
 
             except ValueError as e:
                 progress.stop()
@@ -822,12 +823,12 @@ def repo_update(repo_id: str | None) -> None:
                 TextColumn("[progress.description]{task.description}"),
                 console=console,
             ) as progress:
-                task = progress.add_task(f"Pulling latest changes...", total=None)
+                task = progress.add_task("Pulling latest changes...", total=None)
                 try:
                     repo = repo_manager.update_repository(repo_id)
                     progress.update(task, completed=True)
 
-                    console.print(f"[green]✓[/green] Repository updated successfully")
+                    console.print("[green]✓[/green] Repository updated successfully")
                     console.print(f"  • ID: {repo.id}")
                     console.print(f"  • Skills: {repo.skill_count}")
                     console.print(f"  • Last updated: {repo.last_updated.strftime('%Y-%m-%d %H:%M')}")
@@ -886,7 +887,7 @@ def repo_update(repo_id: str | None) -> None:
                         progress.start()
 
             console.print()
-            console.print(f"[bold]Summary:[/bold]")
+            console.print("[bold]Summary:[/bold]")
             console.print(f"  • Updated: {updated_count}/{len(repos)} repositories")
             if failed_count > 0:
                 console.print(f"  • Failed: {failed_count}")
@@ -894,7 +895,7 @@ def repo_update(repo_id: str | None) -> None:
                 console.print(f"  • New skills: {new_skills}")
 
             if updated_count > 0:
-                console.print(f"\n[dim]Tip: Run 'mcp-skills index' to reindex updated skills[/dim]")
+                console.print("\n[dim]Tip: Run 'mcp-skills index' to reindex updated skills[/dim]")
 
     except Exception as e:
         console.print(f"[red]Update failed: {e}[/red]")
@@ -1036,7 +1037,7 @@ def config() -> None:
         metadata_node = base_node.add(f"📄 Metadata: [yellow]{metadata_file}[/yellow]")
 
         if metadata_file.exists():
-            metadata_node.add(f"[green]✓[/green] Exists")
+            metadata_node.add("[green]✓[/green] Exists")
         else:
             metadata_node.add("[dim]Not created yet[/dim]")
 

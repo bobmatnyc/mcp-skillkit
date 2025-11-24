@@ -10,7 +10,6 @@ etc.) that are configured at startup and used by all tool implementations.
 
 import logging
 from pathlib import Path
-from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
@@ -18,6 +17,7 @@ from ..services.indexing import IndexingEngine
 from ..services.repository_manager import RepositoryManager
 from ..services.skill_manager import SkillManager
 from ..services.toolchain_detector import ToolchainDetector
+
 
 # Initialize FastMCP server
 mcp = FastMCP("mcp-skills")

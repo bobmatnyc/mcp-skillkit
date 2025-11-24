@@ -1,9 +1,8 @@
 """Pytest configuration and fixtures for integration tests."""
 
 import json
-import shutil
+from collections.abc import Generator
 from pathlib import Path
-from typing import Generator
 
 import git
 import pytest
@@ -257,7 +256,6 @@ def configured_repository_manager(
         Configured RepositoryManager instance
     """
     # Create base directory for metadata
-    base_dir = temp_repos_dir.parent
     manager = RepositoryManager(base_dir=temp_repos_dir)
 
     yield manager

@@ -28,6 +28,7 @@ Error Handling:
 
 import gc
 import time
+from datetime import UTC
 from pathlib import Path
 
 import pytest
@@ -91,7 +92,7 @@ class TestIndexingPerformance:
                 engine.index_skill(skill)
 
         # Run benchmark with setup
-        result = benchmark.pedantic(index_skills, setup=setup, rounds=3, iterations=1)
+        benchmark.pedantic(index_skills, setup=setup, rounds=3, iterations=1)
 
         # Verify all skills were indexed
         # (verification happens outside benchmark timing)
@@ -142,7 +143,7 @@ class TestIndexingPerformance:
                 engine.index_skill(skill)
 
         # Run benchmark with setup (fewer rounds due to time)
-        result = benchmark.pedantic(index_skills, setup=setup, rounds=2, iterations=1)
+        benchmark.pedantic(index_skills, setup=setup, rounds=2, iterations=1)
 
     @pytest.mark.slow
     def test_index_10000_skills_large_scale(
@@ -196,7 +197,7 @@ class TestIndexingPerformance:
                 engine.index_skill(skill)
 
         # Run benchmark with single round due to time
-        result = benchmark.pedantic(index_skills, setup=setup, rounds=1, iterations=1)
+        benchmark.pedantic(index_skills, setup=setup, rounds=1, iterations=1)
 
     def test_reindex_all_performance(
         self, benchmark, benchmark_storage_path: Path, benchmark_skills_100: list[Skill]
@@ -225,7 +226,6 @@ class TestIndexingPerformance:
             }
 
             # Mock discover_skills to return our benchmark skills
-            original_discover = skill_manager.discover_skills
             skill_manager.discover_skills = lambda: benchmark_skills_100
 
             engine = IndexingEngine(
@@ -241,7 +241,7 @@ class TestIndexingPerformance:
             engine = engine_tuple[0]
             engine.reindex_all(force=True)
 
-        result = benchmark.pedantic(reindex_all, setup=setup, rounds=3, iterations=1)
+        benchmark.pedantic(reindex_all, setup=setup, rounds=3, iterations=1)
 
 
 class TestSearchPerformance:
@@ -279,7 +279,7 @@ class TestSearchPerformance:
             return results
 
         # Run many iterations to get accurate percentile measurements
-        result = benchmark(search_query)
+        benchmark(search_query)
 
         # Benchmark automatically tracks min, max, mean, median, stddev
 
@@ -306,7 +306,7 @@ class TestSearchPerformance:
             )
             return results
 
-        result = benchmark(search_query)
+        benchmark(search_query)
 
     def test_graph_search_latency(
         self, benchmark, indexed_engine_100: IndexingEngine
@@ -331,7 +331,7 @@ class TestSearchPerformance:
             results = indexed_engine_100._graph_search(seed_id, max_depth=2)
             return results
 
-        result = benchmark(graph_search)
+        benchmark(graph_search)
 
     def test_hybrid_search_end_to_end(
         self, benchmark, indexed_engine_100: IndexingEngine
@@ -356,7 +356,7 @@ class TestSearchPerformance:
             )
             return results
 
-        result = benchmark(hybrid_search)
+        benchmark(hybrid_search)
 
     def test_search_with_filters(self, benchmark, indexed_engine_100: IndexingEngine):
         """Benchmark search with category and toolchain filters.
@@ -382,7 +382,7 @@ class TestSearchPerformance:
             )
             return results
 
-        result = benchmark(filtered_search)
+        benchmark(filtered_search)
 
     def test_related_skills_traversal(
         self, benchmark, indexed_engine_100: IndexingEngine
@@ -407,7 +407,7 @@ class TestSearchPerformance:
             )
             return results
 
-        result = benchmark(get_related)
+        benchmark(get_related)
 
 
 class TestDatabasePerformance:
@@ -442,7 +442,7 @@ class TestDatabasePerformance:
             repo = metadata_store_100.get_repository(repo_id)
             return repo
 
-        result = benchmark(lookup_repository)
+        benchmark(lookup_repository)
 
     def test_list_all_repositories(
         self, benchmark, metadata_store_100: MetadataStore
@@ -465,7 +465,7 @@ class TestDatabasePerformance:
             repos = metadata_store_100.list_repositories()
             return list(repos)
 
-        result = benchmark(list_all)
+        benchmark(list_all)
 
     def test_update_repository_metadata(
         self, benchmark, metadata_store_100: MetadataStore
@@ -490,7 +490,7 @@ class TestDatabasePerformance:
                 repo.skill_count = 42
                 metadata_store_100.update_repository(repo)
 
-        result = benchmark(update_repo)
+        benchmark(update_repo)
 
     def test_list_1000_repositories(
         self, benchmark, metadata_store_1000: MetadataStore
@@ -513,7 +513,7 @@ class TestDatabasePerformance:
             repos = metadata_store_1000.list_repositories()
             return list(repos)
 
-        result = benchmark(list_all)
+        benchmark(list_all)
 
     def test_batch_insert_performance(
         self, benchmark, benchmark_storage_path: Path
@@ -530,8 +530,7 @@ class TestDatabasePerformance:
             benchmark: pytest-benchmark fixture
             benchmark_storage_path: Temporary storage path
         """
-        import time
-        from datetime import datetime, timezone
+        from datetime import datetime
 
         from mcp_skills.models.repository import Repository
 
@@ -554,14 +553,14 @@ class TestDatabasePerformance:
                     / "repos"
                     / f"repo-{(offset + i):06d}",
                     priority=50 + (i % 50),
-                    last_updated=datetime(2024, 1, 1, 12, 0, 0, tzinfo=timezone.utc),
+                    last_updated=datetime(2024, 1, 1, 12, 0, 0, tzinfo=UTC),
                     skill_count=10 + (i % 20),
                     license="MIT",
                 )
                 store.add_repository(repo)
             round_counter[0] += 1
 
-        result = benchmark(batch_insert)
+        benchmark(batch_insert)
 
 
 class TestMemoryUsage:
@@ -625,6 +624,6 @@ class TestMemoryUsage:
                 if i % 100 == 0:
                     gc.collect()  # Force collection to get accurate reading
 
-        result = benchmark.pedantic(
+        benchmark.pedantic(
             index_with_memory_tracking, setup=setup, rounds=1, iterations=1
         )

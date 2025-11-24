@@ -3,9 +3,8 @@
 import logging
 import re
 import shutil
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Optional
 from urllib.parse import urlparse
 
 import git
@@ -43,7 +42,7 @@ class RepositoryManager:
         },
     ]
 
-    def __init__(self, base_dir: Optional[Path] = None) -> None:
+    def __init__(self, base_dir: Path | None = None) -> None:
         """Initialize repository manager.
 
         Args:
@@ -142,7 +141,7 @@ class RepositoryManager:
             url=url,
             local_path=local_path,
             priority=priority,
-            last_updated=datetime.now(timezone.utc),
+            last_updated=datetime.now(UTC),
             skill_count=skill_count,
             license=license,
         )
@@ -199,7 +198,7 @@ class RepositoryManager:
         logger.info(f"Rescanned {repo_id}: {skill_count} skills found")
 
         # 4. Update metadata
-        repository.last_updated = datetime.now(timezone.utc)
+        repository.last_updated = datetime.now(UTC)
         repository.skill_count = skill_count
 
         # 5. Save updated metadata to SQLite
@@ -269,7 +268,7 @@ class RepositoryManager:
         # and ChromaDB integration (Task 5) in later phases
         self.metadata_store.delete_repository(repo_id)
 
-    def get_repository(self, repo_id: str) -> Optional[Repository]:
+    def get_repository(self, repo_id: str) -> Repository | None:
         """Get repository by ID.
 
         Args:
@@ -321,10 +320,7 @@ class RepositoryManager:
             return ":" in url
 
         # Git protocol URLs
-        if url.startswith("git://"):
-            return True
-
-        return False
+        return bool(url.startswith("git://"))
 
     def _generate_repo_id(self, url: str) -> str:
         """Generate repository ID from URL.
@@ -357,11 +353,10 @@ class RepositoryManager:
             clean_url = clean_url[:-4]
 
         # Handle SSH URLs (git@host:path)
-        if url.startswith("git@"):
+        if url.startswith("git@") and ":" in clean_url:
             # Extract path after colon
-            if ":" in clean_url:
-                path = clean_url.split(":", 1)[1]
-                return path.strip("/")
+            path = clean_url.split(":", 1)[1]
+            return path.strip("/")
 
         # Handle HTTPS/HTTP/Git URLs
         try:

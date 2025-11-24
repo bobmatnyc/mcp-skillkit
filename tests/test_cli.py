@@ -1,7 +1,6 @@
 """Tests for CLI commands."""
 
 from click.testing import CliRunner
-import pytest
 
 from mcp_skills.cli.main import cli
 

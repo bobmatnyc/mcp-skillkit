@@ -78,7 +78,7 @@ class TestPythonProjectAutoDetect:
         recommendations = result["recommendations"]
         if len(recommendations) > 0:
             # Should recommend Python-related skills
-            skill_names = [r["name"] for r in recommendations]
+            [r["name"] for r in recommendations]
             skill_tags = [tag for r in recommendations for tag in r["tags"]]
 
             # At least some skills should have python tag
