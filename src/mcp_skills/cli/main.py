@@ -1,5 +1,8 @@
 """Main CLI entry point for mcp-skillkit."""
 
+from __future__ import annotations
+
+import builtins
 import logging
 from pathlib import Path
 
@@ -12,14 +15,18 @@ from rich.tree import Tree
 
 from mcp_skills import __version__
 from mcp_skills.models.config import MCPSkillsConfig
+from mcp_skills.models.repository import Repository
 from mcp_skills.services.indexing import IndexingEngine
-from mcp_skills.services.repository_manager import RepositoryManager
+from mcp_skills.services.repository_manager import RepoConfig, RepositoryManager
 from mcp_skills.services.skill_manager import SkillManager
 from mcp_skills.services.toolchain_detector import ToolchainDetector
 
 
 console = Console()
 logger = logging.getLogger(__name__)
+
+# Store builtin list to avoid shadowing in annotations
+ListType = builtins.list
 
 
 @click.group()
@@ -103,7 +110,7 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
                 )
 
         # Clone repositories
-        added_repos = []
+        added_repos: ListType[Repository] = []
         for repo_config in repos_to_add:
             try:
                 # Check if already exists
@@ -117,13 +124,13 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
                     added_repos.append(existing)
                 else:
                     console.print(f"  + Cloning: {repo_config['url']}")
-                    repo = repo_manager.add_repository(
+                    new_repo = repo_manager.add_repository(
                         url=repo_config["url"],
                         priority=repo_config["priority"],
-                        license=repo_config.get("license", "Unknown"),
+                        license=repo_config["license"],
                     )
-                    added_repos.append(repo)
-                    console.print(f"    ✓ Cloned {repo.skill_count} skills")
+                    added_repos.append(new_repo)
+                    console.print(f"    ✓ Cloned {new_repo.skill_count} skills")
             except Exception as e:
                 console.print(
                     f"    [red]✗ Failed to clone {repo_config['url']}: {e}[/red]"
@@ -202,7 +209,9 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
             console.print(
                 "  2. Search skills: [cyan]mcp-skillkit search 'python testing'[/cyan]"
             )
-            console.print("  3. Get recommendations: [cyan]mcp-skillkit recommend[/cyan]")
+            console.print(
+                "  3. Get recommendations: [cyan]mcp-skillkit recommend[/cyan]"
+            )
         else:
             console.print(
                 "[bold yellow]⚠ Setup completed with warnings[/bold yellow]\n"

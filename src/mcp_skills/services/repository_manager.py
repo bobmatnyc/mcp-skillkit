@@ -5,6 +5,7 @@ import re
 import shutil
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import TypedDict
 from urllib.parse import urlparse
 
 import git
@@ -16,6 +17,14 @@ from mcp_skills.services.metadata_store import MetadataStore
 logger = logging.getLogger(__name__)
 
 
+class RepoConfig(TypedDict):
+    """Type definition for repository configuration."""
+
+    url: str
+    priority: int
+    license: str
+
+
 class RepositoryManager:
     """Manage git-based skills repositories.
 
@@ -24,7 +33,7 @@ class RepositoryManager:
     """
 
     # Default repositories to clone on setup
-    DEFAULT_REPOS = [
+    DEFAULT_REPOS: list[RepoConfig] = [
         {
             "url": "https://github.com/anthropics/skills.git",
             "priority": 100,

@@ -4,9 +4,19 @@ import json
 import logging
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TypedDict
 
 
 logger = logging.getLogger(__name__)
+
+
+class ToolchainPattern(TypedDict):
+    """Type definition for toolchain detection patterns."""
+
+    files: list[str]
+    dirs: list[str]
+    configs: list[str]
+    priority: float
 
 
 @dataclass
@@ -40,7 +50,7 @@ class ToolchainDetector:
     """
 
     # Detection patterns for common toolchains
-    TOOLCHAIN_PATTERNS = {
+    TOOLCHAIN_PATTERNS: dict[str, ToolchainPattern] = {
         "Python": {
             "files": ["pyproject.toml", "setup.py", "requirements.txt", "Pipfile"],
             "dirs": ["venv", ".venv", "__pycache__"],
@@ -539,7 +549,7 @@ class ToolchainDetector:
         Returns:
             List of detected JS/TS framework names
         """
-        frameworks = []
+        frameworks: list[str] = []
         package_json = project_dir / "package.json"
 
         if not package_json.exists():
@@ -591,7 +601,7 @@ class ToolchainDetector:
         Returns:
             List of detected Rust framework names
         """
-        frameworks = []
+        frameworks: list[str] = []
         cargo_toml = project_dir / "Cargo.toml"
 
         if not cargo_toml.exists():
@@ -632,7 +642,7 @@ class ToolchainDetector:
         Returns:
             List of detected Go framework names
         """
-        frameworks = []
+        frameworks: list[str] = []
         go_mod = project_dir / "go.mod"
 
         if not go_mod.exists():

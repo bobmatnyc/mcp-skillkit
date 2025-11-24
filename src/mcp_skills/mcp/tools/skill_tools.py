@@ -83,7 +83,7 @@ async def search_skills(
         engine = get_indexing_engine()
 
         # Build filters
-        filters = {}
+        filters: dict[str, Any] = {}
         if toolchain:
             filters["toolchain"] = toolchain
         if category:
@@ -347,6 +347,12 @@ async def recommend_skills(
         skill_manager = get_skill_manager()
 
         # Get current skill
+        if not current_skill:
+            return {
+                "status": "error",
+                "error": "current_skill parameter is required for skill-based recommendations",
+            }
+
         base_skill = skill_manager.load_skill(current_skill)
         if not base_skill:
             return {

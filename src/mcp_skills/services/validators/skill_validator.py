@@ -2,6 +2,7 @@
 
 import logging
 import re
+from collections.abc import Callable
 from pathlib import Path
 
 import yaml
@@ -119,7 +120,7 @@ class SkillValidator:
         return {"errors": errors, "warnings": warnings}
 
     def validate_skill_with_dependencies(
-        self, skill: Skill, dependency_resolver: callable
+        self, skill: Skill, dependency_resolver: Callable[[str], Skill | None]
     ) -> dict[str, list[str]]:
         """Validate skill including dependency resolution.
 

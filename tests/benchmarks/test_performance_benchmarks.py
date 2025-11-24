@@ -85,9 +85,8 @@ class TestIndexingPerformance:
             )
             return (engine, benchmark_skills_100), {}
 
-        def index_skills(engine_and_skills, *args):
+        def index_skills(engine, skills, *args):
             """Index all skills."""
-            engine, skills = engine_and_skills
             for skill in skills:
                 engine.index_skill(skill)
 
@@ -136,9 +135,8 @@ class TestIndexingPerformance:
             )
             return (engine, benchmark_skills_1000), {}
 
-        def index_skills(engine_and_skills, *args):
+        def index_skills(engine, skills, *args):
             """Index all skills."""
-            engine, skills = engine_and_skills
             for skill in skills:
                 engine.index_skill(skill)
 
@@ -190,9 +188,8 @@ class TestIndexingPerformance:
             )
             return (engine, benchmark_skills_10000), {}
 
-        def index_skills(engine_and_skills, *args):
+        def index_skills(engine, skills, *args):
             """Index all skills."""
-            engine, skills = engine_and_skills
             for skill in skills:
                 engine.index_skill(skill)
 
@@ -236,9 +233,8 @@ class TestIndexingPerformance:
             )
             return (engine,), {}
 
-        def reindex_all(engine_tuple, *args):
+        def reindex_all(engine, *args):
             """Reindex all skills."""
-            engine = engine_tuple[0]
             engine.reindex_all(force=True)
 
         benchmark.pedantic(reindex_all, setup=setup, rounds=3, iterations=1)
@@ -603,10 +599,8 @@ class TestMemoryUsage:
             )
             return (engine, benchmark_skills_1000), {}
 
-        def index_with_memory_tracking(engine_and_skills, *args):
+        def index_with_memory_tracking(engine, skills, *args):
             """Index and track memory."""
-            engine, skills = engine_and_skills
-
             for i, skill in enumerate(skills):
                 engine.index_skill(skill)
 

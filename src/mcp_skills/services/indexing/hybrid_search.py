@@ -259,7 +259,7 @@ class HybridSearcher:
 
     def _graph_search(
         self, seed_skill_id: str, max_depth: int = 2
-    ) -> list[dict[str, float]]:
+    ) -> list[dict[str, str | float]]:
         """Perform graph-based search.
 
         Args:

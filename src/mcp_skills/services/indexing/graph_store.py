@@ -189,7 +189,7 @@ class GraphStore:
         self,
         skill_id: str,
         max_depth: int = 2,
-    ) -> list[dict[str, float]]:
+    ) -> list[dict[str, str | float]]:
         """Find related skills via graph traversal.
 
         Uses BFS (breadth-first search) to find skills connected to
@@ -221,9 +221,9 @@ class GraphStore:
                 return []
 
             # BFS traversal from seed node
-            visited_nodes = set()
-            queue = [(skill_id, 0)]  # (node_id, depth)
-            graph_results = []
+            visited_nodes: set[str] = set()
+            queue: list[tuple[str, int]] = [(skill_id, 0)]  # (node_id, depth)
+            graph_results: list[dict[str, str | float]] = []
 
             while queue:
                 current_id, depth = queue.pop(0)

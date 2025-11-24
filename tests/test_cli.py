@@ -35,7 +35,7 @@ class TestCLI:
     def test_serve_command(self) -> None:
         """Test serve command runs."""
         runner = CliRunner()
-        result = runner.invoke(cli, ["serve", "--dev"])
+        result = runner.invoke(cli, ["mcp", "--dev"])
 
         assert result.exit_code == 0
         assert "Starting MCP server" in result.output
