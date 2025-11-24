@@ -228,6 +228,49 @@ mcp-skills health                   # Health check
 mcp-skills stats                    # Usage statistics
 ```
 
+## Shell Completions
+
+Enable tab completion for the `mcp-skills` command to speed up your workflow:
+
+### Quick Install
+
+**Bash** (requires Bash 4.4+):
+```bash
+eval "$(_MCP_SKILLS_COMPLETE=bash_source mcp-skills)" >> ~/.bashrc
+source ~/.bashrc
+```
+
+**Zsh** (macOS default):
+```zsh
+eval "$(_MCP_SKILLS_COMPLETE=zsh_source mcp-skills)" >> ~/.zshrc
+source ~/.zshrc
+```
+
+**Fish**:
+```fish
+echo 'eval (env _MCP_SKILLS_COMPLETE=fish_source mcp-skills)' >> ~/.config/fish/config.fish
+source ~/.config/fish/config.fish
+```
+
+### Features
+
+- ✅ Complete all commands and subcommands
+- ✅ Complete option flags (`--help`, `--limit`, etc.)
+- ✅ Works with `mcp-skills`, `mcp-skills repo`, and all other commands
+
+### Verification
+
+Test completions are working:
+```bash
+mcp-skills <TAB>        # Shows: config health index info list mcp recommend repo search setup stats
+mcp-skills repo <TAB>   # Shows: add list update
+mcp-skills search --<TAB>  # Shows: --category --help --limit
+```
+
+### Documentation
+
+For detailed installation instructions, troubleshooting, and advanced usage, see [docs/SHELL_COMPLETIONS.md](docs/SHELL_COMPLETIONS.md).
+
 ## MCP Tools
 
 mcp-skills exposes these tools to code assistants:

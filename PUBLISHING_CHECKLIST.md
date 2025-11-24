@@ -52,7 +52,7 @@ twine upload --repository testpypi dist/*
 # Test installation in clean environment
 python3 -m venv test-env
 source test-env/bin/activate
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ mcp-skills
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ mcp-skillkit
 
 # Verify functionality
 mcp-skills --version
@@ -118,7 +118,8 @@ git push origin main
 
 ### Metadata Verification
 
-- **Name**: mcp-skills
+- **Name**: mcp-skillkit (package name on PyPI)
+- **CLI Command**: mcp-skills (command line interface)
 - **Version**: 0.1.0
 - **Homepage**: https://github.com/bobmatnyc/mcp-skills
 - **Repository**: https://github.com/bobmatnyc/mcp-skills.git

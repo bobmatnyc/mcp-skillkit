@@ -106,8 +106,14 @@ Detailed research covering:
 
 ### Installing mcp-skills
 ```bash
+# Recommended: Use pipx for CLI applications
+pipx install mcp-skillkit
+
+# Alternative: Use pip
 pip install mcp-skillkit
 ```
+
+**Note**: Package name is `mcp-skillkit`, CLI command is `mcp-skills`
 
 ### Initial Setup
 ```bash
