@@ -1,12 +1,12 @@
-#compdef mcp-skillkit
+#compdef mcp-skillset
 
-_mcp_skillkit_completion() {
+_mcp_skillset_completion() {
     local -a completions
     local -a completions_with_descriptions
     local -a response
-    (( ! $+commands[mcp-skillkit] )) && return 1
+    (( ! $+commands[mcp-skillset] )) && return 1
 
-    response=("${(@f)$(env COMP_WORDS="${words[*]}" COMP_CWORD=$((CURRENT-1)) _MCP_SKILLKIT_COMPLETE=zsh_complete mcp-skillkit)}")
+    response=("${(@f)$(env COMP_WORDS="${words[*]}" COMP_CWORD=$((CURRENT-1)) _MCP_SKILLKIT_COMPLETE=zsh_complete mcp-skillset)}")
 
     for type key descr in ${response}; do
         if [[ "$type" == "plain" ]]; then
@@ -33,9 +33,9 @@ _mcp_skillkit_completion() {
 
 if [[ $zsh_eval_context[-1] == loadautofunc ]]; then
     # autoload from fpath, call function directly
-    _mcp_skillkit_completion "$@"
+    _mcp_skillset_completion "$@"
 else
     # eval/source/. command, register function for later
-    compdef _mcp_skillkit_completion mcp-skillkit
+    compdef _mcp_skillset_completion mcp-skillset
 fi
 

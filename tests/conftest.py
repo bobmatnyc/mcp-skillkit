@@ -1,4 +1,4 @@
-"""Pytest configuration and fixtures for mcp-skillkit tests."""
+"""Pytest configuration and fixtures for mcp-skillset tests."""
 
 from collections.abc import Generator
 from pathlib import Path

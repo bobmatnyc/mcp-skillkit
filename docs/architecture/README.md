@@ -1,6 +1,6 @@
 # MCP-Skills Architecture Design
 
-**Project**: mcp-skillkit - Standalone Python PyPI app for vector + KG RAG skills service via MCP
+**Project**: mcp-skillset - Standalone Python PyPI app for vector + KG RAG skills service via MCP
 **Author**: Research Agent
 **Date**: 2025-11-21
 **Status**: Architecture Design Document
@@ -9,15 +9,15 @@
 
 ## Executive Summary
 
-**mcp-skillkit** is a standalone Python application that provides dynamic, context-aware skills to code assistants via the Model Context Protocol (MCP). Unlike Claude Code's static skills (loaded at startup), mcp-skillkit uses hybrid RAG (vector + knowledge graph) to enable runtime skill discovery, intelligent recommendations, and dynamic loading based on project context.
+**mcp-skillset** is a standalone Python application that provides dynamic, context-aware skills to code assistants via the Model Context Protocol (MCP). Unlike Claude Code's static skills (loaded at startup), mcp-skillset uses hybrid RAG (vector + knowledge graph) to enable runtime skill discovery, intelligent recommendations, and dynamic loading based on project context.
 
 **Key Differentiators**:
 - **Dynamic**: Skills loaded on-demand, not at startup
 - **Intelligent**: Toolchain detection auto-recommends relevant skills
 - **Hybrid RAG**: Vector similarity + KG relationships for better discovery
-- **Zero Config**: `mcp-skillkit setup` handles everything automatically
+- **Zero Config**: `mcp-skillset setup` handles everything automatically
 - **Multi-Source**: Pulls skills from multiple git repositories
-- **PyPI Installable**: `pip install mcp-skillkit` in any codebase
+- **PyPI Installable**: `pip install mcp-skillset` in any codebase
 
 ---
 
@@ -49,7 +49,7 @@
            ↓                 ↓                  ↓
 ╔══════════════════╗  ╔═══════════════╗  ╔════════════════════════════╗
 ║   Vector Store   ║  ║  Graph Store  ║  ║   Skills Repository        ║
-║   (Chroma/Qdrant)║  ║  (NetworkX/   ║  ║   (~/.mcp-skillkit/repos/)   ║
+║   (Chroma/Qdrant)║  ║  (NetworkX/   ║  ║   (~/.mcp-skillset/repos/)   ║
 ║                  ║  ║   Neo4j Lite) ║  ║   - anthropics/skills      ║
 ║   Embeddings:    ║  ║               ║  ║   - obra/superpowers       ║
 ║   - Skill desc   ║  ║   Relations:  ║  ║   - custom repos           ║
@@ -60,7 +60,7 @@
 
 DATA FLOW:
 ──────────
-1. Setup:    mcp-skillkit setup → Detect toolchain → Pull skills → Index
+1. Setup:    mcp-skillset setup → Detect toolchain → Pull skills → Index
 2. Query:    Assistant request → MCP → Skill search (vector+KG) → Load skill
 3. Execution: Skill instructions → Assistant → Execute → Return result
 ```
@@ -539,17 +539,17 @@ rich = ">=13.0.0"  # CLI formatting
 
 ---
 
-## Setup Workflow: `mcp-skillkit setup`
+## Setup Workflow: `mcp-skillset setup`
 
 **Goal**: Zero-config setup that handles everything automatically
 
 ### Phase 1: Environment Detection
 ```bash
-mcp-skillkit setup
+mcp-skillset setup
 ```
 
 **Actions**:
-1. Check if `~/.mcp-skillkit/` exists, create if not
+1. Check if `~/.mcp-skillset/` exists, create if not
 2. Detect current project directory
 3. Run toolchain detection
 4. Display detected toolchain and ask for confirmation
@@ -570,7 +570,7 @@ Continue with setup? [Y/n]
 
 ### Phase 2: Repository Cloning
 **Actions**:
-1. Clone default repositories to `~/.mcp-skillkit/repos/`
+1. Clone default repositories to `~/.mcp-skillset/repos/`
 2. Show progress for each repository
 3. Validate repository structure
 
@@ -615,24 +615,24 @@ Index size: 12.3 MB
 ⚙️  Configuring MCP integration...
   ✓ Detected Claude Code
   ✓ Updated MCP configuration
-  ✓ Server configured at: ~/.mcp-skillkit/server
+  ✓ Server configured at: ~/.mcp-skillset/server
 
 🚀 Setup complete! Start the server:
-  mcp-skillkit serve
+  mcp-skillset serve
 
 Or test the integration:
-  mcp-skillkit test-connection
+  mcp-skillset test-connection
 ```
 
 **Auto-Generated MCP Config**:
 ```json
 {
   "mcpServers": {
-    "mcp-skillkit": {
-      "command": "mcp-skillkit",
+    "mcp-skillset": {
+      "command": "mcp-skillset",
       "args": ["serve"],
       "env": {
-        "MCP_SKILLS_DIR": "${HOME}/.mcp-skillkit",
+        "MCP_SKILLS_DIR": "${HOME}/.mcp-skillset",
         "MCP_SKILLS_LOG_LEVEL": "info"
       }
     }
@@ -666,13 +666,13 @@ Try it out:
 
 ```bash
 # Start server (stdio mode for Claude Code)
-mcp-skillkit serve
+mcp-skillset serve
 
 # Start with HTTP transport (for web clients)
-mcp-skillkit serve --transport http --port 8000
+mcp-skillset serve --transport http --port 8000
 
 # Start in development mode (auto-reload)
-mcp-skillkit serve --dev
+mcp-skillset serve --dev
 ```
 
 ### Available MCP Tools
@@ -791,7 +791,7 @@ Claude: "I've detected this is a Python/Flask project. I've loaded
 | **Discovery** | Manual browsing | Vector + KG search |
 | **Context Aware** | No | Yes (toolchain detection) |
 | **Updates** | Manual reinstall | Auto-update via git pull |
-| **Storage** | `~/.claude/skills/` | `~/.mcp-skillkit/` |
+| **Storage** | `~/.claude/skills/` | `~/.mcp-skillset/` |
 | **Distribution** | Git clone | PyPI package |
 | **Recommendations** | None | AI-powered based on context |
 | **Multi-Project** | Global only | Per-project + global |
@@ -835,13 +835,13 @@ class SkillAnalytics:
 ### 2. Custom Skill Templates
 ```bash
 # Generate new skill from template
-mcp-skillkit create-skill --name my-custom-skill --category testing
+mcp-skillset create-skill --name my-custom-skill --category testing
 
 # Validate custom skill
-mcp-skillkit validate-skill ./my-skill/SKILL.md
+mcp-skillset validate-skill ./my-skill/SKILL.md
 
 # Publish to personal repo
-mcp-skillkit publish-skill --repo https://github.com/user/my-skills.git
+mcp-skillset publish-skill --repo https://github.com/user/my-skills.git
 ```
 
 ### 3. Skill Dependencies
@@ -858,7 +858,7 @@ auto_load_dependencies: true
 ### 4. Multi-Tenant Support
 ```python
 # Per-project skill overrides
-~/.mcp-skillkit/
+~/.mcp-skillset/
   repos/          # Global skills
   projects/
     project-a/
@@ -919,7 +919,7 @@ class SkillHooks:
 ## Project Structure
 
 ```
-mcp-skillkit/
+mcp-skillset/
 ├── src/
 │   └── mcp_skills/
 │       ├── __init__.py
@@ -978,7 +978,7 @@ mcp-skillkit/
 
 ## Configuration
 
-### User Configuration (`~/.mcp-skillkit/config.yaml`)
+### User Configuration (`~/.mcp-skillset/config.yaml`)
 ```yaml
 # Default repositories
 repositories:
@@ -998,7 +998,7 @@ vector_store:
 # Knowledge graph settings
 knowledge_graph:
   backend: networkx  # or neo4j
-  persist_path: ~/.mcp-skillkit/graph.pkl
+  persist_path: ~/.mcp-skillset/graph.pkl
 
 # Server settings
 server:
@@ -1018,7 +1018,7 @@ performance:
   lazy_load_threshold: 100  # KB
 ```
 
-### Project Configuration (`.mcp-skillkit.yaml`)
+### Project Configuration (`.mcp-skillset.yaml`)
 ```yaml
 # Project-specific overrides
 project:
@@ -1194,7 +1194,7 @@ logger.info("Loaded skill", extra={
 ### Health Checks
 ```bash
 # Server health
-mcp-skillkit doctor
+mcp-skillset doctor
 
 # Output:
 # ✓ Vector store: OK (75 skills)
@@ -1209,26 +1209,26 @@ mcp-skillkit doctor
 
 ### 1. Local Installation (Recommended for Solo Developers)
 ```bash
-pip install mcp-skillkit
-mcp-skillkit setup
-mcp-skillkit serve
+pip install mcp-skillset
+mcp-skillset setup
+mcp-skillset serve
 ```
 
 ### 2. Docker Container (Recommended for Teams)
 ```dockerfile
 FROM python:3.11-slim
-RUN pip install mcp-skillkit
+RUN pip install mcp-skillset
 EXPOSE 8000
-CMD ["mcp-skillkit", "serve", "--transport", "http", "--port", "8000"]
+CMD ["mcp-skillset", "serve", "--transport", "http", "--port", "8000"]
 ```
 
 ```bash
-docker run -p 8000:8000 -v ~/.mcp-skillkit:/root/.mcp-skillkit mcp-skillkit
+docker run -p 8000:8000 -v ~/.mcp-skillset:/root/.mcp-skillset mcp-skillset
 ```
 
 ### 3. System Service (Linux/macOS)
 ```ini
-# /etc/systemd/system/mcp-skillkit.service
+# /etc/systemd/system/mcp-skillset.service
 [Unit]
 Description=MCP Skills Server
 After=network.target
@@ -1236,7 +1236,7 @@ After=network.target
 [Service]
 Type=simple
 User=username
-ExecStart=/usr/local/bin/mcp-skillkit serve
+ExecStart=/usr/local/bin/mcp-skillset serve
 Restart=on-failure
 
 [Install]
@@ -1249,53 +1249,53 @@ WantedBy=multi-user.target
 
 ```bash
 # Setup
-mcp-skillkit setup                    # Interactive setup wizard
-mcp-skillkit setup --auto             # Non-interactive with defaults
+mcp-skillset setup                    # Interactive setup wizard
+mcp-skillset setup --auto             # Non-interactive with defaults
 
 # Server
-mcp-skillkit serve                    # Start stdio server
-mcp-skillkit serve --http             # Start HTTP server
-mcp-skillkit serve --port 8001        # Custom port
-mcp-skillkit serve --dev              # Development mode (auto-reload)
+mcp-skillset serve                    # Start stdio server
+mcp-skillset serve --http             # Start HTTP server
+mcp-skillset serve --port 8001        # Custom port
+mcp-skillset serve --dev              # Development mode (auto-reload)
 
 # Skills Management
-mcp-skillkit search "testing"         # Search skills
-mcp-skillkit list                     # List all skills
-mcp-skillkit info pytest-skill        # Show skill details
-mcp-skillkit recommend                # Get recommendations for current project
+mcp-skillset search "testing"         # Search skills
+mcp-skillset list                     # List all skills
+mcp-skillset info pytest-skill        # Show skill details
+mcp-skillset recommend                # Get recommendations for current project
 
 # Repositories
-mcp-skillkit repo add <url>           # Add repository
-mcp-skillkit repo list                # List repositories
-mcp-skillkit repo update [repo-id]    # Update repositories
-mcp-skillkit repo remove <repo-id>    # Remove repository
+mcp-skillset repo add <url>           # Add repository
+mcp-skillset repo list                # List repositories
+mcp-skillset repo update [repo-id]    # Update repositories
+mcp-skillset repo remove <repo-id>    # Remove repository
 
 # Indexing
-mcp-skillkit index                    # Rebuild indices
-mcp-skillkit index --incremental      # Index only new/changed skills
+mcp-skillset index                    # Rebuild indices
+mcp-skillset index --incremental      # Index only new/changed skills
 
 # Utilities
-mcp-skillkit doctor                   # System health check
-mcp-skillkit stats                    # Usage statistics
-mcp-skillkit validate <skill-path>    # Validate skill
-mcp-skillkit config                   # Show configuration
+mcp-skillset doctor                   # System health check
+mcp-skillset stats                    # Usage statistics
+mcp-skillset validate <skill-path>    # Validate skill
+mcp-skillset config                   # Show configuration
 
 # Development
-mcp-skillkit create-skill             # Create new skill from template
-mcp-skillkit test-connection          # Test MCP connection
+mcp-skillset create-skill             # Create new skill from template
+mcp-skillset test-connection          # Test MCP connection
 ```
 
 ---
 
 ## Summary
 
-**mcp-skillkit** provides a production-ready, intelligent skills service that transforms how code assistants discover and use skills:
+**mcp-skillset** provides a production-ready, intelligent skills service that transforms how code assistants discover and use skills:
 
 **Key Innovations**:
 1. **Dynamic Loading**: Skills loaded on-demand, not at startup
 2. **Hybrid RAG**: Vector similarity + knowledge graph for better discovery
 3. **Toolchain Awareness**: Auto-detects project tech stack
-4. **Zero Config**: `mcp-skillkit setup` handles everything
+4. **Zero Config**: `mcp-skillset setup` handles everything
 5. **Multi-Source**: Pulls from multiple git repositories
 6. **MCP Native**: First-class MCP protocol integration
 
@@ -1325,7 +1325,7 @@ mcp-skillkit test-connection          # Test MCP connection
 
 ## Related Documentation
 
-- **[Skills Repository Resources](../skills/RESOURCES.md)** - Comprehensive index of skill repositories compatible with mcp-skillkit
+- **[Skills Repository Resources](../skills/RESOURCES.md)** - Comprehensive index of skill repositories compatible with mcp-skillset
 - **[Skills Research](../research/skills-research.md)** - Detailed research on 69+ skills and repositories
 - **[README](../../README.md)** - Quick start guide and installation instructions
 - **[CONTRIBUTING](../../CONTRIBUTING.md)** - Development workflow and contribution guidelines

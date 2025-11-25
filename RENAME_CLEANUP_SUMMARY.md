@@ -1,18 +1,18 @@
-# Complete mcp-skills → mcp-skillkit Rename Cleanup
+# Complete mcp-skills → mcp-skillset Rename Cleanup
 
 ## Summary
-Successfully removed ALL remaining "mcp-skills" references from the codebase, updating them to "mcp-skillkit" for consistency.
+Successfully removed ALL remaining "mcp-skills" references from the codebase, updating them to "mcp-skillset" for consistency.
 
 ## Files Changed: 34 files
 
 ### 1. Configuration Files (3 files)
 - ✅ `.gitignore` - Updated comment and directory paths
-  - `~/.mcp-skills/` → `~/.mcp-skillkit/`
-  - `.mcp-skills.yaml` → `.mcp-skillkit.yaml`
-  - Comment: "MCP Skills specific" → "MCP SkillKit specific"
+  - `~/.mcp-skills/` → `~/.mcp-skillset/`
+  - `.mcp-skills.yaml` → `.mcp-skillset.yaml`
+  - Comment: "MCP Skills specific" → "MCP SkillSet specific"
 
 - ✅ `.claude/mcp.local.json` - Updated project paths
-  - `/Users/masa/Projects/mcp-skills` → `/Users/masa/Projects/mcp-skillkit`
+  - `/Users/masa/Projects/mcp-skills` → `/Users/masa/Projects/mcp-skillset`
 
 - ✅ `VERIFICATION_COMMANDS.md` - Updated verification commands
 
@@ -21,8 +21,8 @@ Successfully removed ALL remaining "mcp-skills" references from the codebase, up
 - ✅ `src/mcp_skills/cli/main.py` - Updated docstring
 - ✅ `src/mcp_skills/mcp/__init__.py` - Updated docstring
 - ✅ `src/mcp_skills/mcp/server.py` - Updated docstring, FastMCP name, and log messages
-  - `FastMCP("mcp-skills")` → `FastMCP("mcp-skillkit")`
-  - `"Configured mcp-skills services"` → `"Configured mcp-skillkit services"`
+  - `FastMCP("mcp-skills")` → `FastMCP("mcp-skillset")`
+  - `"Configured mcp-skills services"` → `"Configured mcp-skillset services"`
 - ✅ `src/mcp_skills/mcp/tools/__init__.py` - Updated docstring
 - ✅ `src/mcp_skills/models/__init__.py` - Updated docstring
 - ✅ `src/mcp_skills/models/config.py` - Updated docstring and field descriptions
@@ -41,21 +41,21 @@ Successfully removed ALL remaining "mcp-skills" references from the codebase, up
 **Unit Tests:**
 - ✅ `tests/test_cli.py` - Updated assertion message
 - ✅ `tests/test_mcp_server.py` - Updated temp directory paths
-  - `tmp_path / "mcp-skills"` → `tmp_path / "mcp-skillkit"`
-  - `tmp_path / ".mcp-skills"` → `tmp_path / ".mcp-skillkit"`
+  - `tmp_path / "mcp-skills"` → `tmp_path / "mcp-skillset"`
+  - `tmp_path / ".mcp-skills"` → `tmp_path / ".mcp-skillset"`
 - ✅ `tests/test_skill_manager.py` - Updated default directory path
-  - `Path.home() / ".mcp-skills" / "repos"` → `Path.home() / ".mcp-skillkit" / "repos"`
+  - `Path.home() / ".mcp-skills" / "repos"` → `Path.home() / ".mcp-skillset" / "repos"`
 - ✅ `tests/test_hybrid_search_config.py` - Updated config directory paths (3 occurrences)
-  - `yaml_path.parent / ".mcp-skills"` → `yaml_path.parent / ".mcp-skillkit"`
+  - `yaml_path.parent / ".mcp-skills"` → `yaml_path.parent / ".mcp-skillset"`
 
 **E2E Tests:**
 - ✅ `tests/e2e/__init__.py` - Updated docstring
 - ✅ `tests/e2e/conftest.py` - Updated comments and temp directory paths
-  - `"mcp-skills-e2e"` → `"mcp-skillkit-e2e"`
+  - `"mcp-skills-e2e"` → `"mcp-skillset-e2e"`
   - Sample app descriptions updated
 - ✅ `tests/e2e/README.md` - Updated all CLI command references (28 occurrences)
-  - `mcp-skills setup` → `mcp-skillkit setup`
-  - `mcp-skills search` → `mcp-skillkit search`
+  - `mcp-skills setup` → `mcp-skillset setup`
+  - `mcp-skills search` → `mcp-skillset search`
   - All other commands updated
 - ✅ `tests/e2e/TEST_RESULTS.md` - Updated all CLI command references (50 occurrences)
 - ✅ `tests/e2e/test_cli_commands.py` - Updated CLI command references (46 occurrences)
@@ -65,9 +65,9 @@ Successfully removed ALL remaining "mcp-skills" references from the codebase, up
 
 ### 5. Other Files (2 files)
 - ✅ `test_mcp_comparison.py` - Updated all CLI command references (18 occurrences)
-  - Directory paths: `.mcp-skills` → `.mcp-skillkit`
-  - CLI commands: `mcp-skills` → `mcp-skillkit`
-  - Dev script: `./mcp-skills-dev` → `./mcp-skillkit-dev`
+  - Directory paths: `.mcp-skills` → `.mcp-skillset`
+  - CLI commands: `mcp-skills` → `mcp-skillset`
+  - Dev script: `./mcp-skills-dev` → `./mcp-skillset-dev`
 
 ## Verification Results
 
@@ -104,10 +104,10 @@ grep -r "mcp-skills" \
 ## Change Categories
 
 ### 1. Docstrings (13 changes)
-All module docstrings updated from "mcp-skills" to "mcp-skillkit"
+All module docstrings updated from "mcp-skills" to "mcp-skillset"
 
 ### 2. Path References (8 changes)
-- `.mcp-skills/` → `.mcp-skillkit/` in configs and tests
+- `.mcp-skills/` → `.mcp-skillset/` in configs and tests
 - Project directory paths updated in configurations
 
 ### 3. CLI Commands (142+ changes)
@@ -116,7 +116,7 @@ All module docstrings updated from "mcp-skills" to "mcp-skillkit"
 - All CLI invocations
 
 ### 4. Server Names (1 change)
-- FastMCP server name: `"mcp-skills"` → `"mcp-skillkit"`
+- FastMCP server name: `"mcp-skills"` → `"mcp-skillset"`
 
 ### 5. Log Messages (1 change)
 - Service configuration log message updated
@@ -130,29 +130,29 @@ All module docstrings updated from "mcp-skills" to "mcp-skillkit"
 
 2. **Verify CLI Commands:**
    ```bash
-   mcp-skillkit --help
-   mcp-skillkit setup --help
-   mcp-skillkit search --help
+   mcp-skillset --help
+   mcp-skillset setup --help
+   mcp-skillset search --help
    ```
 
 3. **Check MCP Server:**
    ```bash
-   mcp-skillkit mcp serve
+   mcp-skillset mcp serve
    ```
 
 4. **Verify Completions:**
    ```bash
    ls -la completions/
-   # Should see: mcp-skillkit-completion.{bash,zsh,fish}
+   # Should see: mcp-skillset-completion.{bash,zsh,fish}
    ```
 
 ## Success Criteria - ALL MET ✅
 
 - ✅ ZERO references to "mcp-skills" in entire codebase (excluding git history)
-- ✅ All paths use `.mcp-skillkit`
-- ✅ All commands use `mcp-skillkit`
-- ✅ All documentation uses "mcp-skillkit"
-- ✅ FastMCP server name is "mcp-skillkit"
+- ✅ All paths use `.mcp-skillset`
+- ✅ All commands use `mcp-skillset`
+- ✅ All documentation uses "mcp-skillset"
+- ✅ FastMCP server name is "mcp-skillset"
 - ✅ All test files updated
 - ✅ All source code updated
 - ✅ Configuration files updated
@@ -169,4 +169,4 @@ All module docstrings updated from "mcp-skills" to "mcp-skillkit"
 **Other:** 2 files
 **Total:** 34 files changed
 
-**Lines Changed:** ~180 occurrences of "mcp-skills" → "mcp-skillkit"
+**Lines Changed:** ~180 occurrences of "mcp-skills" → "mcp-skillset"

@@ -50,7 +50,7 @@ Query: "database python" | Query: "python testing"
 [✅] CLI flags work correctly for all 4 presets
 [✅] All 4 presets produce different results
 [✅] Weight validation rejects invalid configurations
-[✅] Config file loading from ~/.mcp-skillkit/config.yaml works
+[✅] Config file loading from ~/.mcp-skillset/config.yaml works
 [✅] CLI override takes precedence over config file
 [✅] No regressions in existing functionality
 
@@ -123,7 +123,7 @@ The feature is production-ready and meets all quality standards.
 ================================================================================
 
 Full report available at:
-  /Users/masa/Projects/mcp-skillkit/QA_TEST_REPORT_1M-148.md
+  /Users/masa/Projects/mcp-skillset/QA_TEST_REPORT_1M-148.md
 
 Test evidence files:
   - /tmp/test_validation.py (validation test script)

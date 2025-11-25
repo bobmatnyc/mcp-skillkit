@@ -1,4 +1,4 @@
-"""Service layer for mcp-skillkit core functionality."""
+"""Service layer for mcp-skillset core functionality."""
 
 from mcp_skills.models.repository import Repository
 from mcp_skills.services.indexing import IndexingEngine

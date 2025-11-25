@@ -96,7 +96,7 @@ pytest tests/test_indexing_engine.py -v --no-cov
 
 **Command:**
 ```bash
-./mcp-skillkit-dev search "python testing" --limit 3
+./mcp-skillset-dev search "python testing" --limit 3
 ```
 
 **Results:** ✅ PASSED
@@ -108,7 +108,7 @@ pytest tests/test_indexing_engine.py -v --no-cov
 
 **Command:**
 ```bash
-./mcp-skillkit-dev search "python testing" --search-mode semantic_focused --limit 3
+./mcp-skillset-dev search "python testing" --search-mode semantic_focused --limit 3
 ```
 
 **Results:** ✅ PASSED
@@ -123,7 +123,7 @@ Scores: 0.59, 0.55, 0.54
 
 **Command:**
 ```bash
-./mcp-skillkit-dev search "python testing" --search-mode graph_focused --limit 3
+./mcp-skillset-dev search "python testing" --search-mode graph_focused --limit 3
 ```
 
 **Results:** ✅ PASSED
@@ -138,7 +138,7 @@ Scores: 0.20, 0.18, 0.18
 
 **Command:**
 ```bash
-./mcp-skillkit-dev search "python testing" --search-mode balanced --limit 3
+./mcp-skillset-dev search "python testing" --search-mode balanced --limit 3
 ```
 
 **Results:** ✅ PASSED
@@ -153,7 +153,7 @@ Scores: 0.33, 0.30, 0.30
 
 **Command:**
 ```bash
-./mcp-skillkit-dev search "python testing" --search-mode current --limit 3
+./mcp-skillset-dev search "python testing" --search-mode current --limit 3
 ```
 
 **Results:** ✅ PASSED
@@ -176,7 +176,7 @@ Scores: 0.46, 0.42, 0.42
 
 ### 4a. YAML Config Loading
 
-**Test Config File:** `~/.mcp-skillkit/config.yaml`
+**Test Config File:** `~/.mcp-skillset/config.yaml`
 ```yaml
 hybrid_search:
   preset: semantic_focused
@@ -184,7 +184,7 @@ hybrid_search:
 
 **Command:**
 ```bash
-./mcp-skillkit-dev search "python" --limit 3
+./mcp-skillset-dev search "python" --limit 3
 ```
 
 **Results:** ✅ PASSED
@@ -196,7 +196,7 @@ hybrid_search:
 
 **Command:**
 ```bash
-./mcp-skillkit-dev search "python" --search-mode balanced --limit 3
+./mcp-skillset-dev search "python" --search-mode balanced --limit 3
 ```
 (With config file still set to semantic_focused)
 
@@ -359,7 +359,7 @@ pytest tests/ -v --no-cov --ignore=tests/benchmarks --ignore=tests/e2e/test_mcp_
 - Platform: macOS Darwin 25.1.0
 - Python: 3.13.7
 - pytest: 9.0.1
-- Project: /Users/masa/Projects/mcp-skillkit
+- Project: /Users/masa/Projects/mcp-skillset
 
 **Test Duration:**
 - Unit tests: 2.01s

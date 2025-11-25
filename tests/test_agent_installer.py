@@ -136,8 +136,8 @@ class TestAgentInstaller:
             config = json.load(f)
 
         assert "mcpServers" in config
-        assert "mcp-skillkit" in config["mcpServers"]
-        assert config["mcpServers"]["mcp-skillkit"]["command"] == "mcp-skillkit"
+        assert "mcp-skillset" in config["mcpServers"]
+        assert config["mcpServers"]["mcp-skillset"]["command"] == "mcp-skillset"
 
     def test_install_with_existing_config(self, installer, temp_agent):
         """Test installation updates existing config."""
@@ -165,7 +165,7 @@ class TestAgentInstaller:
 
         assert config["someOtherSetting"] == "value"
         assert "other-server" in config["mcpServers"]
-        assert "mcp-skillkit" in config["mcpServers"]
+        assert "mcp-skillset" in config["mcpServers"]
 
     def test_install_creates_backup(self, installer, temp_agent):
         """Test that installation creates backup of existing config."""
@@ -187,11 +187,11 @@ class TestAgentInstaller:
         assert backup_config == existing_config
 
     def test_install_refuses_duplicate_without_force(self, installer, temp_agent):
-        """Test installation fails if mcp-skillkit already exists without --force."""
-        # Create config with existing mcp-skillkit
+        """Test installation fails if mcp-skillset already exists without --force."""
+        # Create config with existing mcp-skillset
         existing_config = {
             "mcpServers": {
-                "mcp-skillkit": {
+                "mcp-skillset": {
                     "command": "old-command",
                     "args": ["old"],
                 }
@@ -207,11 +207,11 @@ class TestAgentInstaller:
         assert "already installed" in result.error
 
     def test_install_overwrites_with_force(self, installer, temp_agent):
-        """Test installation overwrites existing mcp-skillkit with --force."""
-        # Create config with existing mcp-skillkit
+        """Test installation overwrites existing mcp-skillset with --force."""
+        # Create config with existing mcp-skillset
         existing_config = {
             "mcpServers": {
-                "mcp-skillkit": {
+                "mcp-skillset": {
                     "command": "old-command",
                     "args": ["old"],
                 }
@@ -229,8 +229,8 @@ class TestAgentInstaller:
         with open(result.config_path) as f:
             config = json.load(f)
 
-        assert config["mcpServers"]["mcp-skillkit"]["command"] == "mcp-skillkit"
-        assert config["mcpServers"]["mcp-skillkit"]["args"] == ["mcp"]
+        assert config["mcpServers"]["mcp-skillset"]["command"] == "mcp-skillset"
+        assert config["mcpServers"]["mcp-skillset"]["args"] == ["mcp"]
 
     def test_install_dry_run_no_changes(self, installer, temp_agent):
         """Test dry run mode doesn't modify files."""
@@ -273,8 +273,8 @@ class TestAgentInstaller:
         # Valid config
         valid_config = {
             "mcpServers": {
-                "mcp-skillkit": {
-                    "command": "mcp-skillkit",
+                "mcp-skillset": {
+                    "command": "mcp-skillset",
                     "args": ["mcp"],
                     "env": {},
                 }
@@ -290,15 +290,15 @@ class TestAgentInstaller:
         invalid_config = {"mcpServers": "not a dict"}
         assert not installer._validate_config(invalid_config)
 
-        # Missing mcp-skillkit
+        # Missing mcp-skillset
         invalid_config = {"mcpServers": {"other": {}}}
         assert not installer._validate_config(invalid_config)
 
-        # Invalid mcp-skillkit structure
+        # Invalid mcp-skillset structure
         invalid_config = {
             "mcpServers": {
-                "mcp-skillkit": {
-                    "command": "mcp-skillkit",
+                "mcp-skillset": {
+                    "command": "mcp-skillset",
                     # Missing 'args'
                 }
             }
@@ -349,11 +349,11 @@ class TestAgentInstaller:
         """Test change description for existing config."""
         existing = {"mcpServers": {"other": {}}}
         description = installer._describe_changes(existing)
-        assert "add" in description.lower() or "mcp-skillkit" in description.lower()
+        assert "add" in description.lower() or "mcp-skillset" in description.lower()
 
     def test_describe_changes_update_existing(self, installer, temp_agent):
-        """Test change description when updating existing mcp-skillkit."""
-        existing = {"mcpServers": {"mcp-skillkit": {"command": "old"}}}
+        """Test change description when updating existing mcp-skillset."""
+        existing = {"mcpServers": {"mcp-skillset": {"command": "old"}}}
         description = installer._describe_changes(existing)
         assert "update" in description.lower()
 
@@ -404,7 +404,7 @@ class TestInstallResult:
             agent_id="test-agent",
             config_path=Path("/test/path"),
             backup_path=Path("/test/backup"),
-            changes_made="Added mcp-skillkit",
+            changes_made="Added mcp-skillset",
         )
 
         assert result.success

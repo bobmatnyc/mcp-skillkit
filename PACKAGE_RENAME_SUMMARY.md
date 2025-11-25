@@ -1,30 +1,30 @@
-# Package Name Revert: mcp-skills → mcp-skillkit
+# Package Name Revert: mcp-skills → mcp-skillset
 
 ## Summary
 
-Successfully reverted package name from `mcp-skills` (taken on PyPI) to `mcp-skillkit` (already published) and updated CLI command to match for consistency.
+Successfully reverted package name from `mcp-skills` (taken on PyPI) to `mcp-skillset` (already published) and updated CLI command to match for consistency.
 
 ## Changes Made
 
 ### 1. Core Package Configuration
 
 **File: `pyproject.toml`**
-- ✅ Package name: `mcp-skills` → `mcp-skillkit`
-- ✅ CLI entry point: `mcp-skills` → `mcp-skillkit`
-- ✅ Project URLs: Updated GitHub URLs to `mcp-skillkit`
-- ✅ Completion data files: Updated paths to `mcp-skillkit-completion.*`
+- ✅ Package name: `mcp-skills` → `mcp-skillset`
+- ✅ CLI entry point: `mcp-skills` → `mcp-skillset`
+- ✅ Project URLs: Updated GitHub URLs to `mcp-skillset`
+- ✅ Completion data files: Updated paths to `mcp-skillset-completion.*`
 
 ### 2. Documentation
 
 **File: `README.md`**
-- ✅ Title: `mcp-skills` → `mcp-skillkit`
-- ✅ Badges: Updated PyPI badge URLs to `mcp-skillkit`
-- ✅ All command examples: `mcp-skills` → `mcp-skillkit` (75 replacements)
-- ✅ Installation: `pipx install mcp-skillkit`
-- ✅ Development script: `mcp-skillkit-dev`
+- ✅ Title: `mcp-skills` → `mcp-skillset`
+- ✅ Badges: Updated PyPI badge URLs to `mcp-skillset`
+- ✅ All command examples: `mcp-skills` → `mcp-skillset` (75 replacements)
+- ✅ Installation: `pipx install mcp-skillset`
+- ✅ Development script: `mcp-skillset-dev`
 
 **File: `docs/SHELL_COMPLETIONS.md`**
-- ✅ All CLI references updated to `mcp-skillkit`
+- ✅ All CLI references updated to `mcp-skillset`
 - ✅ Completion environment variable: `_MCP_SKILLKIT_COMPLETE`
 - ✅ All command examples and instructions updated
 
@@ -39,11 +39,11 @@ Successfully reverted package name from `mcp-skills` (taken on PyPI) to `mcp-ski
 ### 3. Build & Development
 
 **File: `MANIFEST.in`**
-- ✅ Configuration example reference: `.mcp-skillkit.yaml.example`
+- ✅ Configuration example reference: `.mcp-skillset.yaml.example`
 
 **File: `Makefile`**
-- ✅ Project name: `mcp-skills` → `mcp-skillkit`
-- ✅ All CLI commands: `mcp-skills` → `mcp-skillkit`
+- ✅ Project name: `mcp-skills` → `mcp-skillset`
+- ✅ All CLI commands: `mcp-skills` → `mcp-skillset`
 
 **File: `config.yaml.example`**
 - ✅ All CLI references updated
@@ -51,31 +51,31 @@ Successfully reverted package name from `mcp-skills` (taken on PyPI) to `mcp-ski
 ### 4. Scripts
 
 **File: `scripts/generate_completions.sh`**
-- ✅ Command references: `mcp-skills` → `mcp-skillkit`
+- ✅ Command references: `mcp-skills` → `mcp-skillset`
 - ✅ Environment variable: `_MCP_SKILLKIT_COMPLETE`
-- ✅ Completion file names: `mcp-skillkit-completion.*`
+- ✅ Completion file names: `mcp-skillset-completion.*`
 
-**File: `mcp-skills-dev` → `mcp-skillkit-dev`**
+**File: `mcp-skills-dev` → `mcp-skillset-dev`**
 - ✅ Renamed development script
 - ✅ Internal references updated
 
 ### 5. Shell Completions
 
 **Generated Files:**
-- ✅ `completions/mcp-skillkit-completion.bash` (30 lines)
-- ✅ `completions/mcp-skillkit-completion.zsh` (41 lines)
-- ✅ `completions/mcp-skillkit-completion.fish` (18 lines)
+- ✅ `completions/mcp-skillset-completion.bash` (30 lines)
+- ✅ `completions/mcp-skillset-completion.zsh` (41 lines)
+- ✅ `completions/mcp-skillset-completion.fish` (18 lines)
 - ✅ Old `mcp-skills-completion.*` files removed
 
 **Environment Variables:**
-- Bash: `_MCP_SKILLKIT_COMPLETE=bash_source mcp-skillkit`
-- Zsh: `_MCP_SKILLKIT_COMPLETE=zsh_source mcp-skillkit`
-- Fish: `_MCP_SKILLKIT_COMPLETE=fish_source mcp-skillkit`
+- Bash: `_MCP_SKILLKIT_COMPLETE=bash_source mcp-skillset`
+- Zsh: `_MCP_SKILLKIT_COMPLETE=zsh_source mcp-skillset`
+- Fish: `_MCP_SKILLKIT_COMPLETE=fish_source mcp-skillset`
 
 ### 6. Source Code
 
 **File: `src/mcp_skills/cli/main.py`**
-- ✅ Setup message: "Starting mcp-skillkit setup..."
+- ✅ Setup message: "Starting mcp-skillset setup..."
 
 **Note:** Data directory `.mcp-skills` remains unchanged (intentional - it's the user data directory, not the package name).
 
@@ -88,7 +88,7 @@ Successfully reverted package name from `mcp-skills` (taken on PyPI) to `mcp-ski
 pip uninstall mcp-skills
 
 # Install new version
-pipx install mcp-skillkit
+pipx install mcp-skillset
 
 # Or from source
 pip install -e .
@@ -97,29 +97,29 @@ pip install -e .
 ### Verify Installation
 
 ```bash
-which mcp-skillkit
-mcp-skillkit --version
-mcp-skillkit --help
+which mcp-skillset
+mcp-skillset --version
+mcp-skillset --help
 ```
 
 ### Command Examples
 
 ```bash
 # Setup
-mcp-skillkit setup
+mcp-skillset setup
 
 # Search skills
-mcp-skillkit search "python testing"
+mcp-skillset search "python testing"
 
 # Start MCP server
-mcp-skillkit serve
+mcp-skillset serve
 
 # Repository management
-mcp-skillkit repo add <url>
-mcp-skillkit repo list
+mcp-skillset repo add <url>
+mcp-skillset repo list
 
 # Index management
-mcp-skillkit index
+mcp-skillset index
 ```
 
 ## Shell Completions
@@ -127,19 +127,19 @@ mcp-skillkit index
 ### Bash
 
 ```bash
-eval "$(_MCP_SKILLKIT_COMPLETE=bash_source mcp-skillkit)" >> ~/.bashrc
+eval "$(_MCP_SKILLKIT_COMPLETE=bash_source mcp-skillset)" >> ~/.bashrc
 ```
 
 ### Zsh
 
 ```bash
-eval "$(_MCP_SKILLKIT_COMPLETE=zsh_source mcp-skillkit)" >> ~/.zshrc
+eval "$(_MCP_SKILLKIT_COMPLETE=zsh_source mcp-skillset)" >> ~/.zshrc
 ```
 
 ### Fish
 
 ```bash
-echo 'eval (env _MCP_SKILLKIT_COMPLETE=fish_source mcp-skillkit)' >> ~/.config/fish/config.fish
+echo 'eval (env _MCP_SKILLKIT_COMPLETE=fish_source mcp-skillset)' >> ~/.config/fish/config.fish
 ```
 
 ## Testing
@@ -149,13 +149,13 @@ echo 'eval (env _MCP_SKILLKIT_COMPLETE=fish_source mcp-skillkit)' >> ~/.config/f
 pytest tests/
 
 # Test CLI directly
-mcp-skillkit setup --help
-mcp-skillkit search --help
+mcp-skillset setup --help
+mcp-skillset search --help
 ```
 
 ## Publishing
 
-When publishing to PyPI, the package will be named `mcp-skillkit`:
+When publishing to PyPI, the package will be named `mcp-skillset`:
 
 ```bash
 # Build
@@ -172,8 +172,8 @@ twine upload dist/*
 - CLI: `mcp-skills`
 
 ### After (Current)
-- Package: `mcp-skillkit` (already published ✅)
-- CLI: `mcp-skillkit` (now matches package name ✅)
+- Package: `mcp-skillset` (already published ✅)
+- CLI: `mcp-skillset` (now matches package name ✅)
 - Data directory: `.mcp-skills` (unchanged - intentional)
 
 ## Files Modified Summary
@@ -190,9 +190,9 @@ twine upload dist/*
 
 ## Verification Checklist
 
-- ✅ Package installs as `mcp-skillkit`
-- ✅ CLI command is `mcp-skillkit`
-- ✅ Shell completions work with `mcp-skillkit`
+- ✅ Package installs as `mcp-skillset`
+- ✅ CLI command is `mcp-skillset`
+- ✅ Shell completions work with `mcp-skillset`
 - ✅ All documentation references updated
 - ✅ PyPI badges point to correct package
 - ✅ Development script renamed and works
@@ -204,14 +204,14 @@ twine upload dist/*
 
 2. **Completion Generation:** Use `./scripts/generate_completions.sh` to regenerate completions after CLI changes.
 
-3. **PyPI Publication:** Package is already published as `mcp-skillkit` on PyPI, so this revert aligns with the published name.
+3. **PyPI Publication:** Package is already published as `mcp-skillset` on PyPI, so this revert aligns with the published name.
 
-4. **Consistency:** Package name and CLI command now match (`mcp-skillkit`), improving user experience.
+4. **Consistency:** Package name and CLI command now match (`mcp-skillset`), improving user experience.
 
 ## Next Steps
 
-1. Test installation: `pipx install mcp-skillkit`
-2. Verify all commands work: `mcp-skillkit --help`
+1. Test installation: `pipx install mcp-skillset`
+2. Verify all commands work: `mcp-skillset --help`
 3. Test shell completions
 4. Update any external references (CI/CD, documentation sites, etc.)
 5. Announce name change if already in use

@@ -29,7 +29,7 @@ class TestConfigMenu:
         Returns:
             Temporary config file path
         """
-        config_dir = tmp_path / ".mcp-skillkit"
+        config_dir = tmp_path / ".mcp-skillset"
         config_dir.mkdir(parents=True, exist_ok=True)
         return config_dir / "config.yaml"
 
@@ -385,7 +385,7 @@ class TestConfigCommandFlags:
         Returns:
             Temporary config file path
         """
-        config_dir = tmp_path / ".mcp-skillkit"
+        config_dir = tmp_path / ".mcp-skillset"
         config_dir.mkdir(parents=True, exist_ok=True)
         return config_dir / "config.yaml"
 

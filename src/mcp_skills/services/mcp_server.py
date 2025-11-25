@@ -37,7 +37,7 @@ class MCPSkillsServer:
         self.config = config or {}
 
         # Configure services using default paths
-        base_dir = Path.home() / ".mcp-skillkit"
+        base_dir = Path.home() / ".mcp-skillset"
         configure_services(base_dir=base_dir)
 
     async def start(self, transport: str = "stdio") -> None:

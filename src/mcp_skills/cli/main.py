@@ -1,4 +1,4 @@
-"""Main CLI entry point for mcp-skillkit."""
+"""Main CLI entry point for mcp-skillset."""
 
 from __future__ import annotations
 
@@ -33,7 +33,7 @@ ListType = builtins.list
 
 
 @click.group()
-@click.version_option(version=__version__, prog_name="mcp-skillkit")
+@click.version_option(version=__version__, prog_name="mcp-skillset")
 def cli() -> None:
     """MCP Skills - Dynamic RAG-powered skills for code assistants.
 
@@ -52,13 +52,13 @@ def cli() -> None:
 )
 @click.option(
     "--config",
-    default="~/.mcp-skillkit/config.yaml",
+    default="~/.mcp-skillset/config.yaml",
     type=click.Path(),
     help="Config file location",
 )
 @click.option("--auto", is_flag=True, help="Non-interactive setup with defaults")
 def setup(project_dir: str, config: str, auto: bool) -> None:
-    """Auto-configure mcp-skillkit for your project.
+    """Auto-configure mcp-skillset for your project.
 
     This command will:
     1. Detect your project's toolchain
@@ -67,7 +67,7 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
     4. Configure MCP server
     5. Validate setup
     """
-    console.print("🚀 [bold green]Starting mcp-skillkit setup...[/bold green]")
+    console.print("🚀 [bold green]Starting mcp-skillset setup...[/bold green]")
     console.print(f"📁 Project directory: {project_dir}")
     console.print(f"⚙️  Config location: {config}\n")
 
@@ -109,7 +109,7 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
             else:
                 repos_to_add = []
                 console.print(
-                    "  [dim]You can add repositories later with: mcp-skillkit repo add <url>[/dim]"
+                    "  [dim]You can add repositories later with: mcp-skillset repo add <url>[/dim]"
                 )
 
         # Clone repositories
@@ -142,7 +142,7 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
 
         if not added_repos:
             console.print(
-                "\n  [yellow]No repositories configured. Add some with: mcp-skillkit repo add <url>[/yellow]"
+                "\n  [yellow]No repositories configured. Add some with: mcp-skillset repo add <url>[/yellow]"
             )
 
         console.print()
@@ -173,7 +173,7 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
 
         # 4. MCP configuration
         console.print("[bold cyan]Step 4/5:[/bold cyan] Configuring MCP server...")
-        base_dir = Path.home() / ".mcp-skillkit"
+        base_dir = Path.home() / ".mcp-skillset"
         console.print(f"  ✓ Base directory: {base_dir}")
         console.print(f"  ✓ ChromaDB: {base_dir / 'chromadb'}")
         console.print(f"  ✓ Repositories: {base_dir / 'repos'}\n")
@@ -208,12 +208,12 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
         if validation_ok:
             console.print("[bold green]✓ Setup complete![/bold green]\n")
             console.print("Next steps:")
-            console.print("  1. Start MCP server: [cyan]mcp-skillkit mcp[/cyan]")
+            console.print("  1. Start MCP server: [cyan]mcp-skillset mcp[/cyan]")
             console.print(
-                "  2. Search skills: [cyan]mcp-skillkit search 'python testing'[/cyan]"
+                "  2. Search skills: [cyan]mcp-skillset search 'python testing'[/cyan]"
             )
             console.print(
-                "  3. Get recommendations: [cyan]mcp-skillkit recommend[/cyan]"
+                "  3. Get recommendations: [cyan]mcp-skillset recommend[/cyan]"
             )
         else:
             console.print(
@@ -247,30 +247,30 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
 @click.option(
     "--force",
     is_flag=True,
-    help="Overwrite existing mcp-skillkit configuration",
+    help="Overwrite existing mcp-skillset configuration",
 )
 def install(agent: str, dry_run: bool, force: bool) -> None:
-    """Install MCP SkillKit for AI agents with auto-detection.
+    """Install MCP SkillSet for AI agents with auto-detection.
 
     Automatically detects installed AI agents (Claude Desktop, Claude Code, Auggie)
-    and configures them to use mcp-skillkit as an MCP server.
+    and configures them to use mcp-skillset as an MCP server.
 
     The command will:
     1. Scan for installed AI agents on your system
     2. Backup existing configuration files
-    3. Add mcp-skillkit to the agent's MCP server configuration
+    3. Add mcp-skillset to the agent's MCP server configuration
     4. Validate the changes
 
     Use --dry-run to preview changes without modifying files.
-    Use --force to overwrite existing mcp-skillkit configuration.
+    Use --force to overwrite existing mcp-skillset configuration.
 
     Examples:
-        mcp-skillkit install                    # Install for all detected agents
-        mcp-skillkit install --agent claude-desktop  # Install for specific agent
-        mcp-skillkit install --dry-run          # Preview changes
-        mcp-skillkit install --force            # Overwrite existing config
+        mcp-skillset install                    # Install for all detected agents
+        mcp-skillset install --agent claude-desktop  # Install for specific agent
+        mcp-skillset install --dry-run          # Preview changes
+        mcp-skillset install --force            # Overwrite existing config
     """
-    console.print("🔍 [bold green]MCP SkillKit Agent Installer[/bold green]\n")
+    console.print("🔍 [bold green]MCP SkillSet Agent Installer[/bold green]\n")
 
     if dry_run:
         console.print("[yellow]DRY RUN MODE - No changes will be made[/yellow]\n")
@@ -325,7 +325,7 @@ def install(agent: str, dry_run: bool, force: bool) -> None:
             not force
             and not dry_run
             and not click.confirm(
-                f"Install mcp-skillkit for {len(found_agents)} agent(s)?",
+                f"Install mcp-skillset for {len(found_agents)} agent(s)?",
                 default=True,
             )
         ):
@@ -333,7 +333,7 @@ def install(agent: str, dry_run: bool, force: bool) -> None:
             return
 
         # Install for each agent
-        console.print("[bold cyan]Step 2/3:[/bold cyan] Installing mcp-skillkit...")
+        console.print("[bold cyan]Step 2/3:[/bold cyan] Installing mcp-skillset...")
         installer = AgentInstaller()
         results = []
 
@@ -372,7 +372,7 @@ def install(agent: str, dry_run: bool, force: bool) -> None:
             console.print("[bold green]✓ Installation complete![/bold green]\n")
             console.print("Next steps:")
             console.print("  1. Restart your AI agent to load the new configuration")
-            console.print("  2. The agent will automatically connect to mcp-skillkit")
+            console.print("  2. The agent will automatically connect to mcp-skillset")
             console.print("  3. Skills will be available through MCP tools\n")
             console.print(
                 "[dim]Note: If using Claude Desktop, quit and restart the app completely.[/dim]"
@@ -399,7 +399,7 @@ def mcp(dev: bool) -> None:
     available to Claude Code via Model Context Protocol.
 
     Usage:
-        mcp-skillkit mcp
+        mcp-skillset mcp
 
     The server will run in stdio mode and communicate with Claude Code.
     """
@@ -453,7 +453,7 @@ def search(
 ) -> None:
     """Search for skills using natural language query.
 
-    Example: mcp-skillkit search "testing skills for Python"
+    Example: mcp-skillset search "testing skills for Python"
 
     Search Modes:
       - semantic_focused: Optimize for semantic similarity (90% vector, 10% graph)
@@ -495,7 +495,7 @@ def search(
             console.print("\nTry:")
             console.print("  • Using different keywords")
             console.print("  • Removing category filter")
-            console.print("  • Running: mcp-skillkit index --force")
+            console.print("  • Running: mcp-skillset index --force")
             return
 
         # Display results in table
@@ -520,7 +520,7 @@ def search(
             )
 
         console.print(table)
-        console.print("\n[dim]Use 'mcp-skillkit info <skill-id>' for details[/dim]")
+        console.print("\n[dim]Use 'mcp-skillset info <skill-id>' for details[/dim]")
 
     except Exception as e:
         console.print(f"[red]Search failed: {e}[/red]")
@@ -595,7 +595,7 @@ def list(category: str | None, compact: bool) -> None:
 
             console.print(table)
 
-        console.print("\n[dim]Use 'mcp-skillkit info <skill-id>' for details[/dim]")
+        console.print("\n[dim]Use 'mcp-skillset info <skill-id>' for details[/dim]")
 
     except Exception as e:
         console.print(f"[red]List failed: {e}[/red]")
@@ -608,7 +608,7 @@ def list(category: str | None, compact: bool) -> None:
 def info(skill_id: str) -> None:
     """Show detailed information about a skill.
 
-    Example: mcp-skillkit info pytest-skill
+    Example: mcp-skillset info pytest-skill
     """
     console.print(f"ℹ️  [bold]Skill Information:[/bold] {skill_id}\n")
 
@@ -622,8 +622,8 @@ def info(skill_id: str) -> None:
         if not skill:
             console.print(f"[red]Skill not found: {skill_id}[/red]")
             console.print("\nTry:")
-            console.print("  • mcp-skillkit list - to see all available skills")
-            console.print("  • mcp-skillkit search <query> - to search for skills")
+            console.print("  • mcp-skillset list - to see all available skills")
+            console.print("  • mcp-skillset search <query> - to search for skills")
             return
 
         # Metadata panel
@@ -767,9 +767,9 @@ def recommend(search_mode: str | None) -> None:
         if not results:
             console.print("[yellow]No recommendations available[/yellow]")
             console.print("\nTry:")
-            console.print("  • Running: mcp-skillkit setup")
-            console.print("  • Adding repositories: mcp-skillkit repo add <url>")
-            console.print("  • Rebuilding index: mcp-skillkit index --force")
+            console.print("  • Running: mcp-skillset setup")
+            console.print("  • Adding repositories: mcp-skillset repo add <url>")
+            console.print("  • Rebuilding index: mcp-skillset index --force")
             return
 
         # Display recommendations
@@ -796,7 +796,7 @@ def recommend(search_mode: str | None) -> None:
             )
 
         console.print(table)
-        console.print("\n[dim]Use 'mcp-skillkit info <skill-id>' for details[/dim]")
+        console.print("\n[dim]Use 'mcp-skillset info <skill-id>' for details[/dim]")
 
     except Exception as e:
         console.print(f"[red]Recommendations failed: {e}[/red]")
@@ -835,7 +835,7 @@ def doctor() -> None:
                 )
             else:
                 console.print(
-                    "  [yellow]⚠[/yellow] Connected but empty (run: mcp-skillkit index)"
+                    "  [yellow]⚠[/yellow] Connected but empty (run: mcp-skillset index)"
                 )
                 all_healthy = False
         except Exception as e:
@@ -853,7 +853,7 @@ def doctor() -> None:
                 )
             else:
                 console.print(
-                    "  [yellow]⚠[/yellow] Empty graph (run: mcp-skillkit index)"
+                    "  [yellow]⚠[/yellow] Empty graph (run: mcp-skillset index)"
                 )
                 all_healthy = False
         except Exception as e:
@@ -878,7 +878,7 @@ def doctor() -> None:
                 )
             else:
                 console.print(
-                    "  [yellow]⚠[/yellow] No repositories configured (run: mcp-skillkit setup)"
+                    "  [yellow]⚠[/yellow] No repositories configured (run: mcp-skillset setup)"
                 )
                 all_healthy = False
         except Exception as e:
@@ -900,7 +900,7 @@ def doctor() -> None:
                     )
                 else:
                     console.print(
-                        "  [yellow]⚠[/yellow] Never indexed (run: mcp-skillkit index)"
+                        "  [yellow]⚠[/yellow] Never indexed (run: mcp-skillset index)"
                     )
                     all_healthy = False
             else:
@@ -918,8 +918,8 @@ def doctor() -> None:
         else:
             console.print("[bold yellow]⚠ Some systems need attention[/bold yellow]")
             console.print("\nRecommended actions:")
-            console.print("  • Run: mcp-skillkit setup")
-            console.print("  • Run: mcp-skillkit index --force")
+            console.print("  • Run: mcp-skillset setup")
+            console.print("  • Run: mcp-skillset index --force")
 
     except Exception as e:
         console.print(f"\n[red]Health check failed: {e}[/red]")
@@ -1021,7 +1021,7 @@ def repo() -> None:
 def repo_add(url: str, priority: int) -> None:
     """Add a new skill repository.
 
-    Example: mcp-skillkit repo add https://github.com/user/skills.git
+    Example: mcp-skillset repo add https://github.com/user/skills.git
     """
     console.print(f"➕ [bold]Adding repository:[/bold] {url}")
     console.print(f"📊 Priority: {priority}\n")
@@ -1048,7 +1048,7 @@ def repo_add(url: str, priority: int) -> None:
 
                 # Suggest reindexing
                 console.print(
-                    "\n[dim]Tip: Run 'mcp-skillkit index' to index new skills[/dim]"
+                    "\n[dim]Tip: Run 'mcp-skillset index' to index new skills[/dim]"
                 )
 
             except ValueError as e:
@@ -1074,9 +1074,9 @@ def repo_list() -> None:
         if not repos:
             console.print("[yellow]No repositories configured[/yellow]")
             console.print("\nAdd repositories with:")
-            console.print("  mcp-skillkit repo add <url>")
+            console.print("  mcp-skillset repo add <url>")
             console.print("\nOr run setup:")
-            console.print("  mcp-skillkit setup")
+            console.print("  mcp-skillset setup")
             return
 
         # Display repositories in table
@@ -1209,7 +1209,7 @@ def repo_update(repo_id: str | None) -> None:
 
             if updated_count > 0:
                 console.print(
-                    "\n[dim]Tip: Run 'mcp-skillkit index' to reindex updated skills[/dim]"
+                    "\n[dim]Tip: Run 'mcp-skillset index' to reindex updated skills[/dim]"
                 )
 
     except Exception as e:
@@ -1274,7 +1274,7 @@ def index(incremental: bool, force: bool) -> None:
                     console.print("\n[yellow]No skills were indexed[/yellow]")
                     console.print("\nPossible reasons:")
                     console.print(
-                        "  • No repositories configured (run: mcp-skillkit setup)"
+                        "  • No repositories configured (run: mcp-skillset setup)"
                     )
                     console.print("  • Repositories are empty")
                     console.print("  • No SKILL.md files found")
@@ -1339,19 +1339,19 @@ def enrich(
     Examples:
 
         # Basic enrichment with top 3 skills
-        mcp-skillkit enrich "Create a REST API with authentication"
+        mcp-skillset enrich "Create a REST API with authentication"
 
         # Include more skills and full details
-        mcp-skillkit enrich "Write tests for user service" --max-skills 5 --detailed
+        mcp-skillset enrich "Write tests for user service" --max-skills 5 --detailed
 
         # Save to file
-        mcp-skillkit enrich "Deploy to AWS" --output prompt.md
+        mcp-skillset enrich "Deploy to AWS" --output prompt.md
 
         # Copy to clipboard
-        mcp-skillkit enrich "Optimize database queries" --copy
+        mcp-skillset enrich "Optimize database queries" --copy
 
         # Quoted prompts for complex sentences
-        mcp-skillkit enrich "Create a FastAPI endpoint that validates user input and returns JSON"
+        mcp-skillset enrich "Create a FastAPI endpoint that validates user input and returns JSON"
     """
     # Join prompt tuple into single string
     prompt_text = " ".join(prompt)
@@ -1399,7 +1399,7 @@ def enrich(
             console.print("\nSuggestions:")
             console.print("  • Use more specific technical terms")
             console.print("  • Try --threshold 0.5 for broader results")
-            console.print("  • Run: mcp-skillkit search <keywords> to test")
+            console.print("  • Run: mcp-skillset search <keywords> to test")
             return
 
         # Step 3: Enrich prompt
@@ -1476,17 +1476,17 @@ def enrich(
     help="Set configuration value (format: key=value)",
 )
 def config(show: bool, set_value: str | None) -> None:
-    """Configure mcp-skillkit settings interactively.
+    """Configure mcp-skillset settings interactively.
 
     By default, opens an interactive menu for configuration.
     Use --show to display current configuration (backward compatible).
     Use --set to change values non-interactively.
 
     Examples:
-        mcp-skillkit config                    # Interactive menu
-        mcp-skillkit config --show            # Display configuration
-        mcp-skillkit config --set base_dir=/custom/path
-        mcp-skillkit config --set search_mode=balanced
+        mcp-skillset config                    # Interactive menu
+        mcp-skillset config --show            # Display configuration
+        mcp-skillset config --set base_dir=/custom/path
+        mcp-skillset config --set search_mode=balanced
     """
     # Handle --set flag (non-interactive)
     if set_value:
@@ -1529,7 +1529,7 @@ def _display_configuration() -> None:
         base_dir = config.base_dir
 
         # Create configuration tree
-        tree = Tree("[bold cyan]mcp-skillkit Configuration[/bold cyan]")
+        tree = Tree("[bold cyan]mcp-skillset Configuration[/bold cyan]")
 
         # Base directory
         base_node = tree.add(f"📁 Base Directory: [yellow]{base_dir}[/yellow]")
@@ -1566,7 +1566,7 @@ def _display_configuration() -> None:
                     f"[green]✓[/green] Size: {stats.vector_store_size // 1024} KB"
                 )
             else:
-                vector_node.add("[dim]Empty (run: mcp-skillkit index)[/dim]")
+                vector_node.add("[dim]Empty (run: mcp-skillset index)[/dim]")
         except Exception as e:
             vector_node.add(f"[red]Error: {e}[/red]")
 
@@ -1578,7 +1578,7 @@ def _display_configuration() -> None:
                 graph_node.add(f"[green]✓[/green] {stats.graph_nodes} nodes")
                 graph_node.add(f"[green]✓[/green] {stats.graph_edges} edges")
             else:
-                graph_node.add("[dim]Empty (run: mcp-skillkit index)[/dim]")
+                graph_node.add("[dim]Empty (run: mcp-skillset index)[/dim]")
         except Exception as e:
             graph_node.add(f"[red]Error: {e}[/red]")
 
@@ -1642,7 +1642,7 @@ def _handle_set_config(set_value: str) -> None:
         value = value.strip()
 
         # Load existing config
-        config_path = Path.home() / ".mcp-skillkit" / "config.yaml"
+        config_path = Path.home() / ".mcp-skillset" / "config.yaml"
         config_path.parent.mkdir(parents=True, exist_ok=True)
 
         existing_config: dict = {}

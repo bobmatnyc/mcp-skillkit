@@ -1,4 +1,4 @@
-"""Pydantic data models for mcp-skillkit."""
+"""Pydantic data models for mcp-skillset."""
 
 from mcp_skills.models.config import MCPSkillsConfig, ServerConfig, VectorStoreConfig
 from mcp_skills.models.repository import Repository

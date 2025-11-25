@@ -361,7 +361,7 @@ class PromptEnricher:
         [Original Prompt]
 
         ---
-        Context from MCP SkillKit:
+        Context from MCP SkillSet:
 
         ## [Skill 1 Name]
         Category: [category]
@@ -379,7 +379,7 @@ class PromptEnricher:
         Returns:
             Formatted enriched prompt string with full details
         """
-        lines = [prompt, "", "---", "Context from MCP SkillKit:", ""]
+        lines = [prompt, "", "---", "Context from MCP SkillSet:", ""]
 
         for skill in skills:
             lines.append(f"## {skill.name}")

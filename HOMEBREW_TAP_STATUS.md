@@ -1,17 +1,17 @@
-# Homebrew Tap Update Status - mcp-skillkit v0.2.0
+# Homebrew Tap Update Status - mcp-skillset v0.2.0
 
 **Date**: 2025-11-24
-**Package**: mcp-skillkit v0.2.0
-**PyPI URL**: https://pypi.org/project/mcp-skillkit/0.2.0/
+**Package**: mcp-skillset v0.2.0
+**PyPI URL**: https://pypi.org/project/mcp-skillset/0.2.0/
 **Status**: NON-BLOCKING (Phase 5.5 per PM instructions)
 
 ---
 
 ## Executive Summary
 
-**Result**: Homebrew tap infrastructure DOES NOT EXIST for mcp-skillkit.
+**Result**: Homebrew tap infrastructure DOES NOT EXIST for mcp-skillset.
 
-**Impact**: This is a **NON-BLOCKING** issue per PM instructions (Phase 5.5). The PyPI release (v0.2.0) is successful and the package is installable via `pip install mcp-skillkit==0.2.0`.
+**Impact**: This is a **NON-BLOCKING** issue per PM instructions (Phase 5.5). The PyPI release (v0.2.0) is successful and the package is installable via `pip install mcp-skillset==0.2.0`.
 
 **Recommendation**: Create Homebrew tap infrastructure using the proven pattern from `claude-mpm` as a template.
 
@@ -22,14 +22,14 @@
 ### 1. Homebrew Tap Infrastructure Search
 
 **Searched Locations**:
-- `/Users/masa/Projects/mcp-skillkit/` - Project root
-- `/Users/masa/Projects/mcp-skillkit/scripts/` - Scripts directory
-- `/Users/masa/Projects/mcp-skillkit/.makefiles/` - Makefile components
+- `/Users/masa/Projects/mcp-skillset/` - Project root
+- `/Users/masa/Projects/mcp-skillset/scripts/` - Scripts directory
+- `/Users/masa/Projects/mcp-skillset/.makefiles/` - Makefile components
 - GitHub repositories under `bobmatnyc/*`
 
 **Results**:
 - ❌ No `scripts/update_homebrew_tap.sh` script found
-- ❌ No `homebrew-mcp-skillkit` repository exists on GitHub
+- ❌ No `homebrew-mcp-skillset` repository exists on GitHub
 - ❌ No Makefile targets for Homebrew tap updates
 - ❌ No GitHub Actions workflow for Homebrew automation
 
@@ -40,10 +40,10 @@
 
 ### 2. Package Information
 
-**PyPI Package**: mcp-skillkit
+**PyPI Package**: mcp-skillset
 **Version**: 0.2.0
-**Repository**: https://github.com/bobmatnyc/mcp-skillkit
-**PyPI Status**: ✅ Published successfully at https://pypi.org/project/mcp-skillkit/0.2.0/
+**Repository**: https://github.com/bobmatnyc/mcp-skillset
+**PyPI Status**: ✅ Published successfully at https://pypi.org/project/mcp-skillset/0.2.0/
 
 ### 3. Homebrew Tap Pattern Analysis
 
@@ -51,9 +51,9 @@ Based on existing taps (`homebrew-claude-mpm`, `homebrew-mcp-vector-search`, `ho
 
 1. **Repository Structure**:
    ```
-   homebrew-mcp-skillkit/
+   homebrew-mcp-skillset/
    ├── Formula/
-   │   └── mcp-skillkit.rb
+   │   └── mcp-skillset.rb
    ├── README.md
    └── scripts/
        └── generate_resources.py (optional)
@@ -62,7 +62,7 @@ Based on existing taps (`homebrew-claude-mpm`, `homebrew-mcp-vector-search`, `ho
 2. **Automation Script** (`scripts/update_homebrew_tap.sh`):
    - Wait for PyPI package availability (with retry logic)
    - Fetch SHA256 checksum from PyPI
-   - Update Formula/mcp-skillkit.rb
+   - Update Formula/mcp-skillset.rb
    - Run formula tests (brew audit)
    - Commit with conventional commit message
    - Push to tap repository
@@ -82,12 +82,12 @@ Based on existing taps (`homebrew-claude-mpm`, `homebrew-mcp-vector-search`, `ho
 
 This would involve:
 
-1. **Create Repository**: `bobmatnyc/homebrew-mcp-skillkit`
-2. **Create Formula**: `Formula/mcp-skillkit.rb` (based on PyPI package)
+1. **Create Repository**: `bobmatnyc/homebrew-mcp-skillset`
+2. **Create Formula**: `Formula/mcp-skillset.rb` (based on PyPI package)
 3. **Copy Automation Script**: Adapt `claude-mpm/scripts/update_homebrew_tap.sh`
 4. **Add Makefile Target**: Add `update-homebrew-tap` target
 5. **Initial Formula Creation**: Manually create first formula for v0.2.0
-6. **Test Installation**: `brew tap bobmatnyc/mcp-skillkit && brew install mcp-skillkit`
+6. **Test Installation**: `brew tap bobmatnyc/mcp-skillset && brew install mcp-skillset`
 
 **Estimated Time**: 30-45 minutes
 **Benefits**: Full Homebrew support for macOS users
@@ -97,7 +97,7 @@ This would involve:
 Continue with PyPI-only distribution and document pip installation:
 
 ```bash
-pip install mcp-skillkit==0.2.0
+pip install mcp-skillset==0.2.0
 ```
 
 **Current State**: This is the current distribution method
@@ -112,43 +112,43 @@ If you want to create the Homebrew tap manually:
 ### Step 1: Create Repository
 
 ```bash
-gh repo create bobmatnyc/homebrew-mcp-skillkit --public --description "Homebrew tap for mcp-skillkit - Dynamic RAG-powered skills for code assistants"
+gh repo create bobmatnyc/homebrew-mcp-skillset --public --description "Homebrew tap for mcp-skillset - Dynamic RAG-powered skills for code assistants"
 ```
 
 ### Step 2: Clone and Setup
 
 ```bash
 cd /Users/masa/Projects
-git clone https://github.com/bobmatnyc/homebrew-mcp-skillkit.git
-cd homebrew-mcp-skillkit
+git clone https://github.com/bobmatnyc/homebrew-mcp-skillset.git
+cd homebrew-mcp-skillset
 mkdir -p Formula
 ```
 
 ### Step 3: Create Initial Formula
 
-Create `Formula/mcp-skillkit.rb`:
+Create `Formula/mcp-skillset.rb`:
 
 ```ruby
 class MpcSkillkit < Formula
   include Language::Python::Virtualenv
 
   desc "Dynamic RAG-powered skills for code assistants via MCP"
-  homepage "https://github.com/bobmatnyc/mcp-skillkit"
-  url "https://files.pythonhosted.org/packages/source/m/mcp-skillkit/mcp-skillkit-0.2.0.tar.gz"
+  homepage "https://github.com/bobmatnyc/mcp-skillset"
+  url "https://files.pythonhosted.org/packages/source/m/mcp-skillset/mcp-skillset-0.2.0.tar.gz"
   sha256 "FETCH_FROM_PYPI"  # Get actual SHA256 from PyPI
   license "MIT"
 
   depends_on "python@3.11"
 
   # Add resource stanzas for dependencies here
-  # Use `pip download --no-deps mcp-skillkit==0.2.0` to get dependencies
+  # Use `pip download --no-deps mcp-skillset==0.2.0` to get dependencies
 
   def install
     virtualenv_install_with_resources
   end
 
   test do
-    system bin/"mcp-skillkit", "--version"
+    system bin/"mcp-skillset", "--version"
   end
 end
 ```
@@ -156,25 +156,25 @@ end
 ### Step 4: Fetch SHA256 from PyPI
 
 ```bash
-curl -s https://pypi.org/pypi/mcp-skillkit/0.2.0/json | \
+curl -s https://pypi.org/pypi/mcp-skillset/0.2.0/json | \
   python3 -c "import sys, json; data = json.load(sys.stdin); print([u['digests']['sha256'] for u in data['urls'] if u['packagetype'] == 'sdist'][0])"
 ```
 
 ### Step 5: Test Formula Locally
 
 ```bash
-brew install --build-from-source Formula/mcp-skillkit.rb
-brew test mcp-skillkit
-brew audit --strict Formula/mcp-skillkit.rb
+brew install --build-from-source Formula/mcp-skillset.rb
+brew test mcp-skillset
+brew audit --strict Formula/mcp-skillset.rb
 ```
 
 ### Step 6: Commit and Push
 
 ```bash
-git add Formula/mcp-skillkit.rb
-git commit -m "feat: initial formula for mcp-skillkit v0.2.0
+git add Formula/mcp-skillset.rb
+git commit -m "feat: initial formula for mcp-skillset v0.2.0
 
-🤖 Homebrew tap for mcp-skillkit
+🤖 Homebrew tap for mcp-skillset
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
 git push origin main
@@ -186,13 +186,13 @@ Copy and adapt the automation script from claude-mpm:
 
 ```bash
 cp /Users/masa/Projects/claude-mpm/scripts/update_homebrew_tap.sh \
-   /Users/masa/Projects/mcp-skillkit/scripts/update_homebrew_tap.sh
+   /Users/masa/Projects/mcp-skillset/scripts/update_homebrew_tap.sh
 ```
 
 Then edit the script to update:
-- `TAP_REPO="https://github.com/bobmatnyc/homebrew-mcp-skillkit.git"`
-- `PYPI_PACKAGE="mcp-skillkit"`
-- `FORMULA_FILE="Formula/mcp-skillkit.rb"`
+- `TAP_REPO="https://github.com/bobmatnyc/homebrew-mcp-skillset.git"`
+- `PYPI_PACKAGE="mcp-skillset"`
+- `FORMULA_FILE="Formula/mcp-skillset.rb"`
 
 ---
 
@@ -214,7 +214,7 @@ Per PM instructions (Phase 5.5):
 
 ## Conclusion
 
-**Current Status**: mcp-skillkit v0.2.0 is successfully published to PyPI and installable via pip.
+**Current Status**: mcp-skillset v0.2.0 is successfully published to PyPI and installable via pip.
 
 **Homebrew Status**: No Homebrew tap exists yet. This is a **NON-BLOCKING** issue that can be addressed in a future task.
 
@@ -227,10 +227,10 @@ Per PM instructions (Phase 5.5):
 ## Evidence
 
 **Files Checked**:
-- `/Users/masa/Projects/mcp-skillkit/Makefile` - No Homebrew targets found
-- `/Users/masa/Projects/mcp-skillkit/.makefiles/release.mk` - No Homebrew automation
-- `/Users/masa/Projects/mcp-skillkit/scripts/` - Only `generate_completions.sh` found
-- GitHub repository search - No `homebrew-mcp-skillkit` repository exists
+- `/Users/masa/Projects/mcp-skillset/Makefile` - No Homebrew targets found
+- `/Users/masa/Projects/mcp-skillset/.makefiles/release.mk` - No Homebrew automation
+- `/Users/masa/Projects/mcp-skillset/scripts/` - Only `generate_completions.sh` found
+- GitHub repository search - No `homebrew-mcp-skillset` repository exists
 
 **Reference Implementation**:
 - `/Users/masa/Projects/claude-mpm/scripts/update_homebrew_tap.sh` - Working automation script
@@ -240,13 +240,13 @@ Per PM instructions (Phase 5.5):
 
 **PyPI Verification**:
 ```bash
-curl -s https://pypi.org/pypi/mcp-skillkit/0.2.0/json | python3 -c "import sys, json; print(json.load(sys.stdin)['info']['version'])"
+curl -s https://pypi.org/pypi/mcp-skillset/0.2.0/json | python3 -c "import sys, json; print(json.load(sys.stdin)['info']['version'])"
 # Expected output: 0.2.0
 ```
 
 **Installation Verification** (Current Method):
 ```bash
-pip install mcp-skillkit==0.2.0
-mcp-skillkit --version
+pip install mcp-skillset==0.2.0
+mcp-skillset --version
 # Expected: 0.2.0
 ```

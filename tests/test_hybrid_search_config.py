@@ -115,7 +115,7 @@ class TestMCPSkillsConfigYAMLLoading:
 
         try:
             # Create mock config directory structure
-            config_dir = yaml_path.parent / ".mcp-skillkit"
+            config_dir = yaml_path.parent / ".mcp-skillset"
             config_dir.mkdir(exist_ok=True)
             config_file = config_dir / "config.yaml"
 
@@ -146,7 +146,7 @@ class TestMCPSkillsConfigYAMLLoading:
 
         try:
             # Create mock config directory structure
-            config_dir = yaml_path.parent / ".mcp-skillkit"
+            config_dir = yaml_path.parent / ".mcp-skillset"
             config_dir.mkdir(exist_ok=True)
             config_file = config_dir / "config.yaml"
 
@@ -178,7 +178,7 @@ class TestMCPSkillsConfigYAMLLoading:
 
         try:
             # Create mock config directory structure
-            config_dir = yaml_path.parent / ".mcp-skillkit"
+            config_dir = yaml_path.parent / ".mcp-skillset"
             config_dir.mkdir(exist_ok=True)
             config_file = config_dir / "config.yaml"
 

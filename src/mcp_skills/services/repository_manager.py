@@ -56,14 +56,14 @@ class RepositoryManager:
 
         Args:
             base_dir: Base directory for storing repositories.
-                     Defaults to ~/.mcp-skillkit/repos/
+                     Defaults to ~/.mcp-skillset/repos/
 
         Migration Note:
         - Automatically migrates from JSON to SQLite on first use
         - JSON file backed up as repos.json.backup after successful migration
         - SQLite database provides O(1) indexed lookups vs O(n) JSON scans
         """
-        self.base_dir = base_dir or Path.home() / ".mcp-skillkit" / "repos"
+        self.base_dir = base_dir or Path.home() / ".mcp-skillset" / "repos"
         self.base_dir.mkdir(parents=True, exist_ok=True)
         self.metadata_file = self.base_dir.parent / "repos.json"
 

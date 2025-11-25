@@ -1,5 +1,5 @@
 Shell completion is not supported for Bash versions older than 4.4.
-_mcp_skillkit_completion() {
+_mcp_skillset_completion() {
     local IFS=$'\n'
     local response
 
@@ -22,9 +22,9 @@ _mcp_skillkit_completion() {
     return 0
 }
 
-_mcp_skillkit_completion_setup() {
-    complete -o nosort -F _mcp_skillkit_completion mcp-skillkit
+_mcp_skillset_completion_setup() {
+    complete -o nosort -F _mcp_skillset_completion mcp-skillset
 }
 
-_mcp_skillkit_completion_setup;
+_mcp_skillset_completion_setup;
 

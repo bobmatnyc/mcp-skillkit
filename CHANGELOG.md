@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### Core Features
-- Initial release of mcp-skillkit - dynamic RAG-powered skills for code assistants
+- Initial release of mcp-skillset - dynamic RAG-powered skills for code assistants
 - FastMCP-based MCP server with 5 core tools for skill discovery and management
 - 11 comprehensive CLI commands for skill and repository management
 - Hybrid RAG system combining ChromaDB vector search and NetworkX knowledge graph
@@ -79,15 +79,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CLI command reference with examples
 
 ### Developer Experience
-- Zero-config setup with `mcp-skillkit setup`
+- Zero-config setup with `mcp-skillset setup`
 - Rich terminal UI with progress indicators
 - Detailed error messages and troubleshooting hints
 - Development mode with auto-reload support
 - Makefile with common development tasks
 
 ### Configuration
-- Global configuration in `~/.mcp-skillkit/config.yaml`
-- Project-local configuration with `.mcp-skillkit.yaml`
+- Global configuration in `~/.mcp-skillset/config.yaml`
+- Project-local configuration with `.mcp-skillset.yaml`
 - Environment variable overrides
 - Configurable repository priorities
 - Auto-update settings per repository
@@ -100,7 +100,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Migration Notes
 - Automatic migration from JSON to SQLite metadata storage
-- Legacy JSON files preserved as backup in `~/.mcp-skillkit/metadata.json.backup`
+- Legacy JSON files preserved as backup in `~/.mcp-skillset/metadata.json.backup`
 - No user action required for migration
 
 ## [Unreleased]
@@ -116,4 +116,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[0.1.0]: https://github.com/bobmatnyc/mcp-skillkit/releases/tag/v0.1.0
+[0.1.0]: https://github.com/bobmatnyc/mcp-skillset/releases/tag/v0.1.0

@@ -1,10 +1,10 @@
-# Shell Completions for mcp-skillkit
+# Shell Completions for mcp-skillset
 
-This guide provides detailed instructions for installing and using shell completions for the `mcp-skillkit` CLI across bash, zsh, and fish shells.
+This guide provides detailed instructions for installing and using shell completions for the `mcp-skillset` CLI across bash, zsh, and fish shells.
 
 ## Overview
 
-Shell completions enable tab completion for the `mcp-skillkit` command, making it faster and easier to:
+Shell completions enable tab completion for the `mcp-skillset` command, making it faster and easier to:
 - Discover available commands and subcommands
 - Complete option flags (e.g., `--help`, `--force`)
 - Avoid typos and syntax errors
@@ -42,7 +42,7 @@ This method evaluates the completion script every time you start a shell. It's e
 
 Add to `~/.bashrc`:
 ```bash
-eval "$(_MCP_SKILLS_COMPLETE=bash_source mcp-skillkit)"
+eval "$(_MCP_SKILLS_COMPLETE=bash_source mcp-skillset)"
 ```
 
 Then reload your shell:
@@ -54,7 +54,7 @@ source ~/.bashrc
 
 Add to `~/.zshrc`:
 ```zsh
-eval "$(_MCP_SKILLS_COMPLETE=zsh_source mcp-skillkit)"
+eval "$(_MCP_SKILLS_COMPLETE=zsh_source mcp-skillset)"
 ```
 
 Then reload your shell:
@@ -66,7 +66,7 @@ source ~/.zshrc
 
 Add to `~/.config/fish/config.fish`:
 ```fish
-eval (env _MCP_SKILLS_COMPLETE=fish_source mcp-skillkit)
+eval (env _MCP_SKILLS_COMPLETE=fish_source mcp-skillset)
 ```
 
 Then reload your shell:
@@ -84,7 +84,7 @@ This method uses pre-generated completion files for faster shell startup. The co
 
 Add to `~/.bashrc`:
 ```bash
-source /path/to/mcp-skillkit/completions/mcp-skillkit-completion.bash
+source /path/to/mcp-skillset/completions/mcp-skillset-completion.bash
 ```
 
 **Option B: Copy to system completion directory**
@@ -92,12 +92,12 @@ source /path/to/mcp-skillkit/completions/mcp-skillkit-completion.bash
 ```bash
 # For user-specific completions
 mkdir -p ~/.local/share/bash-completion/completions
-cp /path/to/mcp-skillkit/completions/mcp-skillkit-completion.bash \
-   ~/.local/share/bash-completion/completions/mcp-skillkit
+cp /path/to/mcp-skillset/completions/mcp-skillset-completion.bash \
+   ~/.local/share/bash-completion/completions/mcp-skillset
 
 # Or for system-wide completions (requires sudo)
-sudo cp /path/to/mcp-skillkit/completions/mcp-skillkit-completion.bash \
-        /etc/bash_completion.d/mcp-skillkit
+sudo cp /path/to/mcp-skillset/completions/mcp-skillset-completion.bash \
+        /etc/bash_completion.d/mcp-skillset
 ```
 
 Then reload:
@@ -111,7 +111,7 @@ source ~/.bashrc
 
 Add to `~/.zshrc`:
 ```zsh
-source /path/to/mcp-skillkit/completions/mcp-skillkit-completion.zsh
+source /path/to/mcp-skillset/completions/mcp-skillset-completion.zsh
 ```
 
 **Option B: Copy to zsh fpath**
@@ -121,8 +121,8 @@ source /path/to/mcp-skillkit/completions/mcp-skillkit-completion.zsh
 mkdir -p ~/.zsh/completion
 
 # Copy completion file
-cp /path/to/mcp-skillkit/completions/mcp-skillkit-completion.zsh \
-   ~/.zsh/completion/_mcp-skillkit
+cp /path/to/mcp-skillset/completions/mcp-skillset-completion.zsh \
+   ~/.zsh/completion/_mcp-skillset
 
 # Add to fpath in ~/.zshrc (before compinit)
 fpath=(~/.zsh/completion $fpath)
@@ -143,24 +143,24 @@ Fish automatically loads completions from `~/.config/fish/completions/`:
 mkdir -p ~/.config/fish/completions
 
 # Copy completion file
-cp /path/to/mcp-skillkit/completions/mcp-skillkit-completion.fish \
-   ~/.config/fish/completions/mcp-skillkit.fish
+cp /path/to/mcp-skillset/completions/mcp-skillset-completion.fish \
+   ~/.config/fish/completions/mcp-skillset.fish
 ```
 
 Fish will automatically load it on next shell start.
 
 ### Method 3: Install from Package
 
-If you installed `mcp-skillkit` via pip/pipx, the completion files are included in the package:
+If you installed `mcp-skillset` via pip/pipx, the completion files are included in the package:
 
 ```bash
-# Find where mcp-skillkit is installed
-pip show mcp-skillkit
+# Find where mcp-skillset is installed
+pip show mcp-skillset
 
 # Completion files are in: <site-packages>/mcp_skills/completions/
 ```
 
-Then follow Method 2 instructions above, replacing `/path/to/mcp-skillkit/completions/` with the actual package location.
+Then follow Method 2 instructions above, replacing `/path/to/mcp-skillset/completions/` with the actual package location.
 
 ## Verification
 
@@ -168,21 +168,21 @@ After installation, verify completions are working:
 
 ### Test Command Completion
 
-Type `mcp-skillkit ` and press **TAB**. You should see:
+Type `mcp-skillset ` and press **TAB**. You should see:
 ```
 config    health    index     info      list      mcp       recommend repo      search    setup     stats
 ```
 
 ### Test Subcommand Completion
 
-Type `mcp-skillkit repo ` and press **TAB**. You should see:
+Type `mcp-skillset repo ` and press **TAB**. You should see:
 ```
 add    list    update
 ```
 
 ### Test Option Completion
 
-Type `mcp-skillkit search --` and press **TAB**. You should see:
+Type `mcp-skillset search --` and press **TAB**. You should see:
 ```
 --category  --help  --limit
 ```
@@ -219,8 +219,8 @@ Type `mcp-skillkit search --` and press **TAB**. You should see:
 
 4. **Manually source the completion file**:
    ```bash
-   source /path/to/mcp-skillkit/completions/mcp-skillkit-completion.bash
-   complete -p mcp-skillkit  # Verify it's registered
+   source /path/to/mcp-skillset/completions/mcp-skillset-completion.bash
+   complete -p mcp-skillset  # Verify it's registered
    ```
 
 #### Zsh
@@ -258,12 +258,12 @@ Type `mcp-skillkit search --` and press **TAB**. You should see:
 **Solutions**:
 1. **Verify completion file is in correct location**:
    ```bash
-   ls ~/.config/fish/completions/mcp-skillkit.fish
+   ls ~/.config/fish/completions/mcp-skillset.fish
    ```
 
 2. **Test completion function directly**:
    ```fish
-   complete -C "mcp-skillkit "
+   complete -C "mcp-skillset "
    ```
 
 3. **Reload fish completions**:
@@ -278,7 +278,7 @@ If using Method 1 (direct evaluation), shell startup may be slower because the c
 **Solution**: Switch to Method 2 (pre-generated files) for faster startup:
 ```bash
 # Generate completions once
-cd /path/to/mcp-skillkit
+cd /path/to/mcp-skillset
 ./scripts/generate_completions.sh
 
 # Then use the generated files (Method 2)
@@ -286,11 +286,11 @@ cd /path/to/mcp-skillkit
 
 ### Completions Not Updating After CLI Changes
 
-If you've updated mcp-skillkit and completions aren't reflecting new commands:
+If you've updated mcp-skillset and completions aren't reflecting new commands:
 
 **Solution**: Regenerate completion files:
 ```bash
-cd /path/to/mcp-skillkit
+cd /path/to/mcp-skillset
 
 # If using development version
 pip install -e .
@@ -302,29 +302,29 @@ pip install -e .
 source ~/.bashrc  # or ~/.zshrc, or restart fish
 ```
 
-### "command not found: mcp-skillkit"
+### "command not found: mcp-skillset"
 
-The completion system requires `mcp-skillkit` to be in your PATH.
+The completion system requires `mcp-skillset` to be in your PATH.
 
 **Solutions**:
 1. **Verify installation**:
    ```bash
-   which mcp-skillkit
-   pip show mcp-skillkit
+   which mcp-skillset
+   pip show mcp-skillset
    ```
 
 2. **Install if missing**:
    ```bash
-   pipx install mcp-skillkit
+   pipx install mcp-skillset
    # or
-   pip install mcp-skillkit
+   pip install mcp-skillset
    ```
 
 3. **Ensure shell PATH includes pip bin directory**:
    ```bash
    # Add to ~/.bashrc or ~/.zshrc
    export PATH="$HOME/.local/bin:$PATH"  # For pip --user
-   export PATH="$HOME/.local/share/pipx/venvs/mcp-skillkit/bin:$PATH"  # For pipx
+   export PATH="$HOME/.local/share/pipx/venvs/mcp-skillset/bin:$PATH"  # For pipx
    ```
 
 ## Advanced Usage
@@ -338,10 +338,10 @@ You can install completions to any location and source them:
 ./scripts/generate_completions.sh
 
 # Copy to your preferred location
-cp completions/mcp-skillkit-completion.bash ~/my-completions/
+cp completions/mcp-skillset-completion.bash ~/my-completions/
 
 # Source in your shell config
-echo 'source ~/my-completions/mcp-skillkit-completion.bash' >> ~/.bashrc
+echo 'source ~/my-completions/mcp-skillset-completion.bash' >> ~/.bashrc
 ```
 
 ### Multiple Shell Support
@@ -350,14 +350,14 @@ If you use multiple shells (e.g., bash and zsh), install completions for each:
 
 ```bash
 # Bash
-echo 'source /path/to/mcp-skillkit/completions/mcp-skillkit-completion.bash' >> ~/.bashrc
+echo 'source /path/to/mcp-skillset/completions/mcp-skillset-completion.bash' >> ~/.bashrc
 
 # Zsh
-echo 'source /path/to/mcp-skillkit/completions/mcp-skillkit-completion.zsh' >> ~/.zshrc
+echo 'source /path/to/mcp-skillset/completions/mcp-skillset-completion.zsh' >> ~/.zshrc
 
 # Fish
-cp /path/to/mcp-skillkit/completions/mcp-skillkit-completion.fish \
-   ~/.config/fish/completions/mcp-skillkit.fish
+cp /path/to/mcp-skillset/completions/mcp-skillset-completion.fish \
+   ~/.config/fish/completions/mcp-skillset.fish
 ```
 
 ### Disabling Completions
@@ -366,17 +366,17 @@ To temporarily disable completions without uninstalling:
 
 #### Bash
 ```bash
-complete -r mcp-skillkit
+complete -r mcp-skillset
 ```
 
 #### Zsh
 ```zsh
-compdef -d mcp-skillkit
+compdef -d mcp-skillset
 ```
 
 #### Fish
 ```bash
-complete -c mcp-skillkit --erase
+complete -c mcp-skillset --erase
 ```
 
 To permanently disable, remove the source line from your shell config file.
@@ -388,9 +388,9 @@ To permanently disable, remove the source line from your shell config file.
 Remove the source line from `~/.bashrc`:
 ```bash
 # Remove this line:
-# source /path/to/mcp-skillkit/completions/mcp-skillkit-completion.bash
+# source /path/to/mcp-skillset/completions/mcp-skillset-completion.bash
 # or
-# eval "$(_MCP_SKILLS_COMPLETE=bash_source mcp-skillkit)"
+# eval "$(_MCP_SKILLS_COMPLETE=bash_source mcp-skillset)"
 ```
 
 Then reload:
@@ -403,9 +403,9 @@ source ~/.bashrc
 Remove the source line from `~/.zshrc`:
 ```zsh
 # Remove this line:
-# source /path/to/mcp-skillkit/completions/mcp-skillkit-completion.zsh
+# source /path/to/mcp-skillset/completions/mcp-skillset-completion.zsh
 # or
-# eval "$(_MCP_SKILLS_COMPLETE=zsh_source mcp-skillkit)"
+# eval "$(_MCP_SKILLS_COMPLETE=zsh_source mcp-skillset)"
 ```
 
 Then reload:
@@ -417,7 +417,7 @@ source ~/.zshrc
 
 Remove the completion file:
 ```bash
-rm ~/.config/fish/completions/mcp-skillkit.fish
+rm ~/.config/fish/completions/mcp-skillset.fish
 ```
 
 Fish will automatically detect the removal.
@@ -434,7 +434,7 @@ After modifying the CLI structure (adding commands, options, etc.), regenerate c
 ```
 
 This script:
-1. Checks for installed `mcp-skillkit` command
+1. Checks for installed `mcp-skillset` command
 2. Generates completion files for bash, zsh, and fish
 3. Saves them to `completions/` directory
 4. Reports line counts and success status
@@ -445,27 +445,27 @@ To test completions without installing:
 
 #### Bash
 ```bash
-source completions/mcp-skillkit-completion.bash
-mcp-skillkit <TAB>
+source completions/mcp-skillset-completion.bash
+mcp-skillset <TAB>
 ```
 
 #### Zsh
 ```zsh
-source completions/mcp-skillkit-completion.zsh
-mcp-skillkit <TAB>
+source completions/mcp-skillset-completion.zsh
+mcp-skillset <TAB>
 ```
 
 #### Fish
 ```fish
-source completions/mcp-skillkit-completion.fish
-mcp-skillkit <TAB>
+source completions/mcp-skillset-completion.fish
+mcp-skillset <TAB>
 ```
 
 ## Technical Details
 
 ### How Click Completions Work
 
-The `mcp-skillkit` CLI uses Click's built-in completion system:
+The `mcp-skillset` CLI uses Click's built-in completion system:
 
 1. **Environment Variable**: `_MCP_SKILLS_COMPLETE` tells Click to output completion code
 2. **Shell-Specific Format**: Each shell has its own completion script format
@@ -479,7 +479,7 @@ The `mcp-skillkit` CLI uses Click's built-in completion system:
 
 ### Security Considerations
 
-The completion scripts execute the `mcp-skillkit` command to generate context-aware completions. This is safe because:
+The completion scripts execute the `mcp-skillset` command to generate context-aware completions. This is safe because:
 - Only completion metadata is output (no command execution)
 - The scripts are generated from trusted source (Click library)
 - No user input is evaluated during completion
@@ -498,8 +498,8 @@ If you encounter issues with shell completions:
 1. Check the [Troubleshooting](#troubleshooting) section above
 2. Verify your shell version meets requirements
 3. Try Method 1 (direct evaluation) for debugging
-4. Open an issue on [GitHub](https://github.com/bobmatnyc/mcp-skillkit/issues) with:
+4. Open an issue on [GitHub](https://github.com/bobmatnyc/mcp-skillset/issues) with:
    - Shell name and version
    - Installation method used
-   - Output of `type _mcp_skills_completion` (bash/zsh) or `complete -C "mcp-skillkit"` (fish)
+   - Output of `type _mcp_skills_completion` (bash/zsh) or `complete -C "mcp-skillset"` (fish)
    - Error messages or unexpected behavior

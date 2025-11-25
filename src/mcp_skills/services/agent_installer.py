@@ -1,6 +1,6 @@
 """AI Agent Installer Module.
 
-Safely installs MCP SkillKit configuration into AI agent config files with
+Safely installs MCP SkillSet configuration into AI agent config files with
 automatic backup and rollback capabilities.
 
 Design Decision: Atomic config updates with backup/restore
@@ -92,7 +92,7 @@ class InstallResult:
 
 
 class AgentInstaller:
-    """Installs MCP SkillKit into AI agent configurations.
+    """Installs MCP SkillSet into AI agent configurations.
 
     Performance:
     - Time Complexity: O(1) for single agent install
@@ -110,17 +110,17 @@ class AgentInstaller:
     """
 
     MCP_SERVER_CONFIG = {
-        "command": "mcp-skillkit",
+        "command": "mcp-skillset",
         "args": ["mcp"],
         "env": {},
     }
 
     GITIGNORE_ENTRIES = [
         "",
-        "# MCP SkillKit datasets (added by mcp-skillkit installer)",
+        "# MCP SkillSet datasets (added by mcp-skillset installer)",
         "# User-specific data files that should never be committed",
-        ".mcp-skillkit/",
-        "**/.mcp-skillkit/",
+        ".mcp-skillset/",
+        "**/.mcp-skillset/",
     ]
 
     def __init__(self) -> None:
@@ -133,11 +133,11 @@ class AgentInstaller:
         force: bool = False,
         dry_run: bool = False,
     ) -> InstallResult:
-        """Install MCP SkillKit for a detected agent.
+        """Install MCP SkillSet for a detected agent.
 
         Args:
             agent: DetectedAgent to install for
-            force: Overwrite existing mcp-skillkit configuration
+            force: Overwrite existing mcp-skillset configuration
             dry_run: Show what would be done without making changes
 
         Returns:
@@ -186,13 +186,13 @@ class AgentInstaller:
             # Check if already installed
             if not force:
                 mcp_servers = config.get("mcpServers", {})
-                if "mcp-skillkit" in mcp_servers:
+                if "mcp-skillset" in mcp_servers:
                     return InstallResult(
                         success=False,
                         agent_name=agent.name,
                         agent_id=agent.id,
                         config_path=agent.config_path,
-                        error="mcp-skillkit is already installed. Use --force to overwrite.",
+                        error="mcp-skillset is already installed. Use --force to overwrite.",
                     )
 
             # Dry run: show what would happen
@@ -319,13 +319,13 @@ class AgentInstaller:
             return None, str(e)
 
     def _add_mcp_config(self, config: dict[str, Any]) -> dict[str, Any]:
-        """Add MCP SkillKit configuration to config dict.
+        """Add MCP SkillSet configuration to config dict.
 
         Args:
             config: Existing configuration dictionary
 
         Returns:
-            Modified configuration with MCP SkillKit added
+            Modified configuration with MCP SkillSet added
         """
         modified = config.copy()
 
@@ -333,8 +333,8 @@ class AgentInstaller:
         if "mcpServers" not in modified:
             modified["mcpServers"] = {}
 
-        # Add mcp-skillkit configuration
-        modified["mcpServers"]["mcp-skillkit"] = self.MCP_SERVER_CONFIG.copy()
+        # Add mcp-skillset configuration
+        modified["mcpServers"]["mcp-skillset"] = self.MCP_SERVER_CONFIG.copy()
 
         return modified
 
@@ -360,12 +360,12 @@ class AgentInstaller:
             if not isinstance(config["mcpServers"], dict):
                 return False
 
-            # mcp-skillkit must be present
-            if "mcp-skillkit" not in config["mcpServers"]:
+            # mcp-skillset must be present
+            if "mcp-skillset" not in config["mcpServers"]:
                 return False
 
-            # Validate mcp-skillkit structure
-            mcp_config = config["mcpServers"]["mcp-skillkit"]
+            # Validate mcp-skillset structure
+            mcp_config = config["mcpServers"]["mcp-skillset"]
             if not isinstance(mcp_config, dict):
                 return False
 
@@ -432,25 +432,25 @@ class AgentInstaller:
             Human-readable description of changes
         """
         if not original_config:
-            return "Create new config file with MCP SkillKit configuration"
+            return "Create new config file with MCP SkillSet configuration"
 
         has_mcp = "mcpServers" in original_config
-        has_skillkit = has_mcp and "mcp-skillkit" in original_config.get(
+        has_skillset = has_mcp and "mcp-skillset" in original_config.get(
             "mcpServers", {}
         )
 
-        if has_skillkit:
-            return "Update existing mcp-skillkit configuration"
+        if has_skillset:
+            return "Update existing mcp-skillset configuration"
         elif has_mcp:
-            return "Add mcp-skillkit to existing mcpServers configuration"
+            return "Add mcp-skillset to existing mcpServers configuration"
         else:
-            return "Add mcpServers section with mcp-skillkit configuration"
+            return "Add mcpServers section with mcp-skillset configuration"
 
     def _update_gitignore_if_exists(self, search_dir: Path) -> None:
-        """Update .gitignore to exclude .mcp-skillkit/ if file exists.
+        """Update .gitignore to exclude .mcp-skillset/ if file exists.
 
         Searches for .gitignore in the given directory and parent directories
-        up to the user's home directory. Adds MCP SkillKit entries if not present.
+        up to the user's home directory. Adds MCP SkillSet entries if not present.
 
         Args:
             search_dir: Directory to start searching from
@@ -481,7 +481,7 @@ class AgentInstaller:
             pass
 
     def _add_to_gitignore(self, gitignore_path: Path) -> None:
-        """Add MCP SkillKit entries to .gitignore if not already present.
+        """Add MCP SkillSet entries to .gitignore if not already present.
 
         Args:
             gitignore_path: Path to .gitignore file
@@ -491,7 +491,7 @@ class AgentInstaller:
             content = gitignore_path.read_text(encoding="utf-8")
 
             # Check if already has our entries
-            if ".mcp-skillkit/" in content:
+            if ".mcp-skillset/" in content:
                 return  # Already present
 
             # Add our entries

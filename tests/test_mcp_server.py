@@ -52,7 +52,7 @@ def mock_scored_skill(mock_skill):
 @pytest.fixture
 def temp_dirs(tmp_path):
     """Create temporary directories for testing."""
-    base_dir = tmp_path / "mcp-skillkit"
+    base_dir = tmp_path / "mcp-skillset"
     storage_path = base_dir / "storage"
     repos_dir = base_dir / "repos"
 
@@ -94,7 +94,7 @@ class TestConfigureServices:
             configure_services()
 
             # Should create default directory
-            default_dir = tmp_path / ".mcp-skillkit"
+            default_dir = tmp_path / ".mcp-skillset"
             assert default_dir.exists()
 
     def test_get_services_before_configuration(self):

@@ -1,4 +1,4 @@
-"""Interactive configuration menu for mcp-skillkit."""
+"""Interactive configuration menu for mcp-skillset."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ console = Console()
 class ConfigMenu:
     """Interactive configuration menu manager.
 
-    Provides a menu-based interface for configuring mcp-skillkit settings.
+    Provides a menu-based interface for configuring mcp-skillset settings.
 
     Design Decision: Menu-based configuration
 
@@ -47,7 +47,7 @@ class ConfigMenu:
     """
 
     # Configuration file path
-    CONFIG_PATH = Path.home() / ".mcp-skillkit" / "config.yaml"
+    CONFIG_PATH = Path.home() / ".mcp-skillset" / "config.yaml"
 
     # Main menu choices
     MAIN_MENU_CHOICES = [
@@ -124,7 +124,7 @@ class ConfigMenu:
         console.print("[green]Configuration menu closed[/green]\n")
 
     def _configure_base_directory(self) -> None:
-        """Configure base directory for mcp-skillkit.
+        """Configure base directory for mcp-skillset.
 
         Prompts user for base directory path, validates it's writable,
         and creates the directory if it doesn't exist.
@@ -321,7 +321,7 @@ class ConfigMenu:
             console.print(f"  • Skills: {repo.skill_count}")
             console.print(f"  • Priority: {repo.priority}")
             console.print(
-                "\n[dim]Tip: Run 'mcp-skillkit index' to index new skills[/dim]"
+                "\n[dim]Tip: Run 'mcp-skillset index' to index new skills[/dim]"
             )
 
         except Exception as e:
@@ -369,7 +369,7 @@ class ConfigMenu:
                 repo_manager.remove_repository(repo_id)
                 console.print(f"\n[green]✓[/green] Repository {repo_id} removed")
                 console.print(
-                    "\n[dim]Tip: Run 'mcp-skillkit index --force' to rebuild index[/dim]"
+                    "\n[dim]Tip: Run 'mcp-skillset index --force' to rebuild index[/dim]"
                 )
             else:
                 console.print("\n[yellow]Removal cancelled[/yellow]")
@@ -451,7 +451,7 @@ class ConfigMenu:
 
         try:
             # Create configuration tree (same as original config command)
-            tree = Tree("[bold cyan]mcp-skillkit Configuration[/bold cyan]")
+            tree = Tree("[bold cyan]mcp-skillset Configuration[/bold cyan]")
 
             # Base directory
             base_node = tree.add(
@@ -494,7 +494,7 @@ class ConfigMenu:
                         f"[green]✓[/green] Size: {stats.vector_store_size // 1024} KB"
                     )
                 else:
-                    vector_node.add("[dim]Empty (run: mcp-skillkit index)[/dim]")
+                    vector_node.add("[dim]Empty (run: mcp-skillset index)[/dim]")
             except Exception as e:
                 vector_node.add(f"[red]Error: {e}[/red]")
 
@@ -506,7 +506,7 @@ class ConfigMenu:
                     graph_node.add(f"[green]✓[/green] {stats.graph_nodes} nodes")
                     graph_node.add(f"[green]✓[/green] {stats.graph_edges} edges")
                 else:
-                    graph_node.add("[dim]Empty (run: mcp-skillkit index)[/dim]")
+                    graph_node.add("[dim]Empty (run: mcp-skillset index)[/dim]")
             except Exception as e:
                 graph_node.add(f"[red]Error: {e}[/red]")
 

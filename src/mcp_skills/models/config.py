@@ -19,7 +19,7 @@ class VectorStoreConfig(BaseSettings):
         backend: Vector store backend (chromadb, qdrant, faiss)
         embedding_model: Sentence transformer model name
         collection_name: Vector collection name
-        persist_directory: Directory for persistent storage (defaults to ~/.mcp-skillkit/indices/vector_store)
+        persist_directory: Directory for persistent storage (defaults to ~/.mcp-skillset/indices/vector_store)
     """
 
     backend: Literal["chromadb", "qdrant", "faiss"] = Field(
@@ -31,7 +31,7 @@ class VectorStoreConfig(BaseSettings):
     collection_name: str = Field("skills_v1", description="Collection name")
     persist_directory: Path | None = Field(
         None,
-        description="Persistence directory (defaults to ~/.mcp-skillkit/indices/vector_store)",
+        description="Persistence directory (defaults to ~/.mcp-skillset/indices/vector_store)",
     )
 
 
@@ -152,7 +152,7 @@ class KnowledgeGraphConfig(BaseSettings):
 
     Attributes:
         backend: Graph backend (networkx, neo4j)
-        persist_path: Path for graph persistence (defaults to ~/.mcp-skillkit/indices/knowledge_graph.pkl)
+        persist_path: Path for graph persistence (defaults to ~/.mcp-skillset/indices/knowledge_graph.pkl)
     """
 
     backend: Literal["networkx", "neo4j"] = Field(
@@ -160,7 +160,7 @@ class KnowledgeGraphConfig(BaseSettings):
     )
     persist_path: Path | None = Field(
         None,
-        description="Graph persistence path (defaults to ~/.mcp-skillkit/indices/knowledge_graph.pkl)",
+        description="Graph persistence path (defaults to ~/.mcp-skillset/indices/knowledge_graph.pkl)",
     )
 
 
@@ -201,18 +201,18 @@ class RepositoryConfig(BaseSettings):
 
 
 class MCPSkillsConfig(BaseSettings):
-    """Main mcp-skillkit configuration.
+    """Main mcp-skillset configuration.
 
     Loads configuration from:
     1. Environment variables (MCP_SKILLS_*)
-    2. Config file (~/.mcp-skillkit/config.yaml)
+    2. Config file (~/.mcp-skillset/config.yaml)
     3. Defaults
     """
 
     # Base directories
     base_dir: Path = Field(
-        default_factory=lambda: Path.home() / ".mcp-skillkit",
-        description="Base directory for mcp-skillkit",
+        default_factory=lambda: Path.home() / ".mcp-skillset",
+        description="Base directory for mcp-skillset",
     )
     repos_dir: Path | None = Field(None, description="Repositories directory")
     indices_dir: Path | None = Field(None, description="Indices directory")
@@ -259,11 +259,11 @@ class MCPSkillsConfig(BaseSettings):
         Configuration loading priority:
         1. Explicit kwargs (highest priority)
         2. Environment variables (MCP_SKILLS_*)
-        3. Config file (~/.mcp-skillkit/config.yaml)
+        3. Config file (~/.mcp-skillset/config.yaml)
         4. Defaults (lowest priority)
         """
         # Load YAML config if not provided in kwargs
-        config_path = Path.home() / ".mcp-skillkit" / "config.yaml"
+        config_path = Path.home() / ".mcp-skillset" / "config.yaml"
         yaml_config: dict[str, Any] = {}
 
         if config_path.exists() and "hybrid_search" not in kwargs:

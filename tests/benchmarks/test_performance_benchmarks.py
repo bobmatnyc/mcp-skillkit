@@ -1,4 +1,4 @@
-"""Comprehensive performance benchmarks for mcp-skillkit.
+"""Comprehensive performance benchmarks for mcp-skillset.
 
 Design Decision: Multi-Scale Performance Testing
 

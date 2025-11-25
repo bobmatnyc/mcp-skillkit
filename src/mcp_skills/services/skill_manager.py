@@ -49,9 +49,9 @@ class SkillManager:
 
         Args:
             repos_dir: Directory containing skill repositories.
-                      Defaults to ~/.mcp-skillkit/repos/
+                      Defaults to ~/.mcp-skillset/repos/
         """
-        self.repos_dir = repos_dir or Path.home() / ".mcp-skillkit" / "repos"
+        self.repos_dir = repos_dir or Path.home() / ".mcp-skillset" / "repos"
         self._skill_cache: dict[str, Skill] = {}
         self._skill_paths: dict[str, Path] = {}  # Map skill_id -> file_path
         self.validator = SkillValidator()

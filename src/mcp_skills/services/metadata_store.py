@@ -58,13 +58,13 @@ class MetadataStore:
 
         Args:
             db_path: Path to SQLite database file.
-                    Defaults to ~/.mcp-skillkit/metadata.db
+                    Defaults to ~/.mcp-skillset/metadata.db
 
         Error Handling:
         - Database creation failure: Propagates OperationalError
         - Schema initialization failure: Rolls back transaction
         """
-        self.db_path = db_path or (Path.home() / ".mcp-skillkit" / "metadata.db")
+        self.db_path = db_path or (Path.home() / ".mcp-skillset" / "metadata.db")
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
 
         # Initialize database schema

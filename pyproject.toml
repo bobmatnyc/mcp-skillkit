@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mcp-skillkit"
+name = "mcp-skillset"
 version = "0.4.0"
 description = "Dynamic RAG-powered skills for code assistants via Model Context Protocol"
 readme = "README.md"
@@ -85,13 +85,13 @@ neo4j = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/bobmatnyc/mcp-skillkit"
-Repository = "https://github.com/bobmatnyc/mcp-skillkit.git"
-Issues = "https://github.com/bobmatnyc/mcp-skillkit/issues"
-Documentation = "https://github.com/bobmatnyc/mcp-skillkit/blob/main/README.md"
+Homepage = "https://github.com/bobmatnyc/mcp-skillset"
+Repository = "https://github.com/bobmatnyc/mcp-skillset.git"
+Issues = "https://github.com/bobmatnyc/mcp-skillset/issues"
+Documentation = "https://github.com/bobmatnyc/mcp-skillset/blob/main/README.md"
 
 [project.scripts]
-mcp-skillkit = "mcp_skills.cli.main:cli"
+mcp-skillset = "mcp_skills.cli.main:cli"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -103,10 +103,10 @@ mcp_skills = ["py.typed", "VERSION"]
 include-package-data = true
 
 [tool.setuptools.data-files]
-"share/mcp-skillkit/completions" = [
-    "completions/mcp-skillkit-completion.bash",
-    "completions/mcp-skillkit-completion.zsh",
-    "completions/mcp-skillkit-completion.fish",
+"share/mcp-skillset/completions" = [
+    "completions/mcp-skillset-completion.bash",
+    "completions/mcp-skillset-completion.zsh",
+    "completions/mcp-skillset-completion.fish",
 ]
 
 [tool.pytest.ini_options]

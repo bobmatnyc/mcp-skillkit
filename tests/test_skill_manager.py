@@ -111,7 +111,7 @@ class TestSkillManagerInit:
     def test_default_repos_dir(self) -> None:
         """Test default repos directory is set correctly."""
         manager = SkillManager()
-        expected_dir = Path.home() / ".mcp-skillkit" / "repos"
+        expected_dir = Path.home() / ".mcp-skillset" / "repos"
         assert manager.repos_dir == expected_dir
 
     def test_custom_repos_dir(self, temp_repos_dir: Path) -> None:

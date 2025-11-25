@@ -62,9 +62,9 @@ Total commits since v0.1.0: **11 commits**
 
 ### Detailed Commit Log
 ```
-ed5ff2d fix: complete mcp-skills to mcp-skillkit naming consistency
-f89d706 fix: revert package name to mcp-skillkit and update CLI to match
-38f26f2 fix: rename package from mcp-skillkit to mcp-skills for consistency
+ed5ff2d fix: complete mcp-skills to mcp-skillset naming consistency
+f89d706 fix: revert package name to mcp-skillset and update CLI to match
+38f26f2 fix: rename package from mcp-skillset to mcp-skills for consistency
 df97157 feat: add configurable hybrid search weighting (1M-148)
 39235ec chore: update uv.lock with latest dependencies
 96200d8 feat: add shell completions for bash/zsh/fish (1M-147)
@@ -137,17 +137,17 @@ According to [Semantic Versioning 2.0.0](https://semver.org/):
 
 These commits **would** support a patch bump if no features were present:
 
-1. **fix: complete mcp-skills to mcp-skillkit naming consistency** (ed5ff2d)
+1. **fix: complete mcp-skills to mcp-skillset naming consistency** (ed5ff2d)
    - Fixed naming inconsistencies across codebase
    - 34 files modified, ~180 occurrences updated
    - Backward compatible
 
-2. **fix: revert package name to mcp-skillkit and update CLI to match** (f89d706)
+2. **fix: revert package name to mcp-skillset and update CLI to match** (f89d706)
    - Fixed PyPI package name conflict
    - Updated 40+ files with consistent naming
    - Resolved publishing blocker
 
-3. **fix: rename package from mcp-skillkit to mcp-skills for consistency** (38f26f2)
+3. **fix: rename package from mcp-skillset to mcp-skills for consistency** (38f26f2)
    - Attempted fix (later reverted by f89d706)
    - Package name alignment
 
@@ -367,7 +367,7 @@ User must choose:
 3. Enhanced CLI with --search-mode flag
 
 **Bug Fixes** (backward compatible):
-1. Package naming consistency (mcp-skillkit)
+1. Package naming consistency (mcp-skillset)
 2. Installation documentation clarity
 3. Configuration path consistency
 
@@ -378,10 +378,10 @@ User must choose:
 **For Users**:
 ```bash
 # Existing users can upgrade seamlessly
-pipx upgrade mcp-skillkit  # v0.1.0 → v0.2.0
+pipx upgrade mcp-skillset  # v0.1.0 → v0.2.0
 
 # New capabilities available immediately:
-mcp-skillkit --help  # See new --search-mode option
+mcp-skillset --help  # See new --search-mode option
 # Shell completions: Follow docs/SHELL_COMPLETIONS.md
 ```
 
@@ -443,5 +443,5 @@ chore: 1 commit
 ---
 
 **Generated**: 2025-11-24
-**Tool**: Research Agent (MCP SkillKit Project Analysis)
+**Tool**: Research Agent (MCP SkillSet Project Analysis)
 **Context**: Pre-release validation for version bump verification

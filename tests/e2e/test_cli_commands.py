@@ -4,17 +4,17 @@ This module tests all CLI commands with real invocations using Click's
 CliRunner. Tests verify command execution, exit codes, and output formatting.
 
 Commands Tested:
-- mcp-skillkit setup
-- mcp-skillkit mcp (serve)
-- mcp-skillkit search
-- mcp-skillkit list
-- mcp-skillkit info
-- mcp-skillkit recommend
-- mcp-skillkit repo add/list/update
-- mcp-skillkit index
-- mcp-skillkit doctor
-- mcp-skillkit stats
-- mcp-skillkit config
+- mcp-skillset setup
+- mcp-skillset mcp (serve)
+- mcp-skillset search
+- mcp-skillset list
+- mcp-skillset info
+- mcp-skillset recommend
+- mcp-skillset repo add/list/update
+- mcp-skillset index
+- mcp-skillset doctor
+- mcp-skillset stats
+- mcp-skillset config
 """
 
 from pathlib import Path
@@ -27,7 +27,7 @@ from mcp_skills.cli.main import cli
 
 @pytest.mark.e2e
 class TestCLISetupCommand:
-    """Test 'mcp-skillkit setup' command."""
+    """Test 'mcp-skillset setup' command."""
 
     def test_setup_auto_mode(
         self,
@@ -111,7 +111,7 @@ class TestCLISetupCommand:
 
 @pytest.mark.e2e
 class TestCLISearchCommand:
-    """Test 'mcp-skillkit search' command."""
+    """Test 'mcp-skillset search' command."""
 
     def test_search_with_results(
         self,
@@ -190,7 +190,7 @@ class TestCLISearchCommand:
 
 @pytest.mark.e2e
 class TestCLIListCommand:
-    """Test 'mcp-skillkit list' command."""
+    """Test 'mcp-skillset list' command."""
 
     def test_list_all_skills(
         self,
@@ -253,7 +253,7 @@ class TestCLIListCommand:
 
 @pytest.mark.e2e
 class TestCLIInfoCommand:
-    """Test 'mcp-skillkit info' command."""
+    """Test 'mcp-skillset info' command."""
 
     def test_info_existing_skill(
         self,
@@ -301,7 +301,7 @@ class TestCLIInfoCommand:
 
 @pytest.mark.e2e
 class TestCLIRecommendCommand:
-    """Test 'mcp-skillkit recommend' command."""
+    """Test 'mcp-skillset recommend' command."""
 
     def test_recommend_for_python_project(
         self,
@@ -336,7 +336,7 @@ class TestCLIRecommendCommand:
 
 @pytest.mark.e2e
 class TestCLIRepoCommands:
-    """Test 'mcp-skillkit repo' commands."""
+    """Test 'mcp-skillset repo' commands."""
 
     def test_repo_list_empty(
         self,
@@ -396,7 +396,7 @@ class TestCLIRepoCommands:
 
 @pytest.mark.e2e
 class TestCLIIndexCommand:
-    """Test 'mcp-skillkit index' command."""
+    """Test 'mcp-skillset index' command."""
 
     def test_index_command(
         self,
@@ -441,7 +441,7 @@ class TestCLIIndexCommand:
 
 @pytest.mark.e2e
 class TestCLIDoctorCommand:
-    """Test 'mcp-skillkit doctor' command."""
+    """Test 'mcp-skillset doctor' command."""
 
     def test_doctor_check(
         self,
@@ -469,7 +469,7 @@ class TestCLIDoctorCommand:
 
 @pytest.mark.e2e
 class TestCLIStatsCommand:
-    """Test 'mcp-skillkit stats' command."""
+    """Test 'mcp-skillset stats' command."""
 
     def test_stats_command(
         self,
@@ -495,7 +495,7 @@ class TestCLIStatsCommand:
 
 @pytest.mark.e2e
 class TestCLIConfigCommand:
-    """Test 'mcp-skillkit config' command."""
+    """Test 'mcp-skillset config' command."""
 
     def test_config_display(
         self,
@@ -518,7 +518,7 @@ class TestCLIConfigCommand:
         assert "Current Configuration" in result.output
         assert (
             "Base Directory" in result.output
-            or "mcp-skillkit Configuration" in result.output
+            or "mcp-skillset Configuration" in result.output
         )
 
 
@@ -531,7 +531,7 @@ class TestCLIVersionCommand:
         result = cli_runner.invoke(cli, ["--version"])
 
         assert result.exit_code == 0
-        assert "mcp-skillkit" in result.output
+        assert "mcp-skillset" in result.output
 
 
 @pytest.mark.e2e

@@ -31,7 +31,7 @@ class TestCLI:
         result = runner.invoke(cli, ["setup", "--project-dir", ".", "--auto"])
 
         assert result.exit_code == 0
-        assert "Starting mcp-skillkit setup" in result.output
+        assert "Starting mcp-skillset setup" in result.output
 
     @pytest.mark.skip(reason="Test has I/O file closure issues with Click test runner")
     def test_serve_command(self) -> None:

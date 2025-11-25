@@ -47,7 +47,7 @@ This analysis compares the current CLI implementation in `src/mcp_skills/cli/mai
 
 **Current Behavior:**
 ```bash
-mcp-skillkit setup [--project-dir DIR] [--config PATH] [--auto]
+mcp-skillset setup [--project-dir DIR] [--config PATH] [--auto]
 ```
 
 **Implementation:** Lines 43-230 in `main.py`
@@ -81,7 +81,7 @@ mcp-skillkit setup [--project-dir DIR] [--config PATH] [--auto]
 
 **Current Behavior:**
 ```bash
-mcp-skillkit config
+mcp-skillset config
 ```
 
 **Implementation:** Lines 1115-1197 in `main.py`
@@ -122,7 +122,7 @@ Menu-based setup that prompts users through all setup options:
 
 **Current Behavior:**
 ```bash
-mcp-skillkit index [--incremental] [--force]
+mcp-skillset index [--incremental] [--force]
 ```
 
 **Implementation:** Lines 1042-1112 in `main.py`
@@ -157,7 +157,7 @@ Install MCP for agents (Claude Code, Auggie, etc.) with auto-detection
    - Claude Code (VSCode extension)
    - Auggie
    - Other MCP-compatible clients
-2. Modify their configuration files to add mcp-skillkit server
+2. Modify their configuration files to add mcp-skillset server
 3. Provide installation instructions for detected agents
 4. Validate MCP server configuration
 
@@ -168,7 +168,7 @@ Install MCP for agents (Claude Code, Auggie, etc.) with auto-detection
 def install(agent: str) -> None:
     """Install MCP server configuration for AI agents.
 
-    Auto-detects installed agents and configures them to use mcp-skillkit.
+    Auto-detects installed agents and configures them to use mcp-skillset.
 
     Supports:
     - Claude Desktop (~/.config/Claude/claude_desktop_config.json)
@@ -203,7 +203,7 @@ def install(agent: str) -> None:
 
 **Current Behavior:**
 ```bash
-mcp-skillkit mcp [--dev]
+mcp-skillset mcp [--dev]
 ```
 
 **Implementation:** Lines 232-275 in `main.py`
@@ -225,8 +225,8 @@ mcp-skillkit mcp [--dev]
 
 **Current Behavior:**
 ```bash
-mcp-skillkit --help
-mcp-skillkit <command> --help
+mcp-skillset --help
+mcp-skillset <command> --help
 ```
 
 **Implementation:** Click framework provides automatic --help
@@ -254,7 +254,7 @@ mcp-skillkit <command> --help
 
 **Current Behavior:**
 ```bash
-mcp-skillkit health
+mcp-skillset health
 ```
 
 **Implementation:** Lines 646-759 in `main.py`
@@ -285,7 +285,7 @@ mcp-skillkit health
 
 **Current Behavior:**
 ```bash
-mcp-skillkit search QUERY [--limit N] [--category CAT] [--search-mode MODE]
+mcp-skillset search QUERY [--limit N] [--category CAT] [--search-mode MODE]
 ```
 
 **Implementation:** Lines 278-367 in `main.py`
@@ -325,7 +325,7 @@ Enrich a prompt (based on keywords)
 **Use Case Example:**
 ```bash
 # Input prompt
-$ mcp-skillkit enrich "Write tests for my FastAPI app"
+$ mcp-skillset enrich "Write tests for my FastAPI app"
 
 # System behavior:
 # 1. Extracts keywords: "tests", "FastAPI"
@@ -357,7 +357,7 @@ def enrich(prompt: str, max_skills: int, output: str | None) -> None:
     their instructions to create a knowledge-enhanced prompt.
 
     Example:
-        mcp-skillkit enrich "Write pytest tests" --max-skills 2
+        mcp-skillset enrich "Write pytest tests" --max-skills 2
     """
     # 1. Parse prompt for keywords
     # 2. Search for relevant skills
@@ -414,7 +414,7 @@ async def setup_project(
     auto_clone_repos: bool = True,
     force_reindex: bool = False
 ) -> dict[str, Any]:
-    """Set up mcp-skillkit for a project.
+    """Set up mcp-skillset for a project.
 
     Detects toolchain, clones repositories, and indexes skills.
     """

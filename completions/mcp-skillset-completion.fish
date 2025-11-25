@@ -1,5 +1,5 @@
-function _mcp_skillkit_completion;
-    set -l response (env _MCP_SKILLKIT_COMPLETE=fish_complete COMP_WORDS=(commandline -cp) COMP_CWORD=(commandline -t) mcp-skillkit);
+function _mcp_skillset_completion;
+    set -l response (env _MCP_SKILLKIT_COMPLETE=fish_complete COMP_WORDS=(commandline -cp) COMP_CWORD=(commandline -t) mcp-skillset);
 
     for completion in $response;
         set -l metadata (string split "," $completion);
@@ -14,5 +14,5 @@ function _mcp_skillkit_completion;
     end;
 end;
 
-complete --no-files --command mcp-skillkit --arguments "(_mcp_skillkit_completion)";
+complete --no-files --command mcp-skillset --arguments "(_mcp_skillset_completion)";
 

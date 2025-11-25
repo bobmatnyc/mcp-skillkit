@@ -2,7 +2,7 @@
 # MCP Skills - Main Makefile
 # ============================================================================
 # Enhanced with python-project-template modular structure
-# https://github.com/bobmatnyc/mcp-skillkit
+# https://github.com/bobmatnyc/mcp-skillset
 # ============================================================================
 
 .DEFAULT_GOAL := help
@@ -17,7 +17,7 @@
 # ============================================================================
 # Project Configuration
 # ============================================================================
-PROJECT_NAME := mcp-skillkit
+PROJECT_NAME := mcp-skillset
 PYTHON_VERSION := 3.11
 SRC_DIR := src/mcp_skills
 TEST_DIR := tests
@@ -34,12 +34,12 @@ mcp-server: ## Run the MCP Skills server
 .PHONY: index
 index: ## Build/rebuild the skills index
 	@echo "$(BLUE)Indexing skills...$(NC)"
-	mcp-skillkit index
+	mcp-skillset index
 
 .PHONY: search
 search: ## Search skills (usage: make search QUERY="your query")
 	@echo "$(BLUE)Searching for: $(QUERY)$(NC)"
-	mcp-skillkit search "$(QUERY)"
+	mcp-skillset search "$(QUERY)"
 
 # ============================================================================
 # Legacy Targets (preserved for compatibility)

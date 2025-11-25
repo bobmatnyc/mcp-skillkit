@@ -1,4 +1,4 @@
-"""Logging configuration for mcp-skillkit."""
+"""Logging configuration for mcp-skillset."""
 
 import logging
 import sys

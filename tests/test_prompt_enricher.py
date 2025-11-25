@@ -209,7 +209,7 @@ class TestPromptFormatting:
         result = enricher.format_detailed(prompt, sample_skills[:2])
 
         assert prompt in result
-        assert "Context from MCP SkillKit:" in result
+        assert "Context from MCP SkillSet:" in result
         assert "## FastAPI Testing" in result
         assert "## Input Validation" in result
         assert "Category: testing" in result
@@ -249,7 +249,7 @@ class TestPromptEnrichment:
         result = enricher.enrich("Test prompt", max_skills=3, detailed=True)
 
         assert result.detailed
-        assert "Context from MCP SkillKit:" in result.enriched_text
+        assert "Context from MCP SkillSet:" in result.enriched_text
         assert "##" in result.enriched_text
 
     def test_enrich_no_skills_found(self, enricher, mock_skill_manager):

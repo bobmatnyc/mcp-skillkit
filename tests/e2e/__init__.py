@@ -1,4 +1,4 @@
-"""End-to-end tests for mcp-skillkit CLI and MCP tools.
+"""End-to-end tests for mcp-skillset CLI and MCP tools.
 
 This package contains comprehensive E2E tests that verify:
 - CLI command execution with real file operations

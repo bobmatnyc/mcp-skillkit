@@ -215,7 +215,7 @@ pytest-cov                               7.0.0      # Installed (from some other
 ============================= test session starts ==============================
 platform darwin -- Python 3.13.7, pytest-9.0.1, pluggy-1.6.0
 cachedir: .pytest_cache
-rootdir: /Users/masa/Projects/mcp-skillkit
+rootdir: /Users/masa/Projects/mcp-skillset
 configfile: pyproject.toml
 plugins: anyio-4.11.0, cov-7.0.0
 collecting ... collected 21 items
@@ -240,7 +240,7 @@ You need to install a suitable plugin for your async framework, for example:
 ```
 ==================================== ERRORS ====================================
 ___ ERROR at setup of TestIndexingPerformance.test_index_100_skills_baseline ___
-file /Users/masa/Projects/mcp-skillkit/tests/benchmarks/test_performance_benchmarks.py, line 52
+file /Users/masa/Projects/mcp-skillset/tests/benchmarks/test_performance_benchmarks.py, line 52
       def test_index_100_skills_baseline(
 E       fixture 'benchmark' not found
 >       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, ...
@@ -290,7 +290,7 @@ pytest tests/benchmarks/ -v
 **Complexity:** Low
 **Estimated Time:** 2 minutes
 
-**Edit:** `/Users/masa/Projects/mcp-skillkit/pyproject.toml`
+**Edit:** `/Users/masa/Projects/mcp-skillset/pyproject.toml`
 
 **Add to `[tool.pytest.ini_options]` section:**
 ```toml
@@ -424,7 +424,7 @@ While investigating, these warnings were noted (NOT causing test failures):
 
 ### Step 1: Install Dependencies
 ```bash
-cd /Users/masa/Projects/mcp-skillkit
+cd /Users/masa/Projects/mcp-skillset
 .venv/bin/pip install -e ".[dev]"
 ```
 
@@ -554,18 +554,18 @@ Version: 4.0.0
 ## Related Files
 
 ### Configuration Files
-- `/Users/masa/Projects/mcp-skillkit/pyproject.toml` - Package config and dev dependencies
-- `/Users/masa/Projects/mcp-skillkit/tests/conftest.py` - pytest fixtures
-- `/Users/masa/Projects/mcp-skillkit/tests/e2e/conftest.py` - E2E test fixtures
+- `/Users/masa/Projects/mcp-skillset/pyproject.toml` - Package config and dev dependencies
+- `/Users/masa/Projects/mcp-skillset/tests/conftest.py` - pytest fixtures
+- `/Users/masa/Projects/mcp-skillset/tests/e2e/conftest.py` - E2E test fixtures
 
 ### Test Files (Affected by pytest-asyncio)
-- `/Users/masa/Projects/mcp-skillkit/tests/e2e/test_mcp_tools.py` - 21 tests
-- `/Users/masa/Projects/mcp-skillkit/tests/e2e/test_skill_autodetect.py` - 10 async tests
-- `/Users/masa/Projects/mcp-skillkit/tests/test_mcp_server.py` - 17 async tests
-- `/Users/masa/Projects/mcp-skillkit/tests/integration/test_workflows.py` - 1 async test
+- `/Users/masa/Projects/mcp-skillset/tests/e2e/test_mcp_tools.py` - 21 tests
+- `/Users/masa/Projects/mcp-skillset/tests/e2e/test_skill_autodetect.py` - 10 async tests
+- `/Users/masa/Projects/mcp-skillset/tests/test_mcp_server.py` - 17 async tests
+- `/Users/masa/Projects/mcp-skillset/tests/integration/test_workflows.py` - 1 async test
 
 ### Test Files (Affected by pytest-benchmark)
-- `/Users/masa/Projects/mcp-skillkit/tests/benchmarks/test_performance_benchmarks.py` - 16 tests
+- `/Users/masa/Projects/mcp-skillset/tests/benchmarks/test_performance_benchmarks.py` - 16 tests
 
 ---
 

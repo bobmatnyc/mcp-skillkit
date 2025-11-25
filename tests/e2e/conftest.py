@@ -25,7 +25,7 @@ def e2e_base_dir(tmp_path: Path) -> Generator[Path, None, None]:
     """Create E2E base directory with proper structure.
 
     This fixture creates a temporary base directory that mimics
-    the real ~/.mcp-skillkit structure for E2E testing.
+    the real ~/.mcp-skillset structure for E2E testing.
 
     Args:
         tmp_path: Pytest temporary path fixture
@@ -33,7 +33,7 @@ def e2e_base_dir(tmp_path: Path) -> Generator[Path, None, None]:
     Yields:
         Path to E2E base directory
     """
-    base_dir = tmp_path / "mcp-skillkit-e2e"
+    base_dir = tmp_path / "mcp-skillset-e2e"
     base_dir.mkdir(parents=True, exist_ok=True)
 
     # Create expected subdirectories
@@ -691,7 +691,7 @@ python_functions = test_*
     (project_dir / "README.md").write_text(
         """# Sample Python Application
 
-A sample Flask application for testing mcp-skillkit.
+A sample Flask application for testing mcp-skillset.
 
 ## Installation
 
@@ -852,7 +852,7 @@ describe('add', () => {
     (project_dir / "README.md").write_text(
         """# Sample TypeScript Application
 
-A sample TypeScript application for testing mcp-skillkit.
+A sample TypeScript application for testing mcp-skillset.
 
 ## Installation
 

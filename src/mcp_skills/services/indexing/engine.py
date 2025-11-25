@@ -90,7 +90,7 @@ class IndexingEngine:
         >>> from pathlib import Path
         >>> engine = IndexingEngine(
         ...     skill_manager=manager,
-        ...     storage_path=Path.home() / ".mcp-skillkit"
+        ...     storage_path=Path.home() / ".mcp-skillset"
         ... )
         >>> stats = engine.reindex_all(force=True)
         >>> results = engine.search("python testing", top_k=5)
@@ -116,7 +116,7 @@ class IndexingEngine:
             vector_backend: Vector store backend (chromadb, qdrant, faiss)
             graph_backend: Knowledge graph backend (networkx, neo4j)
             skill_manager: SkillManager instance for skill loading
-            storage_path: Path to store ChromaDB data (defaults to ~/.mcp-skillkit/chromadb/)
+            storage_path: Path to store ChromaDB data (defaults to ~/.mcp-skillset/chromadb/)
             config: Optional MCPSkillsConfig for hybrid search weights and other settings
 
         Raises:
@@ -125,7 +125,7 @@ class IndexingEngine:
         self.vector_backend = vector_backend
         self.graph_backend = graph_backend
         self.skill_manager = skill_manager
-        self.storage_path = storage_path or (Path.home() / ".mcp-skillkit" / "chromadb")
+        self.storage_path = storage_path or (Path.home() / ".mcp-skillset" / "chromadb")
         self.config = config
 
         # Ensure storage directory exists

@@ -1,6 +1,6 @@
-# Publishing mcp-skillkit to PyPI
+# Publishing mcp-skillset to PyPI
 
-This guide covers the complete process for publishing mcp-skillkit to PyPI, including setup, testing, and release procedures.
+This guide covers the complete process for publishing mcp-skillset to PyPI, including setup, testing, and release procedures.
 
 ## Prerequisites
 
@@ -22,8 +22,8 @@ pip install --upgrade build twine
 1. **PyPI API Token**:
    - Go to https://pypi.org/manage/account/token/
    - Click "Add API token"
-   - Name: "mcp-skillkit-publishing"
-   - Scope: "Entire account" or "Project: mcp-skillkit" (after first upload)
+   - Name: "mcp-skillset-publishing"
+   - Scope: "Entire account" or "Project: mcp-skillset" (after first upload)
    - Copy the token (starts with `pypi-`)
 
 2. **TestPyPI API Token**:
@@ -118,14 +118,14 @@ python -m build
 ```
 
 This creates:
-- `dist/mcp-skillkit-0.1.0.tar.gz` (source distribution)
+- `dist/mcp-skillset-0.1.0.tar.gz` (source distribution)
 - `dist/mcp_skills-0.1.0-py3-none-any.whl` (wheel)
 
 **Verify build contents**:
 
 ```bash
 # Check source distribution contents
-tar tzf dist/mcp-skillkit-0.1.0.tar.gz | head -20
+tar tzf dist/mcp-skillset-0.1.0.tar.gz | head -20
 
 # Check wheel contents
 unzip -l dist/mcp_skills-0.1.0-py3-none-any.whl
@@ -151,7 +151,7 @@ You'll see output like:
 ```
 Uploading distributions to https://test.pypi.org/legacy/
 Uploading mcp_skills-0.1.0-py3-none-any.whl
-Uploading mcp-skillkit-0.1.0.tar.gz
+Uploading mcp-skillset-0.1.0.tar.gz
 ```
 
 **Test Installation from TestPyPI**:
@@ -162,12 +162,12 @@ python -m venv test-env
 source test-env/bin/activate  # On Windows: test-env\Scripts\activate
 
 # Install from TestPyPI
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ mcp-skillkit
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ mcp-skillset
 
 # Test basic functionality
-mcp-skillkit --version
-mcp-skillkit health
-mcp-skillkit config
+mcp-skillset --version
+mcp-skillset health
+mcp-skillset config
 
 # Clean up
 deactivate
@@ -210,11 +210,11 @@ python -m venv prod-test-env
 source prod-test-env/bin/activate
 
 # Install from PyPI
-pip install mcp-skillkit
+pip install mcp-skillset
 
 # Verify installation
-mcp-skillkit --version
-mcp-skillkit health
+mcp-skillset --version
+mcp-skillset health
 
 # Clean up
 deactivate
@@ -235,7 +235,7 @@ git push origin v0.1.0
 
 **Create GitHub Release**:
 
-1. Go to https://github.com/bobmatnyc/mcp-skillkit/releases/new
+1. Go to https://github.com/bobmatnyc/mcp-skillset/releases/new
 2. Select tag: `v0.1.0`
 3. Release title: `v0.1.0 - Initial Release`
 4. Description: Copy content from `CHANGELOG.md` for this version
@@ -264,7 +264,7 @@ git push origin main
 ### 2. Verify PyPI Page
 
 Check your package page:
-- https://pypi.org/project/mcp-skillkit/
+- https://pypi.org/project/mcp-skillset/
 - Verify README renders correctly
 - Check metadata (links, classifiers, etc.)
 - Verify badges and images display
@@ -342,7 +342,7 @@ If you accidentally publish a broken version:
 1. **DO NOT** delete the version from PyPI (not allowed)
 2. **Immediately publish a patch version** (e.g., 0.1.1) with fixes
 3. Use "yank" feature on PyPI:
-   - Go to https://pypi.org/project/mcp-skillkit/
+   - Go to https://pypi.org/project/mcp-skillset/
    - Click "Manage" → "Options" → "Yank release"
    - This prevents new installations but doesn't break existing ones
 
@@ -434,4 +434,4 @@ Use this checklist for each release:
 ---
 
 **Last Updated**: 2025-11-23
-**Package**: mcp-skillkit v0.1.0
+**Package**: mcp-skillset v0.1.0

@@ -1,1 +1,1 @@
-"""Test suite for mcp-skillkit."""
+"""Test suite for mcp-skillset."""

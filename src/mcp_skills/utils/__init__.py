@@ -1,4 +1,4 @@
-"""Utility functions and helpers for mcp-skillkit."""
+"""Utility functions and helpers for mcp-skillset."""
 
 from mcp_skills.utils.logger import get_logger, setup_logger
 

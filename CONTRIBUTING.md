@@ -1,6 +1,6 @@
-# Contributing to mcp-skillkit
+# Contributing to mcp-skillset
 
-Thank you for your interest in contributing to mcp-skillkit!
+Thank you for your interest in contributing to mcp-skillset!
 
 ## Development Setup
 
@@ -14,8 +14,8 @@ Thank you for your interest in contributing to mcp-skillkit!
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/mcp-skillkit.git
-cd mcp-skillkit
+git clone https://github.com/yourusername/mcp-skillset.git
+cd mcp-skillset
 
 # Install in development mode with dev dependencies
 pip install -e ".[dev]"
@@ -107,7 +107,7 @@ def search_skills(query: str, limit: int = 10) -> list[Skill]:
 ## Project Structure
 
 ```
-mcp-skillkit/
+mcp-skillset/
 ├── src/mcp_skills/       # Main package
 │   ├── cli/              # CLI commands
 │   ├── services/         # Core services

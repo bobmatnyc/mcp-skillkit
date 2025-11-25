@@ -1,17 +1,17 @@
-# mcp-skillkit
+# mcp-skillset
 
-[![PyPI version](https://badge.fury.io/py/mcp-skillkit.svg)](https://badge.fury.io/py/mcp-skillkit)
-[![Python Versions](https://img.shields.io/pypi/pyversions/mcp-skillkit)](https://pypi.org/project/mcp-skillkit/)
+[![PyPI version](https://badge.fury.io/py/mcp-skillset.svg)](https://badge.fury.io/py/mcp-skillset)
+[![Python Versions](https://img.shields.io/pypi/pyversions/mcp-skillset)](https://pypi.org/project/mcp-skillset/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Test Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)](https://github.com/bobmatnyc/mcp-skillkit)
+[![Test Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)](https://github.com/bobmatnyc/mcp-skillset)
 
 **Dynamic RAG-powered skills for code assistants via Model Context Protocol (MCP)**
 
-mcp-skillkit is a standalone Python application that provides intelligent, context-aware skills to code assistants through hybrid RAG (vector + knowledge graph). Unlike static skills that load at startup, mcp-skillkit enables runtime skill discovery, automatic recommendations based on your project's toolchain, and dynamic loading optimized for your workflow.
+mcp-skillset is a standalone Python application that provides intelligent, context-aware skills to code assistants through hybrid RAG (vector + knowledge graph). Unlike static skills that load at startup, mcp-skillset enables runtime skill discovery, automatic recommendations based on your project's toolchain, and dynamic loading optimized for your workflow.
 
 ## Key Features
 
-- **🚀 Zero Config**: `mcp-skillkit setup` handles everything automatically
+- **🚀 Zero Config**: `mcp-skillset setup` handles everything automatically
 - **🧠 Intelligent**: Auto-detects your project's toolchain (Python, TypeScript, Rust, Go, etc.)
 - **🔍 Dynamic Discovery**: Vector similarity + knowledge graph for better skill finding
 - **📦 Multi-Source**: Pulls skills from multiple git repositories
@@ -25,7 +25,7 @@ mcp-skillkit is a standalone Python application that provides intelligent, conte
 [pipx](https://pipx.pypa.io/) is the recommended way to install Python CLI applications:
 
 ```bash
-pipx install mcp-skillkit
+pipx install mcp-skillset
 ```
 
 ### With pip
@@ -33,29 +33,29 @@ pipx install mcp-skillkit
 If you prefer pip (not recommended for CLI tools):
 
 ```bash
-pip install mcp-skillkit
+pip install mcp-skillset
 ```
 
 ### From Source
 
 ```bash
-git clone https://github.com/bobmatnyc/mcp-skillkit.git
-cd mcp-skillkit
+git clone https://github.com/bobmatnyc/mcp-skillset.git
+cd mcp-skillset
 pip install -e .
 ```
 
 ### Local Development (Without Installation)
 
-For development, you can run mcp-skillkit directly from source without installing:
+For development, you can run mcp-skillset directly from source without installing:
 
 ```bash
 # Use the development script
-./mcp-skillkit-dev --help
-./mcp-skillkit-dev search "python testing"
-./mcp-skillkit-dev setup --auto
+./mcp-skillset-dev --help
+./mcp-skillset-dev search "python testing"
+./mcp-skillset-dev setup --auto
 ```
 
-The `mcp-skillkit-dev` script:
+The `mcp-skillset-dev` script:
 - Runs the package from source code (not installed version)
 - Uses local virtual environment if available
 - Sets up PYTHONPATH automatically
@@ -67,11 +67,11 @@ This is useful for:
 - Debugging with source code
 - Contributing to the project
 
-**Note**: For production use, install the package normally with `pip install -e .` or `pip install mcp-skillkit`.
+**Note**: For production use, install the package normally with `pip install -e .` or `pip install mcp-skillset`.
 
 ### First-Run Requirements
 
-**Important**: On first run, mcp-skillkit will automatically download a ~90MB sentence-transformer model (`all-MiniLM-L6-v2`) for semantic search. This happens during the initial `mcp-skillkit setup` or when you first run any command that requires indexing.
+**Important**: On first run, mcp-skillset will automatically download a ~90MB sentence-transformer model (`all-MiniLM-L6-v2`) for semantic search. This happens during the initial `mcp-skillset setup` or when you first run any command that requires indexing.
 
 **Requirements**:
 - ✅ Active internet connection
@@ -81,16 +81,16 @@ This is useful for:
 **Model Caching**:
 - Models are cached in `~/.cache/huggingface/` for future use
 - Subsequent runs use the cached model (no download required)
-- The cache persists across mcp-skillkit updates
+- The cache persists across mcp-skillset updates
 
 ## Quick Start
 
 ### 1. Setup
 
-Run the interactive setup wizard to configure mcp-skillkit for your project:
+Run the interactive setup wizard to configure mcp-skillset for your project:
 
 ```bash
-mcp-skillkit setup
+mcp-skillset setup
 ```
 
 **Note**: The first run will download the embedding model (~90MB) before proceeding with setup. Allow 2-5 minutes for this initial download. Subsequent runs will be much faster.
@@ -106,7 +106,7 @@ This will:
 ### 2. Start the MCP Server
 
 ```bash
-mcp-skillkit serve
+mcp-skillset serve
 ```
 
 The server will start and expose skills to your code assistant via MCP protocol.
@@ -121,7 +121,7 @@ Skills are automatically available in Claude Code. Try:
 ## Project Structure
 
 ```
-~/.mcp-skillkit/
+~/.mcp-skillset/
 ├── config.yaml              # User configuration
 ├── repos/                   # Cloned skill repositories
 │   ├── anthropics/skills/
@@ -135,7 +135,7 @@ Skills are automatically available in Claude Code. Try:
 
 ## Architecture
 
-mcp-skillkit uses a hybrid RAG approach combining:
+mcp-skillset uses a hybrid RAG approach combining:
 
 **Vector Store** (ChromaDB):
 - Fast semantic search over skill descriptions
@@ -154,7 +154,7 @@ mcp-skillkit uses a hybrid RAG approach combining:
 
 ## Configuration
 
-### Global Configuration (`~/.mcp-skillkit/config.yaml`)
+### Global Configuration (`~/.mcp-skillset/config.yaml`)
 
 ```yaml
 # Hybrid Search Configuration
@@ -220,15 +220,15 @@ You can override the config file setting using the `--search-mode` flag:
 
 ```bash
 # Use semantic-focused mode for this search
-mcp-skillkit search "python testing" --search-mode semantic_focused
+mcp-skillset search "python testing" --search-mode semantic_focused
 
 # Use graph-focused mode for recommendations
-mcp-skillkit recommend --search-mode graph_focused
+mcp-skillset recommend --search-mode graph_focused
 
 # Available modes: semantic_focused, graph_focused, balanced, current
 ```
 
-### Project Configuration (`.mcp-skillkit.yaml`)
+### Project Configuration (`.mcp-skillset.yaml`)
 
 ```yaml
 project:
@@ -246,55 +246,55 @@ auto_load:
 
 ```bash
 # Setup and Configuration
-mcp-skillkit setup                    # Interactive setup wizard
-mcp-skillkit config                   # Show configuration
+mcp-skillset setup                    # Interactive setup wizard
+mcp-skillset config                   # Show configuration
 
 # Server
-mcp-skillkit serve                    # Start MCP server (stdio)
-mcp-skillkit serve --http             # Start HTTP server
-mcp-skillkit serve --dev              # Development mode (auto-reload)
+mcp-skillset serve                    # Start MCP server (stdio)
+mcp-skillset serve --http             # Start HTTP server
+mcp-skillset serve --dev              # Development mode (auto-reload)
 
 # Skills Management
-mcp-skillkit search "testing"         # Search skills
-mcp-skillkit list                     # List all skills
-mcp-skillkit info pytest-skill        # Show skill details
-mcp-skillkit recommend                # Get recommendations
+mcp-skillset search "testing"         # Search skills
+mcp-skillset list                     # List all skills
+mcp-skillset info pytest-skill        # Show skill details
+mcp-skillset recommend                # Get recommendations
 
 # Repositories
-mcp-skillkit repo add <url>           # Add repository
-mcp-skillkit repo list                # List repositories
-mcp-skillkit repo update              # Update all repositories
+mcp-skillset repo add <url>           # Add repository
+mcp-skillset repo list                # List repositories
+mcp-skillset repo update              # Update all repositories
 
 # Indexing
-mcp-skillkit index                    # Rebuild indices
-mcp-skillkit index --incremental      # Index only new skills
+mcp-skillset index                    # Rebuild indices
+mcp-skillset index --incremental      # Index only new skills
 
 # Utilities
-mcp-skillkit doctor                   # System health check
-mcp-skillkit stats                    # Usage statistics
+mcp-skillset doctor                   # System health check
+mcp-skillset stats                    # Usage statistics
 ```
 
 ## Shell Completions
 
-Enable tab completion for the `mcp-skillkit` command to speed up your workflow:
+Enable tab completion for the `mcp-skillset` command to speed up your workflow:
 
 ### Quick Install
 
 **Bash** (requires Bash 4.4+):
 ```bash
-eval "$(_MCP_SKILLS_COMPLETE=bash_source mcp-skillkit)" >> ~/.bashrc
+eval "$(_MCP_SKILLS_COMPLETE=bash_source mcp-skillset)" >> ~/.bashrc
 source ~/.bashrc
 ```
 
 **Zsh** (macOS default):
 ```zsh
-eval "$(_MCP_SKILLS_COMPLETE=zsh_source mcp-skillkit)" >> ~/.zshrc
+eval "$(_MCP_SKILLS_COMPLETE=zsh_source mcp-skillset)" >> ~/.zshrc
 source ~/.zshrc
 ```
 
 **Fish**:
 ```fish
-echo 'eval (env _MCP_SKILLS_COMPLETE=fish_source mcp-skillkit)' >> ~/.config/fish/config.fish
+echo 'eval (env _MCP_SKILLS_COMPLETE=fish_source mcp-skillset)' >> ~/.config/fish/config.fish
 source ~/.config/fish/config.fish
 ```
 
@@ -302,15 +302,15 @@ source ~/.config/fish/config.fish
 
 - ✅ Complete all commands and subcommands
 - ✅ Complete option flags (`--help`, `--limit`, etc.)
-- ✅ Works with `mcp-skillkit`, `mcp-skillkit repo`, and all other commands
+- ✅ Works with `mcp-skillset`, `mcp-skillset repo`, and all other commands
 
 ### Verification
 
 Test completions are working:
 ```bash
-mcp-skillkit <TAB>        # Shows: config health index info list mcp recommend repo search setup stats
-mcp-skillkit repo <TAB>   # Shows: add list update
-mcp-skillkit search --<TAB>  # Shows: --category --help --limit
+mcp-skillset <TAB>        # Shows: config health index info list mcp recommend repo search setup stats
+mcp-skillset repo <TAB>   # Shows: add list update
+mcp-skillset search --<TAB>  # Shows: --category --help --limit
 ```
 
 ### Documentation
@@ -319,7 +319,7 @@ For detailed installation instructions, troubleshooting, and advanced usage, see
 
 ## MCP Tools
 
-mcp-skillkit exposes these tools to code assistants:
+mcp-skillset exposes these tools to code assistants:
 
 - **search_skills**: Natural language skill search
 - **get_skill**: Load full skill instructions by ID
@@ -337,23 +337,23 @@ mcp-skillkit exposes these tools to code assistants:
 ### Setup Development Environment
 
 ```bash
-git clone https://github.com/bobmatnyc/mcp-skillkit.git
-cd mcp-skillkit
+git clone https://github.com/bobmatnyc/mcp-skillset.git
+cd mcp-skillset
 pip install -e ".[dev]"
 ```
 
 ### Running from Source (Development Mode)
 
-Use the `./mcp-skillkit-dev` script to run commands directly from source without installation:
+Use the `./mcp-skillset-dev` script to run commands directly from source without installation:
 
 ```bash
 # Run any CLI command
-./mcp-skillkit-dev --version
-./mcp-skillkit-dev search "debugging"
-./mcp-skillkit-dev serve --dev
+./mcp-skillset-dev --version
+./mcp-skillset-dev search "debugging"
+./mcp-skillset-dev serve --dev
 
 # All arguments pass through
-./mcp-skillkit-dev info systematic-debugging
+./mcp-skillset-dev info systematic-debugging
 ```
 
 **How it works**:
@@ -370,10 +370,10 @@ Use the `./mcp-skillkit-dev` script to run commands directly from source without
 **Installed vs. Source**:
 ```bash
 # Installed version (from pip install -e .)
-mcp-skillkit search "testing"
+mcp-skillset search "testing"
 
 # Source version (no installation required)
-./mcp-skillkit-dev search "testing"
+./mcp-skillset-dev search "testing"
 ```
 
 ### Run Tests
@@ -384,7 +384,7 @@ make quality
 
 ### Performance Benchmarks
 
-mcp-skillkit includes comprehensive performance benchmarks to track and prevent regressions:
+mcp-skillset includes comprehensive performance benchmarks to track and prevent regressions:
 
 ```bash
 # Run all benchmarks (includes slow tests)
@@ -434,7 +434,7 @@ make lint-fix
 
 ### Security Scanning
 
-mcp-skillkit includes comprehensive security scanning to identify vulnerabilities in dependencies and code:
+mcp-skillset includes comprehensive security scanning to identify vulnerabilities in dependencies and code:
 
 #### Automated Security (Dependabot + GitHub Actions)
 
@@ -489,7 +489,7 @@ For vulnerability reporting and security best practices, see [.github/SECURITY.m
 See [docs/architecture/README.md](docs/architecture/README.md) for detailed architecture design.
 
 ### Skills Collections
-See [docs/skills/RESOURCES.md](docs/skills/RESOURCES.md) for a comprehensive index of skill repositories compatible with mcp-skillkit, including:
+See [docs/skills/RESOURCES.md](docs/skills/RESOURCES.md) for a comprehensive index of skill repositories compatible with mcp-skillset, including:
 - Official Anthropic skills
 - Community collections (obra/superpowers, claude-mpm-skills, etc.)
 - Toolchain-specific skills (Python, TypeScript, Rust, Go, Java)
@@ -553,14 +553,14 @@ For environments without internet access:
    tar -xzf /path/to/sentence-transformers-model.tar.gz
    ```
 
-3. Install mcp-skillkit (transfer wheel if needed):
+3. Install mcp-skillset (transfer wheel if needed):
    ```bash
-   pip install mcp-skillkit  # Or install from wheel
+   pip install mcp-skillset  # Or install from wheel
    ```
 
 4. Verify the setup:
    ```bash
-   mcp-skillkit doctor
+   mcp-skillset doctor
    ```
 
 #### 5. Custom Cache Location
@@ -569,7 +569,7 @@ If you need to use a different cache directory:
 ```bash
 export HF_HOME=/custom/path/to/cache
 export TRANSFORMERS_CACHE=/custom/path/to/cache
-mcp-skillkit setup
+mcp-skillset setup
 ```
 
 #### 6. Disk Space Issues
@@ -613,12 +613,12 @@ chmod 755 ~/.cache/huggingface
 ### Getting Help
 
 If you encounter issues not covered here:
-1. Check [GitHub Issues](https://github.com/bobmatnyc/mcp-skillkit/issues)
-2. Review logs: `~/.mcp-skillkit/logs/`
-3. Run health check: `mcp-skillkit doctor`
+1. Check [GitHub Issues](https://github.com/bobmatnyc/mcp-skillset/issues)
+2. Review logs: `~/.mcp-skillset/logs/`
+3. Run health check: `mcp-skillset doctor`
 4. Open a new issue with:
    - Error message and stack trace
-   - Output of `mcp-skillkit --version`
+   - Output of `mcp-skillset --version`
    - Operating system and Python version
    - Steps to reproduce
 
@@ -645,9 +645,9 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Links
 
-- **PyPI Package**: [mcp-skillkit on PyPI](https://pypi.org/project/mcp-skillkit/)
-- **Documentation**: [GitHub Wiki](https://github.com/bobmatnyc/mcp-skillkit/wiki)
-- **Issue Tracker**: [GitHub Issues](https://github.com/bobmatnyc/mcp-skillkit/issues)
+- **PyPI Package**: [mcp-skillset on PyPI](https://pypi.org/project/mcp-skillset/)
+- **Documentation**: [GitHub Wiki](https://github.com/bobmatnyc/mcp-skillset/wiki)
+- **Issue Tracker**: [GitHub Issues](https://github.com/bobmatnyc/mcp-skillset/issues)
 - **MCP Registry**: [MCP Servers](https://registry.modelcontextprotocol.io)
 - **Publishing Guide**: [docs/publishing.md](docs/publishing.md)
 

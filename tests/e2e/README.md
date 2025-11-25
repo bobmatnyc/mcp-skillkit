@@ -1,6 +1,6 @@
-# End-to-End (E2E) Tests for mcp-skillkit
+# End-to-End (E2E) Tests for mcp-skillset
 
-This directory contains comprehensive end-to-end tests for the mcp-skillkit project, covering all CLI commands, MCP tools, and complete workflows.
+This directory contains comprehensive end-to-end tests for the mcp-skillset project, covering all CLI commands, MCP tools, and complete workflows.
 
 ## Test Organization
 
@@ -11,17 +11,17 @@ This directory contains comprehensive end-to-end tests for the mcp-skillkit proj
    - Uses Click's CliRunner for command execution
    - Verifies exit codes, output formatting, and error handling
    - Commands tested:
-     - `mcp-skillkit setup` (auto and interactive modes)
-     - `mcp-skillkit mcp` (serve)
-     - `mcp-skillkit search`
-     - `mcp-skillkit list`
-     - `mcp-skillkit info`
-     - `mcp-skillkit recommend`
-     - `mcp-skillkit repo add/list/update`
-     - `mcp-skillkit index`
-     - `mcp-skillkit doctor`
-     - `mcp-skillkit stats`
-     - `mcp-skillkit config`
+     - `mcp-skillset setup` (auto and interactive modes)
+     - `mcp-skillset mcp` (serve)
+     - `mcp-skillset search`
+     - `mcp-skillset list`
+     - `mcp-skillset info`
+     - `mcp-skillset recommend`
+     - `mcp-skillset repo add/list/update`
+     - `mcp-skillset index`
+     - `mcp-skillset doctor`
+     - `mcp-skillset stats`
+     - `mcp-skillset config`
 
 2. **test_mcp_tools.py** (25+ tests)
    - Tests all 5 MCP tools via direct function calls
@@ -54,7 +54,7 @@ This directory contains comprehensive end-to-end tests for the mcp-skillkit proj
 
 Located in `conftest.py`:
 
-- **e2e_base_dir**: Temporary base directory mimicking ~/.mcp-skillkit
+- **e2e_base_dir**: Temporary base directory mimicking ~/.mcp-skillset
 - **e2e_repos_dir**: E2E repositories directory
 - **e2e_storage_dir**: E2E storage directory (ChromaDB, etc.)
 - **cli_runner**: Click CliRunner for CLI testing

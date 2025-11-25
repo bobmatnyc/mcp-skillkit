@@ -1,6 +1,6 @@
 # Interactive Configuration Guide
 
-The `mcp-skillkit config` command has been enhanced with an interactive menu-based configuration system while maintaining full backward compatibility.
+The `mcp-skillset config` command has been enhanced with an interactive menu-based configuration system while maintaining full backward compatibility.
 
 ## Usage Modes
 
@@ -9,7 +9,7 @@ The `mcp-skillkit config` command has been enhanced with an interactive menu-bas
 Run without any flags to launch the interactive menu:
 
 ```bash
-mcp-skillkit config
+mcp-skillset config
 ```
 
 This opens a menu-driven interface where you can:
@@ -25,7 +25,7 @@ This opens a menu-driven interface where you can:
 Use the `--show` flag to display current configuration without making changes:
 
 ```bash
-mcp-skillkit config --show
+mcp-skillset config --show
 ```
 
 This preserves the original behavior of the `config` command.
@@ -36,10 +36,10 @@ Use the `--set` flag to change configuration values from the command line:
 
 ```bash
 # Set base directory
-mcp-skillkit config --set base_dir=/custom/path
+mcp-skillset config --set base_dir=/custom/path
 
 # Change search mode preset
-mcp-skillkit config --set search_mode=balanced
+mcp-skillset config --set search_mode=balanced
 ```
 
 ## Interactive Menu Features
@@ -47,7 +47,7 @@ mcp-skillkit config --set search_mode=balanced
 ### Main Menu Options
 
 1. **Base directory configuration**
-   - Change the base directory for mcp-skillkit
+   - Change the base directory for mcp-skillset
    - Validates path is writable
    - Creates directory if it doesn't exist
 
@@ -102,7 +102,7 @@ Manually configure vector and graph weights. Weights must sum to 1.0.
 
 ## Configuration Persistence
 
-All configuration changes are saved to `~/.mcp-skillkit/config.yaml` immediately after modification.
+All configuration changes are saved to `~/.mcp-skillset/config.yaml` immediately after modification.
 
 ### Configuration File Format
 
@@ -122,7 +122,7 @@ hybrid_search:
 ### Example 1: Configure Base Directory
 
 ```bash
-$ mcp-skillkit config
+$ mcp-skillset config
 ? What would you like to configure?
   > Base directory configuration
     Search settings (hybrid search weights)
@@ -132,14 +132,14 @@ $ mcp-skillkit config
     Exit
 
 # Select "Base directory configuration"
-? Enter base directory path: /custom/mcp-skillkit
-✓ Base directory updated to: /custom/mcp-skillkit
+? Enter base directory path: /custom/mcp-skillset
+✓ Base directory updated to: /custom/mcp-skillset
 ```
 
 ### Example 2: Change Search Mode
 
 ```bash
-$ mcp-skillkit config
+$ mcp-skillset config
 ? What would you like to configure?
     Base directory configuration
   > Search settings (hybrid search weights)
@@ -160,7 +160,7 @@ $ mcp-skillkit config
 ### Example 3: Add Repository
 
 ```bash
-$ mcp-skillkit config
+$ mcp-skillset config
 ? What would you like to configure?
     ...
   > Repository management
@@ -179,23 +179,23 @@ $ mcp-skillkit config
   • Skills: 15
   • Priority: 80
 
-Tip: Run 'mcp-skillkit index' to index new skills
+Tip: Run 'mcp-skillset index' to index new skills
 ```
 
 ### Example 4: Non-Interactive Mode
 
 ```bash
 # Quick configuration changes
-$ mcp-skillkit config --set search_mode=semantic_focused
+$ mcp-skillset config --set search_mode=semantic_focused
 ✓ Search mode set to: semantic_focused (vector=0.9, graph=0.1)
-Configuration saved to /Users/user/.mcp-skillkit/config.yaml
+Configuration saved to /Users/user/.mcp-skillset/config.yaml
 
 # View configuration
-$ mcp-skillkit config --show
+$ mcp-skillset config --show
 ⚙️  Current Configuration
 
-mcp-skillkit Configuration
-└── 📁 Base Directory: /Users/user/.mcp-skillkit
+mcp-skillset Configuration
+└── 📁 Base Directory: /Users/user/.mcp-skillset
     ...
     ├── ⚖️  Hybrid Search
     │   ├── ✓ Mode: semantic_focused
@@ -209,10 +209,10 @@ The original `config` command behavior is preserved through the `--show` flag:
 
 ```bash
 # Old behavior (still works)
-mcp-skillkit config --show
+mcp-skillset config --show
 
 # New interactive behavior (default)
-mcp-skillkit config
+mcp-skillset config
 ```
 
 Scripts and automation can use `--show` for read-only access and `--set` for programmatic configuration changes.
@@ -223,7 +223,7 @@ Scripts and automation can use `--show` for read-only access and `--set` for pro
 
 1. Explicit CLI arguments (highest priority)
 2. Environment variables (`MCP_SKILLS_*`)
-3. Config file (`~/.mcp-skillkit/config.yaml`)
+3. Config file (`~/.mcp-skillset/config.yaml`)
 4. Defaults (lowest priority)
 
 ### Immediate Persistence
