@@ -186,6 +186,33 @@ class ServerConfig(BaseSettings):
     )
 
 
+class GitHubDiscoveryConfig(BaseSettings):
+    """GitHub discovery configuration.
+
+    Attributes:
+        enabled: Enable GitHub repository discovery
+        min_stars: Minimum star count for discovered repositories
+        topics: Default topics to search for
+        github_token: Optional GitHub token for higher rate limits
+    """
+
+    enabled: bool = Field(True, description="Enable GitHub discovery")
+    min_stars: int = Field(2, description="Minimum stars filter", ge=0)
+    topics: list[str] = Field(
+        default_factory=lambda: [
+            "claude-skills",
+            "anthropic-skills",
+            "mcp-skills",
+            "ai-skills",
+        ],
+        description="Default search topics",
+    )
+    github_token: str | None = Field(
+        None,
+        description="GitHub personal access token (optional, for higher rate limits)",
+    )
+
+
 class RepositoryConfig(BaseSettings):
     """Repository configuration.
 
@@ -233,6 +260,10 @@ class MCPSkillsConfig(BaseSettings):
     hybrid_search: HybridSearchConfig = Field(
         default_factory=HybridSearchConfig.current,
         description="Hybrid search weighting config",
+    )
+    github_discovery: GitHubDiscoveryConfig = Field(
+        default_factory=GitHubDiscoveryConfig,
+        description="GitHub discovery config",
     )
 
     # Repositories
