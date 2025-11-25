@@ -145,20 +145,94 @@ This will:
 - Configure MCP server integration
 - Validate the setup
 
-### 2. Start the MCP Server
+### 2. Explore Available Skills
+
+Before diving in, explore what's available:
 
 ```bash
-mcp-skillset serve
+# Get personalized recommendations based on your project
+mcp-skillset recommend
+
+# Search for specific topics
+mcp-skillset search "testing patterns"
+
+# Browse all skills interactively
+mcp-skillset demo
+
+# List all skills in compact format
+mcp-skillset list --compact
+```
+
+### 3. Start the MCP Server
+
+```bash
+mcp-skillset mcp
 ```
 
 The server will start and expose skills to your code assistant via MCP protocol.
 
-### 3. Use with Claude Code
+### 4. Use with Claude Code
 
 Skills are automatically available in Claude Code. Try:
 - "What testing skills are available for Python?"
 - "Show me debugging skills"
 - "Recommend skills for my project"
+- "Use the pytest-fixtures skill to help me write better tests"
+
+### Real-World Usage Scenarios
+
+**Scenario 1: Starting a New Python Project**
+```bash
+# Get setup and testing recommendations
+cd ~/my-new-python-project
+mcp-skillset recommend
+
+# Search for testing frameworks
+mcp-skillset search "python testing frameworks" --limit 5
+
+# Learn about pytest best practices
+mcp-skillset info pytest-best-practices
+
+# Start MCP server for Claude integration
+mcp-skillset mcp
+```
+
+**Scenario 2: Debugging Production Issues**
+```bash
+# Find debugging techniques
+mcp-skillset search "production debugging" --search-mode semantic_focused
+
+# Get systematic debugging approach
+mcp-skillset info systematic-debugging
+
+# View example questions
+mcp-skillset demo systematic-debugging
+```
+
+**Scenario 3: Code Review Preparation**
+```bash
+# Find code review and quality skills
+mcp-skillset search "code review" --category "Best Practices"
+
+# Explore testing and quality skills
+mcp-skillset list --category "Testing"
+
+# Enrich your code review prompt
+mcp-skillset enrich "Review this code for security and performance issues" --max-skills 3
+```
+
+**Scenario 4: Learning New Framework**
+```bash
+# Search for framework-specific skills
+mcp-skillset search "async python patterns"
+
+# Get recommendations for async projects
+cd ~/async-project
+mcp-skillset recommend --search-mode graph_focused
+
+# Explore related skills interactively
+mcp-skillset demo
+```
 
 ## Project Structure
 
@@ -286,53 +360,476 @@ auto_load:
 
 ## CLI Commands
 
+mcp-skillset provides a rich, interactive CLI with comprehensive command-line options and beautiful terminal output powered by Rich and Questionary.
+
+### Quick Reference
+
+| Command | Purpose | Key Options |
+|---------|---------|-------------|
+| `setup` | Initial configuration wizard | `--auto`, `--project-dir` |
+| `config` | View/modify configuration | `--show`, `--set` |
+| `index` | Rebuild indices | `--incremental`, `--force` |
+| `install` | Install for AI agents | `--agent`, `--dry-run` |
+| `mcp` | Start MCP server | `--dev` |
+| `search` | Find skills by query | `--limit`, `--category`, `--search-mode` |
+| `list` | List all skills | `--category`, `--compact` |
+| `info` / `show` | Show skill details | (skill-id argument) |
+| `recommend` | Get recommendations | `--search-mode` |
+| `demo` | Interactive skill explorer | `--interactive` |
+| `repo add` | Add skill repository | `--priority` |
+| `repo list` | List repositories | - |
+| `repo update` | Update repositories | (optional repo-id) |
+| `doctor` | Health check | - |
+| `stats` | Usage statistics | - |
+| `enrich` | Enrich prompts | `--max-skills`, `--full`, `--output` |
+
+**Global options:** `--version`, `--verbose`, `--debug`, `--help`
+
+### Core Commands
+
+#### `setup` - Initial Configuration
+
+Auto-configure mcp-skillset for your project with intelligent toolchain detection.
+
 ```bash
-# Setup and Configuration
-mcp-skillset setup                    # Interactive setup wizard
-mcp-skillset config                   # Show configuration
+# Interactive setup wizard (recommended for first-time setup)
+mcp-skillset setup
 
-# Server
-mcp-skillset serve                    # Start MCP server (stdio)
-mcp-skillset serve --http             # Start HTTP server
-mcp-skillset serve --dev              # Development mode (auto-reload)
+# Non-interactive setup with defaults (CI/automation)
+mcp-skillset setup --auto
 
-# Skills Management
-mcp-skillset search "testing"         # Search skills
-mcp-skillset list                     # List all skills
-mcp-skillset info pytest-skill        # Show skill details
-mcp-skillset show <skill-id>          # Show skill details (alias for info)
-mcp-skillset recommend                # Get recommendations
-mcp-skillset demo                     # Interactive skill demo with menu
-mcp-skillset demo <skill-id>          # Generate example prompts for a skill
+# Setup for specific project directory
+mcp-skillset setup --project-dir /path/to/project
 
-# Repositories
-mcp-skillset repo add <url>           # Add repository
-mcp-skillset repo list                # List repositories
-mcp-skillset repo update              # Update all repositories
-
-# Indexing
-mcp-skillset index                    # Rebuild indices
-mcp-skillset index --incremental      # Index only new skills
-
-# Utilities
-mcp-skillset doctor                   # System health check
-mcp-skillset stats                    # Usage statistics
+# Custom config file location
+mcp-skillset setup --config ~/.config/mcp-skillset/custom.yaml
 ```
 
-### Exploring Skills with Demo
+**What it does:**
+- Downloads embedding model (~90MB, first run only)
+- Detects project toolchain (Python, TypeScript, Rust, Go, etc.)
+- Clones relevant skill repositories
+- Builds vector + knowledge graph indices
+- Configures MCP server integration
+- Validates setup completion
 
-The `demo` command helps you discover skills and understand their usage:
+**First-Run Note:** Allow 2-5 minutes for initial model download. Subsequent runs are instant.
+
+#### `config` - Configuration Management
+
+View or modify mcp-skillset configuration settings.
 
 ```bash
-# Browse all skills with interactive menu
+# Show current configuration (read-only)
+mcp-skillset config
+mcp-skillset config --show
+
+# Set configuration value interactively
+mcp-skillset config --set hybrid_search.preset=semantic_focused
+mcp-skillset config --set repositories[0].auto_update=true
+```
+
+**Configuration file:** `~/.mcp-skillset/config.yaml`
+
+#### `index` - Rebuild Indices
+
+Rebuild vector and knowledge graph indices from skill repositories.
+
+```bash
+# Full rebuild (recommended after adding repositories)
+mcp-skillset index
+
+# Incremental indexing (only new/changed skills)
+mcp-skillset index --incremental
+
+# Force full reindex (bypass cache)
+mcp-skillset index --force
+```
+
+**Use cases:**
+- After adding new repositories with `repo add`
+- When skill content has changed
+- Troubleshooting search issues
+- Switching embedding models
+
+#### `install` - Agent Integration
+
+Install MCP SkillSet configuration for AI agents with auto-detection.
+
+```bash
+# Auto-detect and install for all supported agents
+mcp-skillset install
+
+# Install for specific agent
+mcp-skillset install --agent claude-desktop
+mcp-skillset install --agent claude-code
+mcp-skillset install --agent auggie
+
+# Preview installation without making changes
+mcp-skillset install --dry-run
+
+# Force overwrite existing configuration
+mcp-skillset install --force
+```
+
+**Supported agents:**
+- `claude-desktop` - Claude Desktop App
+- `claude-code` - Claude Code CLI
+- `auggie` - Auggie AI Assistant
+- `all` - Install for all detected agents
+
+#### `mcp` - MCP Server
+
+Start the Model Context Protocol server for integration with code assistants.
+
+```bash
+# Start MCP server (stdio transport)
+mcp-skillset mcp
+
+# Development mode (auto-reload on changes)
+mcp-skillset mcp --dev
+```
+
+**Server details:**
+- Transport: stdio (standard input/output)
+- Protocol: Model Context Protocol v1.0
+- Tools exposed: search_skills, get_skill, recommend_skills, list_categories, update_repositories
+
+### Search & Discovery Commands
+
+#### `search` - Semantic Search
+
+Search for skills using natural language queries with hybrid RAG (vector + knowledge graph).
+
+```bash
+# Basic search
+mcp-skillset search "python testing"
+
+# Limit results
+mcp-skillset search "debugging" --limit 5
+
+# Filter by category
+mcp-skillset search "testing" --category "Python"
+
+# Override search mode (semantic vs graph weighting)
+mcp-skillset search "async patterns" --search-mode semantic_focused
+mcp-skillset search "pytest fixtures" --search-mode graph_focused
+```
+
+**Search modes:**
+- `current` (default) - 70% semantic, 30% graph
+- `semantic_focused` - 90% semantic, 10% graph (best for fuzzy queries)
+- `graph_focused` - 30% semantic, 70% graph (best for related skills)
+- `balanced` - 50% semantic, 50% graph
+
+**Examples:**
+```bash
+# Find testing skills for Python
+mcp-skillset search "python unit testing frameworks"
+
+# Discover debugging techniques
+mcp-skillset search "debugging techniques" --limit 3
+
+# Find skills related to async programming
+mcp-skillset search "asynchronous programming" --search-mode graph_focused
+```
+
+#### `list` - List All Skills
+
+Display all available skills with filtering options.
+
+```bash
+# List all skills
+mcp-skillset list
+
+# Filter by category
+mcp-skillset list --category "Testing"
+
+# Compact output (table format)
+mcp-skillset list --compact
+```
+
+**Output formats:**
+- Default: Rich panels with descriptions
+- Compact: Table view with ID, title, category
+
+#### `info` / `show` - Skill Details
+
+Show detailed information about a specific skill.
+
+```bash
+# Show skill details (both commands are identical)
+mcp-skillset info pytest-fixtures
+mcp-skillset show systematic-debugging
+
+# Output includes:
+# - Full skill ID and title
+# - Description
+# - Category
+# - Repository source
+# - Full instructions preview
+```
+
+#### `recommend` - Smart Recommendations
+
+Get intelligent skill recommendations based on your project's toolchain.
+
+```bash
+# Get recommendations for current directory
+mcp-skillset recommend
+
+# Override search mode for recommendations
+mcp-skillset recommend --search-mode graph_focused
+```
+
+**How it works:**
+1. Analyzes project directory (package.json, pyproject.toml, Cargo.toml, etc.)
+2. Detects primary language and frameworks
+3. Searches for relevant skills using detected toolchain
+4. Ranks by relevance to your tech stack
+
+**Example output:**
+```
+🎯 Recommended Skills for Python Project
+
+1. pytest-advanced-fixtures
+   Category: Testing | Relevance: 0.92
+   Advanced pytest fixture patterns for complex test scenarios
+
+2. python-async-debugging
+   Category: Debugging | Relevance: 0.88
+   Debug async/await code with modern Python tools
+```
+
+#### `demo` - Interactive Skill Explorer
+
+Generate example prompts and explore skills interactively.
+
+```bash
+# Interactive menu (browse all skills)
 mcp-skillset demo
 
-# Generate example prompts for a specific skill
-mcp-skillset demo pytest-skill
+# Interactive mode explicitly
+mcp-skillset demo --interactive
+
+# Generate examples for specific skill
+mcp-skillset demo pytest-fixtures
+mcp-skillset demo systematic-debugging
 ```
 
-The demo command automatically extracts key concepts from skill instructions
-and generates relevant example questions and use cases.
+**Features:**
+- Browse all skills with Rich menu
+- Auto-generates relevant example questions
+- Extracts key concepts from skill instructions
+- Shows practical use cases
+
+**Example output:**
+```
+📚 Demo: pytest-fixtures
+
+Key Concepts:
+- Fixture scopes (function, class, module, session)
+- Fixture dependencies and chaining
+- Parametrized fixtures
+- Fixture cleanup and teardown
+
+Example Questions:
+1. How do I create a database fixture with session scope?
+2. Show me how to parametrize fixtures for multiple test cases
+3. What's the best way to chain fixtures together?
+```
+
+### Repository Management Commands
+
+#### `repo add` - Add Repository
+
+Add a new skill repository to your configuration.
+
+```bash
+# Add repository with default priority
+mcp-skillset repo add https://github.com/user/skills.git
+
+# Add with custom priority (higher = searched first)
+mcp-skillset repo add https://github.com/user/skills.git --priority 100
+```
+
+**Priority levels:**
+- 100: Highest (official repositories)
+- 50: Medium (default, community repositories)
+- 10: Low (experimental repositories)
+
+#### `repo list` - List Repositories
+
+Display all configured skill repositories.
+
+```bash
+mcp-skillset repo list
+```
+
+**Output includes:**
+- Repository URL
+- Priority level
+- Auto-update status
+- Last update timestamp
+- Number of skills indexed
+
+#### `repo update` - Update Repositories
+
+Pull latest changes from skill repositories.
+
+```bash
+# Update all repositories
+mcp-skillset repo update
+
+# Update specific repository by ID
+mcp-skillset repo update anthropic-skills
+```
+
+**Note:** After updating, run `mcp-skillset index --incremental` to index new skills.
+
+### Utility Commands
+
+#### `doctor` - Health Check
+
+Run comprehensive system health check and validation.
+
+```bash
+mcp-skillset doctor
+```
+
+**Checks performed:**
+- Configuration file validity
+- Repository accessibility
+- Index integrity (vector + knowledge graph)
+- Embedding model availability
+- Database connectivity
+- Disk space and permissions
+
+**Example output:**
+```
+🏥 MCP SkillSet Health Check
+
+✅ Configuration: OK
+✅ Repositories: 3 configured, all accessible
+✅ Vector Store: 147 skills indexed
+✅ Knowledge Graph: 147 nodes, 423 edges
+✅ Embedding Model: all-MiniLM-L6-v2 (cached)
+✅ Database: SQLite OK
+✅ Disk Space: 2.3 GB available
+
+System Status: Healthy ✅
+```
+
+#### `stats` - Usage Statistics
+
+Display usage statistics and metrics.
+
+```bash
+mcp-skillset stats
+```
+
+**Metrics displayed:**
+- Total skills indexed
+- Skills by category
+- Skills by repository
+- Search query counts
+- Most used skills
+- Index size and memory usage
+
+#### `enrich` - Prompt Enrichment
+
+Enrich prompts with relevant skill context (advanced feature).
+
+```bash
+# Enrich a prompt with relevant skills
+mcp-skillset enrich "help me write tests for async functions"
+
+# Limit skills included
+mcp-skillset enrich "debug memory leak" --max-skills 2
+
+# Include full skill instructions (vs brief summaries)
+mcp-skillset enrich "testing strategy" --full
+
+# Set relevance threshold (0.0-1.0)
+mcp-skillset enrich "python patterns" --threshold 0.8
+
+# Save enriched prompt to file
+mcp-skillset enrich "code review checklist" --output enriched_prompt.txt
+
+# Copy to clipboard (requires pyperclip)
+mcp-skillset enrich "refactoring" --clipboard
+```
+
+**What it does:**
+1. Searches for relevant skills based on your prompt
+2. Extracts key concepts and instructions from top matches
+3. Augments your prompt with skill context
+4. Outputs enriched prompt for use with LLMs
+
+### Global Options
+
+All commands support these global flags:
+
+```bash
+# Show version
+mcp-skillset --version
+
+# Verbose output
+mcp-skillset --verbose search "testing"
+
+# Debug mode (detailed logs)
+mcp-skillset --debug search "testing"
+
+# Help for any command
+mcp-skillset --help
+mcp-skillset search --help
+mcp-skillset repo --help
+```
+
+### Command Workflows
+
+**First-Time Setup Flow:**
+```bash
+# 1. Install mcp-skillset
+pipx install mcp-skillset
+
+# 2. Run setup wizard
+mcp-skillset setup
+
+# 3. Verify installation
+mcp-skillset doctor
+
+# 4. Explore available skills
+mcp-skillset list
+```
+
+**Daily Usage Pattern:**
+```bash
+# Morning: Get recommendations for your project
+cd ~/my-project
+mcp-skillset recommend
+
+# Search for specific skill when needed
+mcp-skillset search "async debugging"
+
+# View skill details before using
+mcp-skillset info python-async-debugging
+
+# Start MCP server for Claude integration
+mcp-skillset mcp
+```
+
+**Adding New Skill Repository:**
+```bash
+# 1. Add repository
+mcp-skillset repo add https://github.com/user/custom-skills.git
+
+# 2. Rebuild index to include new skills
+mcp-skillset index --incremental
+
+# 3. Search new skills
+mcp-skillset search "custom skill topic"
+```
 
 ## Shell Completions
 
