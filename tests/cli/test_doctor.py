@@ -38,7 +38,7 @@ class TestDoctorCommand:
         mock_config_cls.load.return_value = mock_config
 
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = [mock_skill] * 5
+        mock_manager.discover_skills.return_value = [mock_skill] * 5
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()
@@ -86,7 +86,7 @@ class TestDoctorCommand:
         mock_config_cls.load.return_value = mock_config
 
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = []
+        mock_manager.discover_skills.return_value = []
         mock_manager_cls.return_value = mock_manager
 
         # Run command
@@ -202,7 +202,7 @@ class TestDoctorCommand:
         mock_config_cls.load.return_value = mock_config
 
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = [mock_skill] * 10
+        mock_manager.discover_skills.return_value = [mock_skill] * 10
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()

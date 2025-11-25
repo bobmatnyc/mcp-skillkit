@@ -34,7 +34,7 @@ class TestIndexCommand:
         """Test basic index command."""
         # Setup mocks
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = []
+        mock_manager.discover_skills.return_value = []
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()
@@ -64,7 +64,7 @@ class TestIndexCommand:
         """Test index command with --incremental flag."""
         # Setup mocks
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = []
+        mock_manager.discover_skills.return_value = []
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()
@@ -93,7 +93,7 @@ class TestIndexCommand:
         """Test index command with --force flag."""
         # Setup mocks
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = []
+        mock_manager.discover_skills.return_value = []
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()
@@ -122,7 +122,7 @@ class TestIndexCommand:
         """Test index command with actual skills to index."""
         # Setup mocks
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = [mock_skill] * 5
+        mock_manager.discover_skills.return_value = [mock_skill] * 5
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()
@@ -151,7 +151,7 @@ class TestIndexCommand:
         """Test index command when no skills found."""
         # Setup mocks
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = []
+        mock_manager.discover_skills.return_value = []
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()
@@ -196,7 +196,7 @@ class TestIndexCommand:
         """Test index command displays statistics."""
         # Setup mocks with stats
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = []
+        mock_manager.discover_skills.return_value = []
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()
@@ -226,7 +226,7 @@ class TestIndexCommand:
         """Test that incremental and force flags work together."""
         # Setup mocks
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = []
+        mock_manager.discover_skills.return_value = []
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()
@@ -251,7 +251,7 @@ class TestIndexCommand:
         """Test index command shows progress information."""
         # Setup mocks
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = [mock_skill] * 20
+        mock_manager.discover_skills.return_value = [mock_skill] * 20
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()

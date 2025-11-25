@@ -155,7 +155,7 @@ class TestMCPCommand:
         mock_config_cls.load.return_value = mock_config
 
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = []
+        mock_manager.discover_skills.return_value = []
         mock_manager_cls.return_value = mock_manager
 
         # Run command (should warn about no skills)

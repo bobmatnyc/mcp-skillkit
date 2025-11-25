@@ -45,19 +45,12 @@ class TestConfigCommand:
         assert result.exit_code == 0
         assert "Current Configuration" in result.output
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
     def test_config_set_valid_value(
         self,
-        mock_config_cls: Mock,
         cli_runner: CliRunner,
-        mock_config: MCPSkillsConfig,
         tmp_path: Path,
     ) -> None:
         """Test config --set with valid key=value."""
-        # Setup mock
-        mock_config_cls.load.return_value = mock_config
-        mock_config.save = Mock()
-
         # Run command
         result = cli_runner.invoke(
             cli,
@@ -66,6 +59,7 @@ class TestConfigCommand:
 
         # Verify
         assert result.exit_code == 0
+        assert "Base directory set to" in result.output or "✓" in result.output
 
     @patch("mcp_skills.cli.main.MCPSkillsConfig")
     def test_config_set_invalid_format(
@@ -88,18 +82,11 @@ class TestConfigCommand:
         assert result.exit_code != 0
         assert "format" in result.output.lower() or "=" in result.output
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
     def test_config_set_search_mode(
         self,
-        mock_config_cls: Mock,
         cli_runner: CliRunner,
-        mock_config: MCPSkillsConfig,
     ) -> None:
         """Test config --set for search_mode."""
-        # Setup mock
-        mock_config_cls.load.return_value = mock_config
-        mock_config.save = Mock()
-
         # Run command
         result = cli_runner.invoke(
             cli,
@@ -108,6 +95,7 @@ class TestConfigCommand:
 
         # Verify
         assert result.exit_code == 0
+        assert "Search mode set to" in result.output or "balanced" in result.output
 
     @patch("mcp_skills.cli.main.MCPSkillsConfig")
     def test_config_set_invalid_key(
@@ -129,7 +117,7 @@ class TestConfigCommand:
         # Verify error
         assert result.exit_code != 0
 
-    @patch("mcp_skills.cli.main.ConfigMenu")
+    @patch("mcp_skills.cli.config_menu.ConfigMenu")
     def test_config_interactive_mode(
         self,
         mock_menu_cls: Mock,
@@ -147,7 +135,7 @@ class TestConfigCommand:
         # Verify interactive menu was invoked
         mock_menu_cls.assert_called_once()
 
-    @patch("mcp_skills.cli.main.ConfigMenu")
+    @patch("mcp_skills.cli.config_menu.ConfigMenu")
     def test_config_interactive_keyboard_interrupt(
         self,
         mock_menu_cls: Mock,
@@ -166,7 +154,7 @@ class TestConfigCommand:
         assert result.exit_code == 1
         assert "cancelled" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.ConfigMenu")
+    @patch("mcp_skills.cli.config_menu.ConfigMenu")
     def test_config_interactive_error(
         self,
         mock_menu_cls: Mock,
@@ -221,22 +209,15 @@ class TestConfigCommand:
         assert result.exit_code == 0
         assert "Search" in result.output or "search" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
     def test_config_set_multiple_values(
         self,
-        mock_config_cls: Mock,
         cli_runner: CliRunner,
-        mock_config: MCPSkillsConfig,
     ) -> None:
         """Test config --set can be called multiple times."""
-        # Setup mock
-        mock_config_cls.load.return_value = mock_config
-        mock_config.save = Mock()
-
         # Run first command
         result1 = cli_runner.invoke(
             cli,
-            ["config", "--set", "search_mode=vector"],
+            ["config", "--set", "search_mode=semantic_focused"],
         )
 
         # Run second command

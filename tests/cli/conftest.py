@@ -12,6 +12,7 @@ from click.testing import CliRunner
 from mcp_skills.models.config import HybridSearchConfig, MCPSkillsConfig
 from mcp_skills.models.repository import Repository
 from mcp_skills.models.skill import Skill, SkillMetadata
+from mcp_skills.services.indexing.hybrid_search import ScoredSkill
 from mcp_skills.services.toolchain_detector import ToolchainInfo
 
 if TYPE_CHECKING:
@@ -93,18 +94,23 @@ def mock_repository() -> Repository:
 def mock_skill_manager(mock_skill: Skill) -> Generator[Mock, None, None]:
     """Provide mocked SkillManager."""
     manager = Mock()
-    manager.list_skills.return_value = [mock_skill]
-    manager.search_skills.return_value = [mock_skill]
+    # Return actual lists, not Mocks, so len() works
+    manager.discover_skills.return_value = [mock_skill]
+    manager.search_skills.return_value = [(mock_skill, 0.95)]  # Return tuples with scores
     manager.get_skill.return_value = mock_skill
+    manager.load_skill.return_value = mock_skill  # Add load_skill method
     manager.list_categories.return_value = ["testing", "development"]
     yield manager
 
 
 @pytest.fixture
-def mock_indexing_engine() -> Generator[Mock, None, None]:
+def mock_indexing_engine(mock_skill: Skill) -> Generator[Mock, None, None]:
     """Provide mocked IndexingEngine."""
     engine = Mock()
     engine.index_skills.return_value = None
+    # Return list of ScoredSkill objects for search
+    scored_skill = ScoredSkill(skill=mock_skill, score=0.95, match_type="hybrid")
+    engine.search.return_value = [scored_skill]
     engine.get_stats.return_value = {
         "total_skills": 10,
         "total_embeddings": 100,

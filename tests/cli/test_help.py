@@ -40,7 +40,7 @@ class TestHelpCommands:
         """Test list command displays skills."""
         # Setup mock
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = [mock_skill]
+        mock_manager.discover_skills.return_value = [mock_skill]
         mock_manager_cls.return_value = mock_manager
 
         # Run command
@@ -60,7 +60,7 @@ class TestHelpCommands:
         """Test list command with category filter."""
         # Setup mock
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = [mock_skill]
+        mock_manager.discover_skills.return_value = [mock_skill]
         mock_manager_cls.return_value = mock_manager
 
         # Run command
@@ -79,7 +79,7 @@ class TestHelpCommands:
         """Test list command in compact mode."""
         # Setup mock
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = [mock_skill] * 10
+        mock_manager.discover_skills.return_value = [mock_skill] * 10
         mock_manager_cls.return_value = mock_manager
 
         # Run command
@@ -97,7 +97,7 @@ class TestHelpCommands:
         """Test list command when no skills available."""
         # Setup mock
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = []
+        mock_manager.discover_skills.return_value = []
         mock_manager_cls.return_value = mock_manager
 
         # Run command
@@ -117,7 +117,7 @@ class TestHelpCommands:
         """Test info command displays skill details."""
         # Setup mock
         mock_manager = Mock()
-        mock_manager.get_skill.return_value = mock_skill
+        mock_manager.load_skill.return_value = mock_skill
         mock_manager_cls.return_value = mock_manager
 
         # Run command
@@ -136,7 +136,7 @@ class TestHelpCommands:
         """Test info command when skill not found."""
         # Setup mock
         mock_manager = Mock()
-        mock_manager.get_skill.return_value = None
+        mock_manager.load_skill.return_value = None
         mock_manager_cls.return_value = mock_manager
 
         # Run command
@@ -156,7 +156,7 @@ class TestHelpCommands:
         """Test show command (alias for info)."""
         # Setup mock
         mock_manager = Mock()
-        mock_manager.get_skill.return_value = mock_skill
+        mock_manager.load_skill.return_value = mock_skill
         mock_manager_cls.return_value = mock_manager
 
         # Run command
@@ -191,7 +191,7 @@ class TestHelpCommands:
         """Test info command displays skill metadata."""
         # Setup mock
         mock_manager = Mock()
-        mock_manager.get_skill.return_value = mock_skill
+        mock_manager.load_skill.return_value = mock_skill
         mock_manager_cls.return_value = mock_manager
 
         # Run command
@@ -211,7 +211,7 @@ class TestHelpCommands:
         """Test list command displays skill categories."""
         # Setup mock
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = [mock_skill]
+        mock_manager.discover_skills.return_value = [mock_skill]
         mock_manager.list_categories.return_value = ["testing", "development"]
         mock_manager_cls.return_value = mock_manager
 
@@ -237,7 +237,7 @@ class TestStatsCommand:
         """Test stats command displays statistics."""
         # Setup mocks
         mock_manager = Mock()
-        mock_manager.list_skills.return_value = [mock_skill] * 10
+        mock_manager.discover_skills.return_value = [mock_skill] * 10
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()
