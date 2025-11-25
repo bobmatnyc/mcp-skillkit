@@ -790,6 +790,53 @@ git push origin main
 
 **Automation**: Future releases may automate this with a script similar to `update_homebrew_tap.sh` from claude-mpm.
 
+### Real-World Example: v0.6.1 Release
+
+**Date**: 2025-11-25
+**Type**: Patch release (template validation fix)
+
+**Homebrew Update Process** (actual commands used):
+
+```bash
+# 1. Get SHA256 from PyPI
+curl -sL https://pypi.org/pypi/mcp-skillset/0.6.1/json | python3 -c "import sys, json; data=json.load(sys.stdin); print(data['urls'][0]['digests']['sha256'])"
+# Output: 330e8252e7a9d919b1ba0826022e0110faaec9afd3004116bad5b3a7b1e039ee
+
+# 2. Navigate to homebrew-tools tap
+cd /Users/masa/Projects/homebrew-tools
+
+# 3. Update formula (automated via Edit)
+# Updated Formula/mcp-skillset.rb:
+#   - url: mcp_skillset-0.6.0.tar.gz → mcp_skillset-0.6.1.tar.gz
+#   - sha256: 38380332b... → 330e8252e7a9d919b1ba0826022e0110faaec9afd...
+
+# 4. Commit and push
+git add Formula/mcp-skillset.rb
+git commit -m "feat: update mcp-skillset to v0.6.1
+
+- Updated URL to mcp_skillset-0.6.1.tar.gz
+- Updated SHA256 checksum
+- Fixes template validation errors in skill repositories
+
+Release notes: https://github.com/bobmatnyc/mcp-skillset/releases/tag/v0.6.1
+
+🤖👥 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+git push origin main
+```
+
+**Result**:
+- ✅ Formula updated: https://github.com/bobmatnyc/homebrew-tools/blob/main/Formula/mcp-skillset.rb
+- ✅ Commit: `1bd662a` (feat: update mcp-skillset to v0.6.1)
+- ✅ Users can now: `brew upgrade mcp-skillset` to get v0.6.1
+
+**Key Points**:
+1. Homebrew formula in `homebrew-tools` tap (NOT `homebrew-mcp-skillset`)
+2. SHA256 must match PyPI's source distribution checksum
+3. Formula updates can be done immediately after PyPI publication
+4. Test locally with: `brew install --build-from-source ./Formula/mcp-skillset.rb`
+
 ---
 
 ## Rollback Procedures
