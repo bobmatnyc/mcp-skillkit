@@ -137,13 +137,16 @@ mcp-skillset setup
 
 **Note**: The first run will download the embedding model (~90MB) before proceeding with setup. Allow 2-5 minutes for this initial download. Subsequent runs will be much faster.
 
-This will:
+This complete one-command setup will:
 - Download embedding model (first run only)
 - Detect your project's toolchain
 - Clone relevant skill repositories
 - Build vector + knowledge graph indices
 - Configure MCP server integration
+- **Install and configure for all detected AI agents** (Claude Desktop, Claude Code, Auggie)
 - Validate the setup
+
+**Tip**: Use `mcp-skillset setup --skip-agents` if you prefer to configure AI agents manually using the `install` command.
 
 ### 2. Explore Available Skills
 
@@ -403,7 +406,7 @@ mcp-skillset provides a rich, interactive CLI with comprehensive command-line op
 
 #### `setup` - Initial Configuration
 
-Auto-configure mcp-skillset for your project with intelligent toolchain detection.
+Auto-configure mcp-skillset for your project with intelligent toolchain detection and automatic agent installation.
 
 ```bash
 # Interactive setup wizard (recommended for first-time setup)
@@ -411,6 +414,9 @@ mcp-skillset setup
 
 # Non-interactive setup with defaults (CI/automation)
 mcp-skillset setup --auto
+
+# Skip automatic agent installation (configure manually later)
+mcp-skillset setup --skip-agents
 
 # Setup for specific project directory
 mcp-skillset setup --project-dir /path/to/project
@@ -425,9 +431,12 @@ mcp-skillset setup --config ~/.config/mcp-skillset/custom.yaml
 - Clones relevant skill repositories
 - Builds vector + knowledge graph indices
 - Configures MCP server integration
+- **Automatically installs and configures for all detected AI agents** (Claude Desktop, Claude Code, Auggie)
 - Validates setup completion
 
 **First-Run Note:** Allow 2-5 minutes for initial model download. Subsequent runs are instant.
+
+**Agent Installation:** The setup command now automatically detects and configures all supported AI agents on your system, providing a complete one-command installation experience similar to mcp-ticketer. Use `--skip-agents` if you prefer to configure agents manually with the `install` command.
 
 #### `config` - Configuration Management
 
@@ -900,7 +909,7 @@ mcp-skillset repo --help
 # 1. Install mcp-skillset
 pipx install mcp-skillset
 
-# 2. Run setup wizard
+# 2. Run setup wizard (includes agent installation)
 mcp-skillset setup
 
 # 3. Verify installation

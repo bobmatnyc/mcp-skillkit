@@ -59,7 +59,12 @@ def cli() -> None:
     help="Config file location",
 )
 @click.option("--auto", is_flag=True, help="Non-interactive setup with defaults")
-def setup(project_dir: str, config: str, auto: bool) -> None:
+@click.option(
+    "--skip-agents",
+    is_flag=True,
+    help="Skip automatic installation for AI agents",
+)
+def setup(project_dir: str, config: str, auto: bool, skip_agents: bool) -> None:
     """Auto-configure mcp-skillset for your project.
 
     This command will:
@@ -68,6 +73,7 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
     3. Index skills with vector + KG
     4. Configure MCP server
     5. Validate setup
+    6. Install for AI agents (Claude Desktop, Claude Code, Auggie)
     """
     console.print("🚀 [bold green]Starting mcp-skillset setup...[/bold green]")
     console.print(f"📁 Project directory: {project_dir}")
@@ -75,7 +81,7 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
 
     try:
         # 1. Toolchain detection
-        console.print("[bold cyan]Step 1/5:[/bold cyan] Detecting project toolchain...")
+        console.print("[bold cyan]Step 1/6:[/bold cyan] Detecting project toolchain...")
         detector = ToolchainDetector()
         project_path = Path(project_dir).resolve()
         toolchain = detector.detect(project_path)
@@ -93,7 +99,7 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
 
         # 2. Repository cloning
         console.print(
-            "[bold cyan]Step 2/5:[/bold cyan] Setting up skill repositories..."
+            "[bold cyan]Step 2/6:[/bold cyan] Setting up skill repositories..."
         )
         repo_manager = RepositoryManager()
 
@@ -150,7 +156,7 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
         console.print()
 
         # 3. Indexing
-        console.print("[bold cyan]Step 3/5:[/bold cyan] Building skill indices...")
+        console.print("[bold cyan]Step 3/6:[/bold cyan] Building skill indices...")
         skill_manager = SkillManager()
         indexing_engine = IndexingEngine(skill_manager=skill_manager)
 
@@ -174,14 +180,14 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
                 logger.error(f"Indexing failed: {e}")
 
         # 4. MCP configuration
-        console.print("[bold cyan]Step 4/5:[/bold cyan] Configuring MCP server...")
+        console.print("[bold cyan]Step 4/6:[/bold cyan] Configuring MCP server...")
         base_dir = Path.home() / ".mcp-skillset"
         console.print(f"  ✓ Base directory: {base_dir}")
         console.print(f"  ✓ ChromaDB: {base_dir / 'chromadb'}")
         console.print(f"  ✓ Repositories: {base_dir / 'repos'}\n")
 
         # 5. Validation
-        console.print("[bold cyan]Step 5/5:[/bold cyan] Validating setup...")
+        console.print("[bold cyan]Step 5/6:[/bold cyan] Validating setup...")
         repos = repo_manager.list_repositories()
         skills = skill_manager.discover_skills()
 
@@ -206,16 +212,71 @@ def setup(project_dir: str, config: str, auto: bool) -> None:
 
         console.print()
 
+        # 6. Agent installation (if not skipped)
+        agents_installed = 0
+        if not skip_agents:
+            console.print()
+            console.print("[bold cyan]Step 6/6:[/bold cyan] Installing for AI agents...")
+
+            detector = AgentDetector()
+            found_agents = [a for a in detector.detect_all() if a.exists]
+
+            if found_agents:
+                console.print(f"  ✓ Detected {len(found_agents)} agent(s):")
+                for agent in found_agents:
+                    console.print(f"    • {agent.name}")
+
+                # Ask for confirmation (respect auto flag)
+                should_install = auto or click.confirm(
+                    "\n  Install mcp-skillset for these agents?", default=True
+                )
+
+                if should_install:
+                    installer = AgentInstaller()
+                    success_count = 0
+
+                    for agent in found_agents:
+                        try:
+                            result = installer.install(agent)
+                            if result.success:
+                                console.print(f"    ✓ {agent.name} configured")
+                                success_count += 1
+                            else:
+                                console.print(
+                                    f"    ✗ {agent.name} failed: {result.error or 'Unknown error'}"
+                                )
+                        except Exception as e:
+                            console.print(f"    ✗ {agent.name} error: {str(e)}")
+
+                    console.print(f"\n  Installed for {success_count}/{len(found_agents)} agent(s)")
+                    agents_installed = success_count
+                else:
+                    console.print("  Skipped agent installation")
+            else:
+                console.print("  No AI agents detected (Claude Desktop, Claude Code, Auggie)")
+                console.print("  You can install manually later with: mcp-skillset install")
+        else:
+            console.print("\n[dim]Skipped agent installation (--skip-agents flag)[/dim]")
+
+        console.print()
+
         # Summary
         if validation_ok:
             console.print("[bold green]✓ Setup complete![/bold green]\n")
             console.print("Next steps:")
-            console.print("  1. [cyan]Explore skills:[/cyan] mcp-skillset demo")
-            console.print(
-                "  2. [cyan]Search skills:[/cyan] mcp-skillset search 'python testing'"
-            )
-            console.print("  3. [cyan]Show skill:[/cyan] mcp-skillset show <skill-id>")
-            console.print("  4. [cyan]Start MCP:[/cyan] mcp-skillset mcp")
+            if agents_installed > 0:
+                console.print("  1. [cyan]Restart your AI agent[/cyan] to load mcp-skillset")
+                console.print("  2. [cyan]Explore skills:[/cyan] mcp-skillset demo")
+                console.print(
+                    "  3. [cyan]Search skills:[/cyan] mcp-skillset search 'python testing'"
+                )
+            else:
+                console.print("  1. [cyan]Install for agents:[/cyan] mcp-skillset install")
+                console.print("  2. [cyan]Explore skills:[/cyan] mcp-skillset demo")
+                console.print(
+                    "  3. [cyan]Search skills:[/cyan] mcp-skillset search 'python testing'"
+                )
+                console.print("  4. [cyan]Show skill:[/cyan] mcp-skillset show <skill-id>")
             console.print()
             console.print(
                 "[dim]💡 Tip: Try 'mcp-skillset demo' to see example questions for each skill![/dim]"

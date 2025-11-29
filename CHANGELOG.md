@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Agent installation now integrated into `setup` command as Step 6 - automatically detects and configures Claude Desktop, Claude Code, and Auggie
+- `--skip-agents` flag for `setup` command to skip automatic agent installation
+
+### Changed
+- `setup` command now provides complete one-command installation experience, matching mcp-ticketer's setup workflow
+- Setup process now includes 6 steps instead of 5, with agent installation as the final step
+- Updated documentation to reflect new integrated setup experience
+
 ## [0.6.3] - 2025-11-28
 
 ### Changed

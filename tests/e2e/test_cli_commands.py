@@ -39,7 +39,7 @@ class TestCLISetupCommand:
 
         This test verifies:
         - Setup runs without user interaction
-        - All 5 setup steps complete
+        - All 6 setup steps complete
         - Validation passes
         - Proper exit code
         """
@@ -66,12 +66,13 @@ class TestCLISetupCommand:
         # Verify command succeeded
         assert result.exit_code == 0, f"Setup failed: {result.output}"
 
-        # Verify output contains setup steps
-        assert "Step 1/5" in result.output
-        assert "Step 2/5" in result.output
-        assert "Step 3/5" in result.output
-        assert "Step 4/5" in result.output
-        assert "Step 5/5" in result.output
+        # Verify output contains setup steps (now 6 steps with agent installation)
+        assert "Step 1/6" in result.output
+        assert "Step 2/6" in result.output
+        assert "Step 3/6" in result.output
+        assert "Step 4/6" in result.output
+        assert "Step 5/6" in result.output
+        assert "Step 6/6" in result.output or "Skipped agent installation" in result.output
 
         # Verify toolchain detection
         assert "Detecting project toolchain" in result.output
