@@ -158,6 +158,8 @@ module = [
     "mcp.server.fastmcp",
     "click",
     "rich.*",
+    "questionary",
+    "pyperclip",
 ]
 ignore_missing_imports = true
 
