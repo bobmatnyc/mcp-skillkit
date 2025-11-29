@@ -220,9 +220,9 @@ def setup(project_dir: str, config: str, auto: bool, skip_agents: bool) -> None:
                 "[bold cyan]Step 6/6:[/bold cyan] Installing for AI agents..."
             )
 
-            detector = AgentDetector()
+            agent_detector = AgentDetector()
             # Exclude Claude Desktop by default (config path conflicts with Claude Code)
-            all_agents = detector.detect_all()
+            all_agents = agent_detector.detect_all()
             found_agents = [
                 a for a in all_agents if a.exists and a.id != "claude-desktop"
             ]
