@@ -98,7 +98,7 @@ mcp-skillset = "mcp_skills.cli.main:cli"
 where = ["src"]
 
 [tool.setuptools.package-data]
-mcp_skills = ["py.typed", "VERSION"]
+mcp_skills = ["py.typed", "VERSION", "templates/**/*.j2"]
 
 [tool.setuptools]
 include-package-data = true
