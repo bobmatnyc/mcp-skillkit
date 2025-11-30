@@ -28,12 +28,12 @@ class TestSetupCommand:
         assert "--config" in result.output
         assert "--auto" in result.output
 
-    @patch("mcp_skills.cli.main.ToolchainDetector")
-    @patch("mcp_skills.cli.main.RepositoryManager")
-    @patch("mcp_skills.cli.main.SkillManager")
-    @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.AgentDetector")
-    @patch("mcp_skills.cli.main.AgentInstaller")
+    @patch("mcp_skills.cli.commands.setup.ToolchainDetector")
+    @patch("mcp_skills.cli.commands.setup.RepositoryManager")
+    @patch("mcp_skills.cli.commands.setup.SkillManager")
+    @patch("mcp_skills.cli.commands.setup.IndexingEngine")
+    @patch("mcp_skills.cli.commands.setup.AgentDetector")
+    @patch("mcp_skills.cli.commands.setup.AgentInstaller")
     def test_setup_auto_mode(
         self,
         mock_installer_cls: Mock,
@@ -99,7 +99,7 @@ class TestSetupCommand:
         assert "Detecting project toolchain" in result.output
         assert "Python" in result.output
 
-    @patch("mcp_skills.cli.main.ToolchainDetector")
+    @patch("mcp_skills.cli.commands.setup.ToolchainDetector")
     def test_setup_toolchain_detection_failure(
         self,
         mock_toolchain_cls: Mock,
@@ -122,11 +122,11 @@ class TestSetupCommand:
         assert result.exit_code != 0
         assert "Setup failed" in result.output or "Detection failed" in result.output
 
-    @patch("mcp_skills.cli.main.ToolchainDetector")
-    @patch("mcp_skills.cli.main.RepositoryManager")
-    @patch("mcp_skills.cli.main.SkillManager")
-    @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.AgentDetector")
+    @patch("mcp_skills.cli.commands.setup.ToolchainDetector")
+    @patch("mcp_skills.cli.commands.setup.RepositoryManager")
+    @patch("mcp_skills.cli.commands.setup.SkillManager")
+    @patch("mcp_skills.cli.commands.setup.IndexingEngine")
+    @patch("mcp_skills.cli.commands.setup.AgentDetector")
     def test_setup_with_custom_config_path(
         self,
         mock_detector_cls: Mock,
@@ -183,11 +183,11 @@ class TestSetupCommand:
         # Verify custom path is used
         assert str(custom_config) in result.output or result.exit_code == 0
 
-    @patch("mcp_skills.cli.main.ToolchainDetector")
-    @patch("mcp_skills.cli.main.RepositoryManager")
-    @patch("mcp_skills.cli.main.SkillManager")
-    @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.AgentDetector")
+    @patch("mcp_skills.cli.commands.setup.ToolchainDetector")
+    @patch("mcp_skills.cli.commands.setup.RepositoryManager")
+    @patch("mcp_skills.cli.commands.setup.SkillManager")
+    @patch("mcp_skills.cli.commands.setup.IndexingEngine")
+    @patch("mcp_skills.cli.commands.setup.AgentDetector")
     def test_setup_with_repository_cloning(
         self,
         mock_detector_cls: Mock,
@@ -254,11 +254,11 @@ class TestSetupCommand:
         # Should fail with path error
         assert result.exit_code != 0
 
-    @patch("mcp_skills.cli.main.ToolchainDetector")
-    @patch("mcp_skills.cli.main.RepositoryManager")
-    @patch("mcp_skills.cli.main.SkillManager")
-    @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.AgentDetector")
+    @patch("mcp_skills.cli.commands.setup.ToolchainDetector")
+    @patch("mcp_skills.cli.commands.setup.RepositoryManager")
+    @patch("mcp_skills.cli.commands.setup.SkillManager")
+    @patch("mcp_skills.cli.commands.setup.IndexingEngine")
+    @patch("mcp_skills.cli.commands.setup.AgentDetector")
     def test_setup_indexing_step(
         self,
         mock_detector_cls: Mock,
@@ -308,12 +308,12 @@ class TestSetupCommand:
         assert result.exit_code == 0
         assert "Indexing skills" in result.output or "indexed" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.ToolchainDetector")
-    @patch("mcp_skills.cli.main.RepositoryManager")
-    @patch("mcp_skills.cli.main.SkillManager")
-    @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.AgentDetector")
-    @patch("mcp_skills.cli.main.AgentInstaller")
+    @patch("mcp_skills.cli.commands.setup.ToolchainDetector")
+    @patch("mcp_skills.cli.commands.setup.RepositoryManager")
+    @patch("mcp_skills.cli.commands.setup.SkillManager")
+    @patch("mcp_skills.cli.commands.setup.IndexingEngine")
+    @patch("mcp_skills.cli.commands.setup.AgentDetector")
+    @patch("mcp_skills.cli.commands.setup.AgentInstaller")
     def test_setup_skip_agents(
         self,
         mock_installer_cls: Mock,

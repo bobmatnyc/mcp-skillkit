@@ -46,7 +46,7 @@ class TestInstallDefaultBehavior:
         ]
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.AgentDetector")
+    @patch("mcp_skills.cli.commands.install.AgentDetector")
     def test_default_install_excludes_claude_desktop(
         self,
         mock_detector_cls: Mock,
@@ -88,7 +88,7 @@ class TestInstallDefaultBehavior:
         assert "claude code" in output_lower or "code" in output_lower
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.AgentDetector")
+    @patch("mcp_skills.cli.commands.install.AgentDetector")
     def test_explicit_claude_desktop_still_works(
         self,
         mock_detector_cls: Mock,
@@ -129,7 +129,7 @@ class TestInstallDefaultBehavior:
         mock_detector.detect_agent.assert_called_with("claude-desktop")
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.AgentDetector")
+    @patch("mcp_skills.cli.commands.install.AgentDetector")
     def test_claude_code_selected_by_default(
         self,
         mock_detector_cls: Mock,
@@ -183,7 +183,7 @@ class TestAgentNameDisplay:
     """Test suite for agent name display (Bug Fix #2)."""
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.AgentDetector")
+    @patch("mcp_skills.cli.commands.install.AgentDetector")
     def test_claude_code_displays_correct_name(
         self,
         mock_detector_cls: Mock,
@@ -235,7 +235,7 @@ class TestAgentNameDisplay:
                 assert "Claude Desktop" not in line
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.AgentDetector")
+    @patch("mcp_skills.cli.commands.install.AgentDetector")
     def test_all_agents_display_correct_names(
         self,
         mock_detector_cls: Mock,

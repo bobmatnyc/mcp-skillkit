@@ -24,8 +24,8 @@ class TestMCPCommand:
     @pytest.mark.skip(
         reason="MCP server has I/O file closure issues with Click test runner"
     )
-    @patch("mcp_skills.cli.main.MCPSkillsServer")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.cli.commands.mcp_server.MCPSkillsServer")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_mcp_basic(
         self,
         mock_config_cls: Mock,
@@ -50,8 +50,8 @@ class TestMCPCommand:
     @pytest.mark.skip(
         reason="MCP server has I/O file closure issues with Click test runner"
     )
-    @patch("mcp_skills.cli.main.MCPSkillsServer")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.cli.commands.mcp_server.MCPSkillsServer")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_mcp_dev_mode(
         self,
         mock_config_cls: Mock,
@@ -74,8 +74,8 @@ class TestMCPCommand:
         assert "Starting MCP server" in result.output
         assert "dev" in result.output.lower() or "development" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.MCPSkillsServer")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.cli.commands.mcp_server.MCPSkillsServer")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_mcp_server_initialization_error(
         self,
         mock_config_cls: Mock,
@@ -94,7 +94,7 @@ class TestMCPCommand:
         # Verify error handling
         assert result.exit_code != 0
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_mcp_config_load_error(
         self,
         mock_config_cls: Mock,
@@ -122,8 +122,8 @@ class TestMCPCommand:
         assert "MCP" in result.output or "server" in result.output.lower()
 
     @pytest.mark.skip(reason="MCP server runs indefinitely")
-    @patch("mcp_skills.cli.main.MCPSkillsServer")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.cli.commands.mcp_server.MCPSkillsServer")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_mcp_can_be_interrupted(
         self,
         mock_config_cls: Mock,
@@ -146,7 +146,7 @@ class TestMCPCommand:
         assert "Shutting down" in result.output or result.exit_code == 1
 
     @patch("mcp_skills.cli.main.SkillManager")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_mcp_verifies_skills_available(
         self,
         mock_config_cls: Mock,

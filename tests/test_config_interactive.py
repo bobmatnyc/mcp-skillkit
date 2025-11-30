@@ -391,11 +391,11 @@ class TestConfigCommandFlags:
 
     def test_set_base_dir(self, temp_config_path: Path, tmp_path: Path) -> None:
         """Test --set flag with base_dir key."""
-        from mcp_skills.cli.main import _handle_set_config
+        from mcp_skills.cli.commands.config import _handle_set_config
 
         new_base_dir = tmp_path / "custom_base"
 
-        with patch("mcp_skills.cli.main.Path.home") as mock_home:
+        with patch("mcp_skills.cli.commands.config.Path.home") as mock_home:
             mock_home.return_value = temp_config_path.parent.parent
             _handle_set_config(f"base_dir={new_base_dir}")
 
@@ -410,9 +410,9 @@ class TestConfigCommandFlags:
 
     def test_set_search_mode(self, temp_config_path: Path) -> None:
         """Test --set flag with search_mode key."""
-        from mcp_skills.cli.main import _handle_set_config
+        from mcp_skills.cli.commands.config import _handle_set_config
 
-        with patch("mcp_skills.cli.main.Path.home") as mock_home:
+        with patch("mcp_skills.cli.commands.config.Path.home") as mock_home:
             mock_home.return_value = temp_config_path.parent.parent
             _handle_set_config("search_mode=balanced")
 
@@ -426,27 +426,27 @@ class TestConfigCommandFlags:
 
     def test_set_invalid_format(self, temp_config_path: Path) -> None:
         """Test --set flag with invalid format raises error."""
-        from mcp_skills.cli.main import _handle_set_config
+        from mcp_skills.cli.commands.config import _handle_set_config
 
-        with patch("mcp_skills.cli.main.Path.home") as mock_home:
+        with patch("mcp_skills.cli.commands.config.Path.home") as mock_home:
             mock_home.return_value = temp_config_path.parent.parent
             with pytest.raises(SystemExit):
                 _handle_set_config("invalid_format")
 
     def test_set_unknown_key(self, temp_config_path: Path) -> None:
         """Test --set flag with unknown key raises error."""
-        from mcp_skills.cli.main import _handle_set_config
+        from mcp_skills.cli.commands.config import _handle_set_config
 
-        with patch("mcp_skills.cli.main.Path.home") as mock_home:
+        with patch("mcp_skills.cli.commands.config.Path.home") as mock_home:
             mock_home.return_value = temp_config_path.parent.parent
             with pytest.raises(SystemExit):
                 _handle_set_config("unknown_key=value")
 
     def test_set_invalid_search_mode(self, temp_config_path: Path) -> None:
         """Test --set flag with invalid search mode raises error."""
-        from mcp_skills.cli.main import _handle_set_config
+        from mcp_skills.cli.commands.config import _handle_set_config
 
-        with patch("mcp_skills.cli.main.Path.home") as mock_home:
+        with patch("mcp_skills.cli.commands.config.Path.home") as mock_home:
             mock_home.return_value = temp_config_path.parent.parent
             with pytest.raises(SystemExit):
                 _handle_set_config("search_mode=invalid_mode")

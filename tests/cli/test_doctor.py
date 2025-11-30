@@ -20,9 +20,9 @@ class TestDoctorCommand:
         assert result.exit_code == 0
         assert "health" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
-    @patch("mcp_skills.cli.main.SkillManager")
-    @patch("mcp_skills.cli.main.IndexingEngine")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
+    @patch("mcp_skills.cli.commands.doctor.SkillManager")
+    @patch("mcp_skills.cli.commands.doctor.IndexingEngine")
     def test_doctor_all_healthy(
         self,
         mock_engine_cls: Mock,
@@ -54,7 +54,7 @@ class TestDoctorCommand:
         assert result.exit_code == 0
         assert "Health Check" in result.output or "health" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_doctor_config_not_found(
         self,
         mock_config_cls: Mock,
@@ -71,8 +71,8 @@ class TestDoctorCommand:
         assert result.exit_code == 0  # Doctor should still complete
         assert "config" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
+    @patch("mcp_skills.cli.commands.doctor.SkillManager")
     def test_doctor_no_skills(
         self,
         mock_manager_cls: Mock,
@@ -97,8 +97,8 @@ class TestDoctorCommand:
             "no skills" in result.output.lower() or "warning" in result.output.lower()
         )
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
-    @patch("mcp_skills.cli.main.IndexingEngine")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
+    @patch("mcp_skills.cli.commands.doctor.IndexingEngine")
     def test_doctor_index_not_built(
         self,
         mock_engine_cls: Mock,
@@ -124,8 +124,8 @@ class TestDoctorCommand:
         assert result.exit_code == 0
         assert "index" in result.output.lower() or "warning" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
-    @patch("mcp_skills.cli.main.RepositoryManager")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
+    @patch("mcp_skills.cli.commands.doctor.RepositoryManager")
     def test_doctor_checks_repositories(
         self,
         mock_repo_cls: Mock,
@@ -148,8 +148,8 @@ class TestDoctorCommand:
         # Verify repositories are checked
         assert result.exit_code == 0
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
-    @patch("mcp_skills.cli.main.RepositoryManager")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
+    @patch("mcp_skills.cli.commands.doctor.RepositoryManager")
     def test_doctor_no_repositories(
         self,
         mock_repo_cls: Mock,
@@ -183,10 +183,10 @@ class TestDoctorCommand:
         # Verify summary is displayed
         assert "Health Check" in result.output or "health" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
-    @patch("mcp_skills.cli.main.SkillManager")
-    @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.RepositoryManager")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
+    @patch("mcp_skills.cli.commands.doctor.SkillManager")
+    @patch("mcp_skills.cli.commands.doctor.IndexingEngine")
+    @patch("mcp_skills.cli.commands.doctor.RepositoryManager")
     def test_doctor_comprehensive_check(
         self,
         mock_repo_cls: Mock,

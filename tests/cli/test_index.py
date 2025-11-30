@@ -22,7 +22,7 @@ class TestIndexCommand:
         assert "--force" in result.output
 
     @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.index.SkillManager")
     def test_index_basic(
         self,
         mock_manager_cls: Mock,
@@ -52,7 +52,7 @@ class TestIndexCommand:
         assert "Indexing" in result.output or "indexed" in result.output.lower()
 
     @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.index.SkillManager")
     def test_index_incremental(
         self,
         mock_manager_cls: Mock,
@@ -81,7 +81,7 @@ class TestIndexCommand:
         assert "incremental" in result.output.lower() or result.exit_code == 0
 
     @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.index.SkillManager")
     def test_index_force(
         self,
         mock_manager_cls: Mock,
@@ -109,7 +109,7 @@ class TestIndexCommand:
         assert result.exit_code == 0
 
     @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.index.SkillManager")
     def test_index_with_skills(
         self,
         mock_manager_cls: Mock,
@@ -139,7 +139,7 @@ class TestIndexCommand:
         mock_engine.index_skills.assert_called_once()
 
     @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.index.SkillManager")
     def test_index_no_skills(
         self,
         mock_manager_cls: Mock,
@@ -163,7 +163,7 @@ class TestIndexCommand:
         assert "No skills" in result.output or "0" in result.output
 
     @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.index.SkillManager")
     def test_index_error_handling(
         self,
         mock_manager_cls: Mock,
@@ -184,7 +184,7 @@ class TestIndexCommand:
         assert "failed" in result.output.lower() or "error" in result.output.lower()
 
     @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.index.SkillManager")
     def test_index_displays_stats(
         self,
         mock_manager_cls: Mock,
@@ -214,7 +214,7 @@ class TestIndexCommand:
         assert "15" in result.output or "skills" in result.output.lower()
 
     @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.index.SkillManager")
     def test_index_incremental_and_force_mutually_exclusive(
         self,
         mock_manager_cls: Mock,
@@ -238,7 +238,7 @@ class TestIndexCommand:
         assert result.exit_code == 0
 
     @patch("mcp_skills.cli.main.IndexingEngine")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.index.SkillManager")
     def test_index_progress_display(
         self,
         mock_manager_cls: Mock,

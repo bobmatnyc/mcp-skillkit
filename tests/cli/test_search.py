@@ -20,7 +20,7 @@ class TestSearchCommand:
         assert "Search for skills" in result.output
         assert "query" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_search_basic(
         self,
         mock_manager_cls: Mock,
@@ -40,7 +40,7 @@ class TestSearchCommand:
         assert result.exit_code == 0
         assert "Searching for" in result.output or "testing" in result.output
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_search_no_results(
         self,
         mock_manager_cls: Mock,
@@ -59,7 +59,7 @@ class TestSearchCommand:
         assert result.exit_code == 0
         assert "No skills found" in result.output or "0" in result.output
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_search_with_limit(
         self,
         mock_manager_cls: Mock,
@@ -78,7 +78,7 @@ class TestSearchCommand:
         # Verify
         assert result.exit_code == 0
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_search_with_mode(
         self,
         mock_manager_cls: Mock,
@@ -100,7 +100,7 @@ class TestSearchCommand:
         # Verify
         assert result.exit_code == 0
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_search_with_threshold(
         self,
         mock_manager_cls: Mock,
@@ -122,7 +122,7 @@ class TestSearchCommand:
         # Verify
         assert result.exit_code == 0
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_search_multiple_results(
         self,
         mock_manager_cls: Mock,
@@ -141,7 +141,7 @@ class TestSearchCommand:
         # Verify multiple results displayed
         assert result.exit_code == 0
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_search_displays_relevance_scores(
         self,
         mock_manager_cls: Mock,
@@ -160,7 +160,7 @@ class TestSearchCommand:
         # Verify
         assert result.exit_code == 0
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_search_error_handling(
         self,
         mock_manager_cls: Mock,
@@ -178,7 +178,7 @@ class TestSearchCommand:
         # Verify error handling
         assert result.exit_code != 0
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_search_empty_query(
         self,
         mock_manager_cls: Mock,
@@ -210,7 +210,7 @@ class TestRecommendCommand:
         assert "Recommend skills" in result.output
 
     @patch("mcp_skills.cli.main.ToolchainDetector")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_recommend_basic(
         self,
         mock_manager_cls: Mock,
@@ -237,7 +237,7 @@ class TestRecommendCommand:
         assert "Recommend" in result.output or "skills" in result.output.lower()
 
     @patch("mcp_skills.cli.main.ToolchainDetector")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_recommend_with_search_mode(
         self,
         mock_manager_cls: Mock,
@@ -284,7 +284,7 @@ class TestRecommendCommand:
         assert result.exit_code != 0
 
     @patch("mcp_skills.cli.main.ToolchainDetector")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_recommend_no_matching_skills(
         self,
         mock_manager_cls: Mock,
@@ -310,7 +310,7 @@ class TestRecommendCommand:
         assert "No" in result.output or "0" in result.output
 
     @patch("mcp_skills.cli.main.ToolchainDetector")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.search.SkillManager")
     def test_recommend_displays_recommendations(
         self,
         mock_manager_cls: Mock,

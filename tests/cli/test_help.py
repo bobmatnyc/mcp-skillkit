@@ -29,7 +29,7 @@ class TestHelpCommands:
         assert result.exit_code == 0
         assert "0.5.0" in result.output or "version" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.list_skills.SkillManager")
     def test_list_command(
         self,
         mock_manager_cls: Mock,
@@ -49,7 +49,7 @@ class TestHelpCommands:
         assert result.exit_code == 0
         assert "Available Skills" in result.output or "Skills" in result.output
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.list_skills.SkillManager")
     def test_list_command_with_category(
         self,
         mock_manager_cls: Mock,
@@ -68,7 +68,7 @@ class TestHelpCommands:
         # Verify
         assert result.exit_code == 0
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.list_skills.SkillManager")
     def test_list_command_compact_mode(
         self,
         mock_manager_cls: Mock,
@@ -87,7 +87,7 @@ class TestHelpCommands:
         # Verify
         assert result.exit_code == 0
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.list_skills.SkillManager")
     def test_list_command_no_skills(
         self,
         mock_manager_cls: Mock,
@@ -106,7 +106,7 @@ class TestHelpCommands:
         assert result.exit_code == 0
         assert "No skills" in result.output or "0" in result.output
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.list_skills.SkillManager")
     def test_info_command(
         self,
         mock_manager_cls: Mock,
@@ -126,7 +126,7 @@ class TestHelpCommands:
         assert result.exit_code == 0
         assert "test-skill" in result.output.lower() or "Test Skill" in result.output
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.list_skills.SkillManager")
     def test_info_command_skill_not_found(
         self,
         mock_manager_cls: Mock,
@@ -145,7 +145,7 @@ class TestHelpCommands:
         assert result.exit_code != 0
         assert "not found" in result.output.lower() or "error" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.list_skills.SkillManager")
     def test_show_command_alias(
         self,
         mock_manager_cls: Mock,
@@ -180,7 +180,7 @@ class TestHelpCommands:
         assert result.exit_code == 0
         assert "Show detailed information" in result.output
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.list_skills.SkillManager")
     def test_info_displays_metadata(
         self,
         mock_manager_cls: Mock,
@@ -200,7 +200,7 @@ class TestHelpCommands:
         assert result.exit_code == 0
         assert "version" in result.output.lower() or "1.0.0" in result.output
 
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.list_skills.SkillManager")
     def test_list_displays_categories(
         self,
         mock_manager_cls: Mock,
@@ -224,8 +224,8 @@ class TestHelpCommands:
 class TestStatsCommand:
     """Test suite for stats command."""
 
-    @patch("mcp_skills.cli.main.SkillManager")
-    @patch("mcp_skills.cli.main.IndexingEngine")
+    @patch("mcp_skills.cli.commands.list_skills.SkillManager")
+    @patch("mcp_skills.cli.commands.stats.IndexingEngine")
     def test_stats_command(
         self,
         mock_engine_cls: Mock,

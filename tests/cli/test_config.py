@@ -27,7 +27,7 @@ class TestConfigCommand:
         assert "--show" in result.output
         assert "--set" in result.output
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_config_show(
         self,
         mock_config_cls: Mock,
@@ -61,7 +61,7 @@ class TestConfigCommand:
         assert result.exit_code == 0
         assert "Base directory set to" in result.output or "✓" in result.output
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_config_set_invalid_format(
         self,
         mock_config_cls: Mock,
@@ -97,7 +97,7 @@ class TestConfigCommand:
         assert result.exit_code == 0
         assert "Search mode set to" in result.output or "balanced" in result.output
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_config_set_invalid_key(
         self,
         mock_config_cls: Mock,
@@ -173,7 +173,7 @@ class TestConfigCommand:
         assert result.exit_code == 1
         assert "failed" in result.output.lower()
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_config_show_with_repositories(
         self,
         mock_config_cls: Mock,
@@ -193,7 +193,7 @@ class TestConfigCommand:
             "Repositories" in result.output or "repositories" in result.output.lower()
         )
 
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_config_show_with_search_settings(
         self,
         mock_config_cls: Mock,

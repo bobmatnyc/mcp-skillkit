@@ -23,7 +23,7 @@ class TestInstallCommand:
         assert "--force" in result.output
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_install_claude(
         self,
         mock_config_cls: Mock,
@@ -51,7 +51,7 @@ class TestInstallCommand:
         assert "Installing" in result.output or "claude" in result.output.lower()
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_install_cursor(
         self,
         mock_config_cls: Mock,
@@ -77,7 +77,7 @@ class TestInstallCommand:
         assert result.exit_code == 0
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_install_dry_run(
         self,
         mock_config_cls: Mock,
@@ -107,7 +107,7 @@ class TestInstallCommand:
         assert "dry" in result.output.lower() or "would" in result.output.lower()
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_install_force(
         self,
         mock_config_cls: Mock,
@@ -136,7 +136,7 @@ class TestInstallCommand:
         assert result.exit_code == 0
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_install_invalid_agent(
         self,
         mock_config_cls: Mock,
@@ -163,7 +163,7 @@ class TestInstallCommand:
         assert "error" in result.output.lower() or "failed" in result.output.lower()
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_install_config_exists_warning(
         self,
         mock_config_cls: Mock,
@@ -189,7 +189,7 @@ class TestInstallCommand:
         assert result.exit_code == 0
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_install_without_agent_flag(
         self,
         mock_config_cls: Mock,
@@ -204,7 +204,7 @@ class TestInstallCommand:
         assert result.exit_code != 0 or "agent" in result.output.lower()
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_install_multiple_agents(
         self,
         mock_config_cls: Mock,
@@ -231,7 +231,7 @@ class TestInstallCommand:
         assert result2.exit_code == 0
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_install_displays_config_path(
         self,
         mock_config_cls: Mock,
@@ -258,7 +258,7 @@ class TestInstallCommand:
         assert "config" in result.output.lower() or "/path" in result.output
 
     @patch("mcp_skills.cli.main.AgentInstaller")
-    @patch("mcp_skills.cli.main.MCPSkillsConfig")
+    @patch("mcp_skills.models.config.MCPSkillsConfig")
     def test_install_error_handling(
         self,
         mock_config_cls: Mock,

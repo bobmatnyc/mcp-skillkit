@@ -23,7 +23,7 @@ class TestEnrichCommand:
         assert "--max-skills" in result.output or "--output" in result.output
 
     @patch("mcp_skills.cli.main.PromptEnricher")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.enrich.SkillManager")
     def test_enrich_with_prompt_text(
         self,
         mock_manager_cls: Mock,
@@ -50,7 +50,7 @@ class TestEnrichCommand:
         assert "Enriched" in result.output or "prompt" in result.output.lower()
 
     @patch("mcp_skills.cli.main.PromptEnricher")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.enrich.SkillManager")
     def test_enrich_with_file(
         self,
         mock_manager_cls: Mock,
@@ -81,7 +81,7 @@ class TestEnrichCommand:
         assert result.exit_code == 0
 
     @patch("mcp_skills.cli.main.PromptEnricher")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.enrich.SkillManager")
     def test_enrich_with_output_file(
         self,
         mock_manager_cls: Mock,
@@ -127,7 +127,7 @@ class TestEnrichCommand:
         assert result.exit_code != 0
 
     @patch("mcp_skills.cli.main.PromptEnricher")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.enrich.SkillManager")
     def test_enrich_with_limit(
         self,
         mock_manager_cls: Mock,
@@ -153,7 +153,7 @@ class TestEnrichCommand:
         assert result.exit_code == 0
 
     @patch("mcp_skills.cli.main.PromptEnricher")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.enrich.SkillManager")
     def test_enrich_with_mode(
         self,
         mock_manager_cls: Mock,
@@ -192,7 +192,7 @@ class TestEnrichCommand:
         assert result.exit_code != 0
 
     @patch("mcp_skills.cli.main.PromptEnricher")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.enrich.SkillManager")
     def test_enrich_error_handling(
         self,
         mock_manager_cls: Mock,
@@ -219,7 +219,7 @@ class TestEnrichCommand:
         assert "failed" in result.output.lower() or "error" in result.output.lower()
 
     @patch("mcp_skills.cli.main.PromptEnricher")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.enrich.SkillManager")
     def test_enrich_displays_enriched_content(
         self,
         mock_manager_cls: Mock,
@@ -246,7 +246,7 @@ class TestEnrichCommand:
         assert result.exit_code == 0
 
     @patch("mcp_skills.cli.main.PromptEnricher")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.enrich.SkillManager")
     def test_enrich_with_stdin(
         self,
         mock_manager_cls: Mock,
@@ -273,7 +273,7 @@ class TestEnrichCommand:
         assert result.exit_code in [0, 2]
 
     @patch("mcp_skills.cli.main.PromptEnricher")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.enrich.SkillManager")
     def test_enrich_no_relevant_skills(
         self,
         mock_manager_cls: Mock,
@@ -299,7 +299,7 @@ class TestEnrichCommand:
         assert result.exit_code == 0
 
     @patch("mcp_skills.cli.main.PromptEnricher")
-    @patch("mcp_skills.cli.main.SkillManager")
+    @patch("mcp_skills.cli.commands.enrich.SkillManager")
     def test_enrich_with_context(
         self,
         mock_manager_cls: Mock,
