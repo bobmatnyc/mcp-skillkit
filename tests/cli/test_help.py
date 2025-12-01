@@ -234,17 +234,22 @@ class TestStatsCommand:
         mock_skill,
     ) -> None:
         """Test stats command displays statistics."""
+        from types import SimpleNamespace
+
         # Setup mocks
         mock_manager = Mock()
         mock_manager.discover_skills.return_value = [mock_skill] * 10
         mock_manager_cls.return_value = mock_manager
 
         mock_engine = Mock()
-        mock_engine.get_stats.return_value = {
-            "total_skills": 10,
-            "total_embeddings": 100,
-            "index_size_mb": 5.5,
-        }
+        # Return SimpleNamespace object with attributes instead of dict
+        mock_engine.get_stats.return_value = SimpleNamespace(
+            total_skills=10,
+            vector_store_size=5632,  # bytes
+            graph_nodes=10,
+            graph_edges=15,
+            last_indexed="2025-01-01T00:00:00",
+        )
         mock_engine_cls.return_value = mock_engine
 
         # Run command

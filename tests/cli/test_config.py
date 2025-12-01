@@ -35,8 +35,8 @@ class TestConfigCommand:
         mock_config: MCPSkillsConfig,
     ) -> None:
         """Test config --show displays configuration."""
-        # Setup mock
-        mock_config_cls.load.return_value = mock_config
+        # Setup mock - when MCPSkillsConfig() is called, return our config object
+        mock_config_cls.return_value = mock_config
 
         # Run command
         result = cli_runner.invoke(cli, ["config", "--show"])
@@ -181,8 +181,8 @@ class TestConfigCommand:
         mock_config: MCPSkillsConfig,
     ) -> None:
         """Test config --show displays repositories."""
-        # Setup mock with repositories
-        mock_config_cls.load.return_value = mock_config
+        # Setup mock - when MCPSkillsConfig() is called, return our config object
+        mock_config_cls.return_value = mock_config
 
         # Run command
         result = cli_runner.invoke(cli, ["config", "--show"])
@@ -201,8 +201,8 @@ class TestConfigCommand:
         mock_config: MCPSkillsConfig,
     ) -> None:
         """Test config --show displays search settings."""
-        # Setup mock
-        mock_config_cls.load.return_value = mock_config
+        # Setup mock - when MCPSkillsConfig() is called, return our config object
+        mock_config_cls.return_value = mock_config
 
         # Run command
         result = cli_runner.invoke(cli, ["config", "--show"])

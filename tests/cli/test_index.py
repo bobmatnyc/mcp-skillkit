@@ -17,7 +17,7 @@ class TestIndexCommand:
         result = cli_runner.invoke(cli, ["index", "--help"])
 
         assert result.exit_code == 0
-        assert "Index all skills" in result.output
+        assert "Rebuild skill indices" in result.output
         assert "--incremental" in result.output
         assert "--force" in result.output
 

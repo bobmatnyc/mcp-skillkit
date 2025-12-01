@@ -33,14 +33,23 @@ def mock_config(tmp_path: Path) -> MCPSkillsConfig:
     config_dir = tmp_path / ".mcp-skillset"
     config_dir.mkdir(parents=True, exist_ok=True)
 
-    return MCPSkillsConfig(
+    # Create actual config object with real values (not Mocks)
+    # to avoid MagicMock format string errors
+    config = MCPSkillsConfig(
         base_dir=config_dir,
         repositories=[],  # Empty list to avoid Repository initialization issues
         hybrid_search=HybridSearchConfig(
             vector_weight=0.7,
             graph_weight=0.3,
+            preset="balanced",
         ),
     )
+
+    # Ensure hybrid_search has actual numeric values, not Mocks
+    config.hybrid_search.vector_weight = 0.7
+    config.hybrid_search.graph_weight = 0.3
+
+    return config
 
 
 @pytest.fixture
